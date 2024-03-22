@@ -1,0 +1,4 @@
+repository "DIPRIProjekt@TeamFIPU@cloud"
+  path "/"
+    br "/main"
+    co "/main"
