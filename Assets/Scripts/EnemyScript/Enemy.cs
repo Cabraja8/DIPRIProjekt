@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public float TimeBetweenAttacks;
     private NavMeshAgent navMeshAgent;
 
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -24,21 +25,25 @@ public class Enemy : MonoBehaviour
         {
             navMeshAgent.updateRotation = false;
             navMeshAgent.stoppingDistance = stopDistance;
+            navMeshAgent.speed = speed; 
         }
     }
 
     void Update()
-    {
+    {   
+ 
         if (target != null)
         {
             navMeshAgent.SetDestination(target.position);
-            navMeshAgent.speed = speed; 
+            
             if(Time.time >=attackTime){
                 StartCoroutine(Attack());
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }
     }
+
+    
 
     IEnumerator Attack(){
         
@@ -47,11 +52,11 @@ public class Enemy : MonoBehaviour
         float percent = 0;
         Debug.Log("Attack");
 
-        while(percent <= 1){
-            percent += Time.deltaTime * attackSpeed;
-            float formula = (-Mathf.Pow(percent,2)+percent)*4;
-            transform.position = Vector2.Lerp(originalPosition,targetPosition,formula);
+        // while(percent <= 1){
+        //     percent += Time.deltaTime * attackSpeed;
+        //     float formula = (-Mathf.Pow(percent,2)+percent)*4;
+        //     transform.position = Vector2.Lerp(originalPosition,targetPosition,formula);
             yield return null;
-        }
+        //}
     }
 }
