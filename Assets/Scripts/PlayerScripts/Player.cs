@@ -15,5 +15,13 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+   
+    public virtual void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E)){
+            Debug.Log("Interact with NPC");
+        }
+    }
+
  
 }

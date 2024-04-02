@@ -11,8 +11,9 @@ public class PlayerMovement : Player
     }
 
       // Update is called once per frame
-    void Update()
-    {
+   public override void Update()
+    {   
+        base.Update();
         PlayerMove();
     }
 
