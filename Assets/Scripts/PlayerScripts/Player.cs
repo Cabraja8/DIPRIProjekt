@@ -13,11 +13,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
 
     public CombatAndMovement PlayerAnimation;
+    private SpriteRenderer rend;
+
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
-
+        rend = GetComponentInChildren<SpriteRenderer>();
     }
 
 
@@ -29,8 +31,26 @@ public class Player : MonoBehaviour
         }
 
         CheckWalkingAnimation();
+        CheckAngle();
     }
 
+    private void CheckAngle()
+    {
+        Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        float angle = Vector2.SignedAngle(Vector2.right, moveDirection);
+
+        if (angle >= 90 || angle <= -90)
+        {   //okretanje bez spriterenderera
+            //transform.localScale = new Vector3(-1f, 1f, 1f);
+            rend.flipX = true;
+        }
+        else
+        {
+            //okretanje bez spriterenderera
+            // transform.localScale = new Vector3(1f, 1f, 1f);
+            rend.flipX = false;
+        }
+    }
     public void CheckWalkingAnimation()
     {
         Vector2 currentPosition = transform.position;
