@@ -5,14 +5,17 @@ using UnityEngine;
 public class PlayerControls : Player
 {
     // Dodatne varijable za akcije
-    private bool isDashing = false;
-    private bool isSneaking = false;
+    public bool isDashing = false;
+    public bool isSneaking = false;
+
+    public float OriginalMovementSpeed;
 
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        OriginalMovementSpeed = base.MovementSpeed;
 
     }
 
@@ -31,7 +34,7 @@ public class PlayerControls : Player
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Dash();
-            PlayerAnimation.PlayWalkAnimation();
+            PlayerAnimation.PlayDashAnimation();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -43,7 +46,7 @@ public class PlayerControls : Player
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shield();
-            PlayerAnimation.PlayAttackAnimation();
+            PlayerAnimation.PlayShieldAnimation();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -80,24 +83,32 @@ public class PlayerControls : Player
     private void Shield()
     {
         Debug.Log("Shield!");
+        Invoke("ResetShield", 1f);
     }
 
     private void AoE()
-    {
+    {   
+        // tu ces kasnije nadodat drugi attack napad, ali kasnije ne treba sad još
         Debug.Log("AoE!");
 
     }
 
     private void ResetDash()
     {
-        MovementSpeed = 5f;
+        MovementSpeed = OriginalMovementSpeed;
         isDashing = false;
     }
 
+
     private void ResetSneak()
     {
-        MovementSpeed = 5f;
+        MovementSpeed = OriginalMovementSpeed;
         isSneaking = false;
+    }
+      private void ResetShield()
+    {
+        Debug.Log("Currently shielding");
+        PlayerAnimation.StopShieldAnimation();
     }
 
 

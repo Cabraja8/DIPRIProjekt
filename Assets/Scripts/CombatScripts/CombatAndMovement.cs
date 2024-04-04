@@ -36,6 +36,20 @@ public class CombatAndMovement : MonoBehaviour
         animator.SetTrigger("TakeHit");
     }
 
+    public void PlayDashAnimation(){
+        animator.SetTrigger("Dash");
+    }
+
+    public void PlayShieldAnimation(){
+        animator.SetBool("IsShielding", true);
+    }
+    public void StopShieldAnimation(){
+        animator.SetBool("IsShielding", false);
+    }
+
+    public void DeathAnimation(){
+        animator.SetBool("Dead", true);
+    }
     public void SetSpeed(float speed)
     {
        
