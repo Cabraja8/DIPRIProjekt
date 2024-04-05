@@ -25,10 +25,7 @@ public class Player : MonoBehaviour
 
     public virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Interact with NPC");
-        }
+       
 
         CheckWalkingAnimation();
         CheckAngle();

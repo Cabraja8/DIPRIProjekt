@@ -2,35 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CallTheGuards : MonoBehaviour
+public class CallTheGuards : MonoBehaviour, Interactable
 {      
     public GameObject Guards;
     public GameObject[] spawnPoints; 
 
+    private bool IsRinged;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+
+    public void Interact(){
+        // Play Audio treba dodat ali kasnije
+        IsRinged = true;
+        Invoke("SpawnGuards",1f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public bool CanInteract(){
+        return !IsRinged;
     }
+    
+  
 
+ 
     public void SpawnGuards(){
 
-          if (spawnPoints.Length == 0)
-        {
-            Debug.LogWarning("No spawn points defined.");
-            return;
-        }
+        Debug.Log("Spawning guards");
+        //   if (spawnPoints.Length == 0)
+        // {
+        //     Debug.LogWarning("No spawn points defined.");
+        //     return;
+        // }
 
-        GameObject chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(Guards, chosenSpawnPoint.transform.position, Quaternion.identity);
-
+        // GameObject chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        // Instantiate(Guards, chosenSpawnPoint.transform.position, Quaternion.identity);
     }
+
 
 }
