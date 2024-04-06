@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour{
 
      protected virtual void Update()
     {
-        WalkEnemyAnim();
         CheckAngle();
         
     }
@@ -59,16 +58,7 @@ public class Enemy : MonoBehaviour{
         }
     }
 
-    private void WalkEnemyAnim(){
-    if (navMeshAgent.velocity.magnitude > 0.1f)
-    {    
-        enemyAnimation.PlayWalkAnimation();
-    }
-    else
-    {
-        enemyAnimation.StopWalkAnimation();
-    }
-}
+  
 
   
 

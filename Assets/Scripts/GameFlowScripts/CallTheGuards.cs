@@ -6,14 +6,22 @@ public class CallTheGuards : MonoBehaviour, Interactable
 {      
     public GameObject Guards;
     public GameObject[] spawnPoints; 
+    public Animator anim;
 
     private bool IsRinged;
+
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
 
 
     public void Interact(){
         // Play Audio treba dodat ali kasnije
         IsRinged = true;
+        anim.SetTrigger("Ring");
         Invoke("SpawnGuards",1f);
     }
 

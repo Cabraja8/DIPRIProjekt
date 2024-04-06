@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class NPCKnightBehaviour : MonoBehaviour
 {
-   public Transform StandField; // Set this to the destination GameObject or position
+   public Transform Target; 
 
     private NavMeshAgent navMeshAgent;
-    public Vector2 MoveAmount;
+    private Vector2 MoveAmount;
 
      public CombatAndMovement KnightAnimation;
      public float speed = 5f; 
@@ -25,7 +25,7 @@ public class NPCKnightBehaviour : MonoBehaviour
         {
             Debug.LogError("NavMeshAgent component not found.");
         }
-        else if (StandField == null)
+        else if (Target == null)
         {
             Debug.LogError("Target destination not set.");
         }
@@ -37,18 +37,18 @@ public class NPCKnightBehaviour : MonoBehaviour
 
     void SetDestination()
     {
-        navMeshAgent.SetDestination(StandField.position);
+        navMeshAgent.SetDestination(Target.position);
     }
 
      private void SetDefaultValues(){
-        if (StandField == null)
+        if (Target == null)
         {
             Debug.LogError("Target is not set for enemy!");
         }
         else
         {
             navMeshAgent.updateRotation = false;
-            //navMeshAgent.stoppingDistance = stopDistance;
+            navMeshAgent.stoppingDistance = stopDistance;
             navMeshAgent.speed = speed;
         }
     }
@@ -71,15 +71,17 @@ public void CheckWalkingAnimation()
             KnightAnimation.PlayWalkAnimation();
         }
         else
-        {
+        {   
+            
             KnightAnimation.StopWalkAnimation();
         }
+        MoveAmount = currentPosition;
 }
 
     private void CheckAngle()
     {   
         
-        Vector3 directionToTarget = StandField.position - transform.position;
+        Vector3 directionToTarget = Target.position - transform.position;
         float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
 
         if (angle >= 90 || angle <= -90)
