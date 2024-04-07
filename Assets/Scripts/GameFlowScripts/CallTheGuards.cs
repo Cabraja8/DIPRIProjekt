@@ -10,6 +10,8 @@ public class CallTheGuards : MonoBehaviour, Interactable
 
     private bool IsRinged;
 
+    public GameObject CallTriggerGuards;
+
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class CallTheGuards : MonoBehaviour, Interactable
         // Play Audio treba dodat ali kasnije
         IsRinged = true;
         anim.SetTrigger("Ring");
-        Invoke("SpawnGuards",1f);
+        Invoke("SpawnGuards",3f);
     }
 
     public bool CanInteract(){
@@ -32,18 +34,29 @@ public class CallTheGuards : MonoBehaviour, Interactable
   
 
  
-    public void SpawnGuards(){
+ public void SpawnGuards(){
+    Debug.Log("Spawning guards");
 
-        Debug.Log("Spawning guards");
-        //   if (spawnPoints.Length == 0)
-        // {
-        //     Debug.LogWarning("No spawn points defined.");
-        //     return;
-        // }
-
-        // GameObject chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        // Instantiate(Guards, chosenSpawnPoint.transform.position, Quaternion.identity);
+    if (spawnPoints.Length == 0)
+    {
+        Debug.LogWarning("No spawn points defined.");
+        return;
     }
+
+    for (int i = 0; i < 6; i++) {
+ 
+        GameObject chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+       
+        Instantiate(Guards, chosenSpawnPoint.transform.position, Quaternion.identity);
+    }
+    Invoke("EnableTrigger",3f);
+}
+
+
+public void EnableTrigger(){
+
+    CallTriggerGuards.SetActive(true);
+}
 
 
 }

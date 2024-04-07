@@ -16,7 +16,11 @@ public class NPCKnightBehaviour : MonoBehaviour
     private SpriteRenderer rend;
 
     void Start()
-    {   
+    {    
+         GameObject standField = GameObject.FindGameObjectWithTag("StandField");
+    if (standField != null) {
+        Target = standField.transform;
+    } 
         KnightAnimation = GetComponentInChildren<CombatAndMovement>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         rend = GetComponentInChildren<SpriteRenderer>();
