@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - StandField
+  - StartField
   layers:
   - Default
   - TransparentFX
@@ -30,7 +30,7 @@ TagManager:
   - Layer 1
   - Layer 2
   - Layer 3
-  - 
+  - Layer 4
   - 
   - 
   - 
