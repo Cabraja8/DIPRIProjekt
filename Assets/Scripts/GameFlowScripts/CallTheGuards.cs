@@ -14,7 +14,8 @@ public class CallTheGuards : MonoBehaviour, Interactable
 
 
     void Start()
-    {
+    {   	
+        CallTriggerGuards.SetActive(false);
         anim = GetComponent<Animator>();
     }
 

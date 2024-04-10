@@ -17,7 +17,7 @@ public class NPCKnightBehaviour : MonoBehaviour
 
     void Start()
     {    
-         GameObject standField = GameObject.FindGameObjectWithTag("StandField");
+         GameObject standField = GameObject.FindGameObjectWithTag("StartField");
     if (standField != null) {
         Target = standField.transform;
     } 
