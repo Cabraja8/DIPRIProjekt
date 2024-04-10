@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour{
      protected virtual void Update()
     {
         CheckAngle();
+        WalkEnemyAnim();
         
     }
 
@@ -57,6 +58,17 @@ public class Enemy : MonoBehaviour{
             rend.flipX = false;
         }
     }
+
+       private void WalkEnemyAnim(){
+    if (navMeshAgent.velocity.magnitude > 0.1f)
+    {    
+        enemyAnimation.PlayWalkAnimation();
+    }
+    else
+    {
+        enemyAnimation.StopWalkAnimation();
+    }
+       }
 
   
 

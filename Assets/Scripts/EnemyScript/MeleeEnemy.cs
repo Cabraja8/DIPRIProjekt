@@ -13,7 +13,7 @@ public class MeleeEnemy : Enemy
     // Update is called once per frame
   protected override  void Update()
     {   
-         WalkEnemyAnim();
+        
         base.Update();
         if (target != null)
         {
@@ -21,26 +21,18 @@ public class MeleeEnemy : Enemy
         }
     }
 
-     private void WalkEnemyAnim(){
-    if (navMeshAgent.velocity.magnitude > 0.1f)
-    {    
-        enemyAnimation.PlayWalkAnimation();
-    }
-    else
-    {
-        enemyAnimation.StopWalkAnimation();
-    }
-}
-
+   
       private void AttackIfInRange(){
         navMeshAgent.SetDestination(target.position);
         if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(target.position.x, target.position.y)) <= stopDistance)
 {
     if (Time.time >= attackTime)
     {
+    Debug.Log("Attack");
+
+    enemyAnimation.PlayAttackAnimation();
         StartCoroutine(Attack());
         attackTime = Time.time + TimeBetweenAttacks;
-        enemyAnimation.StopWalkAnimation();
     }
 }
     }
@@ -48,17 +40,15 @@ public class MeleeEnemy : Enemy
 
 
 
-     IEnumerator Attack(){
+IEnumerator Attack() {
     Vector2 originalPosition = transform.position;
     Vector2 targetPosition = target.position;
     float percent = 0;
-    Debug.Log("Attack");
-    enemyAnimation.PlayAttackAnimation();
 
-    while (percent <= 1)
-    {
+    while (percent <= 1) {
         percent += Time.deltaTime * attackSpeed;
-        float formula = (-Mathf.Pow(percent, 2) + percent) * 4;
+        float smoothPercent = Mathf.SmoothStep(0f, 1f, percent);
+        float formula = (-Mathf.Pow(smoothPercent, 2) + smoothPercent) * 4;
         transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
         yield return null;
     }
