@@ -1,0 +1,23 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:0508c4371b59de5b8f8047c86dbb5f15:60abdc7e285c2de9839c6b7b2606afa7:6c005f18383373a971e7d3527d767302$
+#
+:format=40300
+:texture=Mountain.png
+:size=1024x1024
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+MountainTilesetDownLeft;259;251;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetDownRight;517;509;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetMiddleLeft;1;251;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetMiddleRight;259;509;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetTopLeft;1;509;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetTopMiddle;517;767;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+MountainTilesetTopRight;259;767;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
+TilesettMountainMiddle;1;767;256;256; 0.5;0.5; 0;0;0;0; 4;256;0;0;0;0;256;256;256; 2;1;2;3;0;1;3
