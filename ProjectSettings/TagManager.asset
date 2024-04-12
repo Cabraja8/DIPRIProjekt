@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Enemy
   - StartField
+  - Knight
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Friendly
   - Water
   - UI
   - LayerForObstacle

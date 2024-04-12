@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour{
     public NavMeshAgent navMeshAgent;
     public CombatAndMovement enemyAnimation;
     private SpriteRenderer rend;
+
+     [Header("Detection Settings")]
+    public float detectionRadius = 5f;
+    public LayerMask targetLayerMask;
+
+    private List<Transform> targets = new List<Transform>();
     
     protected virtual void Start(){
         target = GameObject.FindWithTag("Player").transform;
@@ -24,24 +30,33 @@ public class Enemy : MonoBehaviour{
     }
 
     private void SetDefaultValues(){
-        if (target == null)
-        {
-            Debug.LogError("Target is not set for enemy!");
-        }
-        else
-        {
+       
             navMeshAgent.updateRotation = false;
             navMeshAgent.stoppingDistance = stopDistance;
             navMeshAgent.speed = speed;
-        }
+
     }
 
      protected virtual void Update()
     {
         CheckAngle();
         WalkEnemyAnim();
-        
+       
+        if (target == null)
+        {
+            DetectTarget();
+        }
     }
+
+   
+   public virtual void SetTarget(Transform newTarget)
+{   
+    target = newTarget;
+    if (target != null)
+    {
+        navMeshAgent.SetDestination(target.position);
+    }
+}
 
     private void CheckAngle()
     {   
@@ -70,8 +85,32 @@ public class Enemy : MonoBehaviour{
     }
        }
 
-  
 
+protected virtual void DetectTarget()
+{
+    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, targetLayerMask);
+    foreach (Collider2D collider in colliders)
+    {
+        if (collider.CompareTag("Player") || collider.CompareTag("Knight"))
+        {
+            SetTarget(collider.transform);
+            Debug.Log("Target detected: " + collider.name); // Add this line for debugging
+            break;
+        }
+    }
+}
+
+
+     protected virtual void GoTowardsTarget()
+    {
+        
+    }
+  
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
   
 
 

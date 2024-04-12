@@ -20,28 +20,27 @@ public class RangedEnemy : Enemy
 
         if (target != null)
         {
-            AttackIfInRange();
+            GoTowardsTarget();
         }
     }
 
-      private void AttackIfInRange(){
+     protected override void GoTowardsTarget()
+    {
         navMeshAgent.SetDestination(target.position);
-        if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(target.position.x, target.position.y)) <= stopDistance){
+       if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(target.position.x, target.position.y)) <= stopDistance){
             if (Time.time >= attackTime){
                 attackTime = Time.time + TimeBetweenAttacks;
                 enemyAnimation.StopWalkAnimation();
-                RangedAttack();
+                 enemyAnimation.PlayAttackAnimation();
+                
             }
         }
     }
 
-
-
-
     public void RangedAttack()
-    {
+    {   
+        
         CalculateShoot();
-        enemyAnimation.PlayAttackAnimation();
         Instantiate(EnemyProjectile, ShotPoint.position, ShotPoint.rotation);
     }
 

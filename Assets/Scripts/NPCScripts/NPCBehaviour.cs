@@ -9,7 +9,7 @@ public class NPCBehaviour : MonoBehaviour
     // Start is called before the first frame update
 
      public CombatAndMovement NPCAnimation;
-     private NavMeshAgent navMeshAgent;
+     public NavMeshAgent navMeshAgent;
      public float speed = 5f; 
 
     private SpriteRenderer rend;

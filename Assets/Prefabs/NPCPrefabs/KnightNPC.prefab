@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5600542502314937832}
   - component: {fileID: 983942376646213116}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InteractionDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4414954506887771492}
   - component: {fileID: 6824372150727069468}
   - component: {fileID: 8537349392068570292}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: KnightNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928034e679968d54a9a22a7b31c01d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KnightAnimation: {fileID: 0}
+  NPCAnimation: {fileID: 0}
   speed: 3
   Target: {fileID: 0}
   stopDistance: 2
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 8895428393275800472}
   - component: {fileID: 913491328905777483}
   - component: {fileID: 8686667662733260485}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: KnightModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

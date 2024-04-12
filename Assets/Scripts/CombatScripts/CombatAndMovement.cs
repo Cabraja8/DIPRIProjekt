@@ -55,4 +55,24 @@ public class CombatAndMovement : MonoBehaviour
        
         animator.SetFloat(SpeedHash, speed);
     }
+
+
+    public void MeleeAttackEvent(){
+        MeleeEnemy meleeEnemy = GetComponentInParent<MeleeEnemy>();
+        
+        if (meleeEnemy != null)
+        {
+            meleeEnemy.StartCoroutine(meleeEnemy.Attack());
+        }
+    }
+
+      public void RangedAttackEvent()
+    {
+        RangedEnemy rangedEnemy = GetComponentInParent<RangedEnemy>();
+        
+        if (rangedEnemy != null)
+        {
+           rangedEnemy.RangedAttack();
+        }
+    }
 }

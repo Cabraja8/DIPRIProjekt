@@ -7,7 +7,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
 {   
     private bool Interacted;
   
-
+    public Transform target;
 
    protected override void Start()
     {    
@@ -17,6 +17,8 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     } 
         base.Start();
         Interacted = true;
+
+        Invoke("AttackEnemy",2f);
     
     }
 
@@ -38,6 +40,11 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         return !Interacted;
     }
 
+
+    public void AttackEnemy(){
+        target = GameObject.FindWithTag("Enemy").transform;
+        navMeshAgent.SetDestination(target.position);
+    }
 
 
 
