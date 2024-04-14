@@ -8,6 +8,8 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     private bool Interacted;
   
     public Transform target;
+    public float detectionRadius = 5f;
+    public LayerMask targetLayerMask;
 
    protected override void Start()
     {    
@@ -46,7 +48,40 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         navMeshAgent.SetDestination(target.position);
     }
 
+    protected virtual void DetectTarget()
+{
+    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, targetLayerMask);
+    foreach (Collider2D collider in colliders)
+    {
+        if (collider.CompareTag("Enemy"))
+        {
+            SetTarget(collider.transform);
+            Debug.Log("Target detected: " + collider.name); // Add this line for debugging
+            break;
+        }
+    }
+}
 
 
+     protected virtual void GoTowardsTarget()
+    {
+        
+    }
+  
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+
+ public virtual void SetTarget(Transform newTarget)
+{   
+    target = newTarget;
+    if (target != null)
+    {
+        navMeshAgent.SetDestination(target.position);
+    }
+}
    
 }
