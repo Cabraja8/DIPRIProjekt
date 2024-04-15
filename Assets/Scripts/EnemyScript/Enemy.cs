@@ -39,12 +39,13 @@ public class Enemy : MonoBehaviour{
 
      protected virtual void Update()
     {
-        CheckAngle();
         WalkEnemyAnim();
+        CheckAngle();
        
         if (target == null)
         {
             DetectTarget();
+         
         }
     }
 
@@ -52,10 +53,7 @@ public class Enemy : MonoBehaviour{
    public virtual void SetTarget(Transform newTarget)
 {   
     target = newTarget;
-    if (target != null)
-    {
-        navMeshAgent.SetDestination(target.position);
-    }
+    
 }
 
     private void CheckAngle()
@@ -94,8 +92,8 @@ protected virtual void DetectTarget()
         if (collider.CompareTag("Player") || collider.CompareTag("Knight"))
         {
             SetTarget(collider.transform);
-            Debug.Log("Target detected: " + collider.name); // Add this line for debugging
-            break;
+            Debug.Log("Target detected: " + collider.name); 
+           return;
         }
     }
 }

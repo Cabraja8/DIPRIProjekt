@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 4414954506887771492}
   - component: {fileID: 6824372150727069468}
   - component: {fileID: 8537349392068570292}
+  - component: {fileID: 3585812007696585606}
   m_Layer: 3
   m_Name: KnightNPC
   m_TagString: Untagged
@@ -165,9 +166,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCAnimation: {fileID: 0}
+  navMeshAgent: {fileID: 0}
   speed: 3
   Target: {fileID: 0}
   stopDistance: 2
+  detectionRadius: 5
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  attackTime: 2
+  attackSpeed: 3
+  TimeBetweenAttacks: 4
+--- !u!70 &3585812007696585606
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683121340167294904}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.008148635, y: -9410.511}
+  m_Size: {x: 0.41308126, y: 0.0001}
+  m_Direction: 0
 --- !u!1 &8878143914863230863
 GameObject:
   m_ObjectHideFlags: 0

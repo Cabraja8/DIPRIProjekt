@@ -11,6 +11,7 @@ public class NPCBehaviour : MonoBehaviour
      public CombatAndMovement NPCAnimation;
      public NavMeshAgent navMeshAgent;
      public float speed = 5f; 
+    GameObject standField;
 
     private SpriteRenderer rend;
     public Transform Target; 
@@ -25,43 +26,53 @@ public class NPCBehaviour : MonoBehaviour
         {
             Debug.LogError("NavMeshAgent component not found.");
         }
-        else if (Target == null)
-        {
-            Debug.LogError("Target destination not set.");
-        }
-        else
-        {
-            SetDestination();
-        }
+        standField = GameObject.FindGameObjectWithTag("StartField");
+    if (standField != null) {
+        navMeshAgent.SetDestination(standField.transform.position);
+    } 
+
+        
     }
      private void SetDefaultValues(){
-        if (Target == null)
-        {
-            Debug.LogError("Target is not set for enemy!");
-        }
-        else
-        {
+      
             navMeshAgent.updateRotation = false;
             navMeshAgent.stoppingDistance = stopDistance;
             navMeshAgent.speed = speed;
-        }
+        
     }
-      void SetDestination()
-    {
-        navMeshAgent.SetDestination(Target.position);
-    }
+ 
 
     // Update is called once per frame
     protected virtual void Update()
     {   
         WalkingNPCAnim();
+        if(Target !=null){
+
         CheckAngle();
+        }else{
+            CheckAngleForWalking();
+        }
     }
 
     private void CheckAngle()
     {   
         
         Vector3 directionToTarget = Target.position - transform.position;
+        float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+
+        if (angle >= 90 || angle <= -90)
+        {
+            rend.flipX = true;
+        }
+        else
+        {
+            rend.flipX = false;
+        }
+    }
+    private void CheckAngleForWalking()
+    {   
+        
+        Vector3 directionToTarget = standField.transform.position - transform.position;
         float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
 
         if (angle >= 90 || angle <= -90)

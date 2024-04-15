@@ -33,6 +33,20 @@ public class MeleeEnemy : Enemy
         }
     }
 
+      public void IfInRangeAttack(){
+        navMeshAgent.SetDestination(target.position);
+        if (Vector2.Distance(transform.position, target.position) <= stopDistance)
+        {
+            if (Time.time >= attackTime)
+            {
+                enemyAnimation.PlayAttackAnimation();
+                Debug.Log("Attack");
+                
+                attackTime = Time.time + TimeBetweenAttacks;
+            }
+        }
+    }
+
 
     
 
