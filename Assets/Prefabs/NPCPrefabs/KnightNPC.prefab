@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 3585812007696585606}
   m_Layer: 3
   m_Name: KnightNPC
-  m_TagString: Untagged
+  m_TagString: Knight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

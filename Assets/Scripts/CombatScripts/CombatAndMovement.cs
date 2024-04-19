@@ -29,11 +29,14 @@ public class CombatAndMovement : MonoBehaviour
        
         animator.SetTrigger("Attack");
     }
+    public void PlayAttack3Animation(){
+        animator.SetTrigger("Attack3");
+    }
 
     public void PlayTakeHitAnimation()
     {
         
-        animator.SetTrigger("TakeHit");
+        animator.SetTrigger("Take_Hit");
     }
 
     public void PlayDashAnimation(){

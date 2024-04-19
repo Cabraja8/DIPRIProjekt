@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour{
     private List<Transform> targets = new List<Transform>();
     
     protected virtual void Start(){
-        target = GameObject.FindWithTag("Player").transform;
+        //target = GameObject.FindWithTag("Player").transform;
         enemyAnimation = GetComponentInChildren<CombatAndMovement>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -56,21 +56,45 @@ public class Enemy : MonoBehaviour{
     
 }
 
-    private void CheckAngle()
-    {   
-        
-        Vector3 directionToTarget = target.position - transform.position;
-        float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+   private void CheckAngle()
+{
+   
+    if (target != null)
+    {
 
+        Vector3 directionToTarget = target.position - transform.position;
+    
+        Vector3 localDirection = transform.InverseTransformDirection(directionToTarget);
+
+        float angle = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;
+   
         if (angle >= 90 || angle <= -90)
         {
-            rend.flipX = true;
+            rend.flipX = true; 
         }
         else
         {
-            rend.flipX = false;
+            rend.flipX = false; 
         }
     }
+    else
+    {
+        Vector3 velocity = navMeshAgent.velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float direction = Mathf.Sign(Vector3.Cross(transform.forward, localVelocity).y);
+
+        if (direction > 0)
+        {
+            Debug.Log("Moving Right");
+            rend.flipX = false; 
+        }
+        else if (direction < 0)
+        {
+            Debug.Log("Moving Left");
+            rend.flipX = true; 
+        }
+    }
+}
 
        private void WalkEnemyAnim(){
     if (navMeshAgent.velocity.magnitude > 0.1f)

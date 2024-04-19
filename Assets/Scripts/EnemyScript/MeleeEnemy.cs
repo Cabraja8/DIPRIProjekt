@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemy : Enemy
-{
+{   
+    public int Damage;
     protected override void Start()
     {
         base.Start();
@@ -12,10 +13,15 @@ public class MeleeEnemy : Enemy
     protected override void Update()
     {
         base.Update();
+        DetectTarget();
         if (target != null)
         {
             GoTowardsTarget();
         }
+        if (target == null)
+    {
+        return;
+    }
     }
 
     protected override void GoTowardsTarget()
@@ -27,25 +33,13 @@ public class MeleeEnemy : Enemy
             {
                 enemyAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
-                
+                target.GetComponent<Player>().TakeDamage(Damage);
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }
     }
 
-      public void IfInRangeAttack(){
-        navMeshAgent.SetDestination(target.position);
-        if (Vector2.Distance(transform.position, target.position) <= stopDistance)
-        {
-            if (Time.time >= attackTime)
-            {
-                enemyAnimation.PlayAttackAnimation();
-                Debug.Log("Attack");
-                
-                attackTime = Time.time + TimeBetweenAttacks;
-            }
-        }
-    }
+    
 
 
     

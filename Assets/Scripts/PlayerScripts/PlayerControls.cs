@@ -52,7 +52,7 @@ public class PlayerControls : Player
         if (Input.GetKeyDown(KeyCode.Q))
         {
             AoE();
-            PlayerAnimation.PlayAttackAnimation();
+            PlayerAnimation.PlayAttack3Animation();
         }
     }
 

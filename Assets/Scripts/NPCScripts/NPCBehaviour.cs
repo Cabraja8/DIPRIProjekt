@@ -26,12 +26,15 @@ public class NPCBehaviour : MonoBehaviour
         {
             Debug.LogError("NavMeshAgent component not found.");
         }
-        standField = GameObject.FindGameObjectWithTag("StartField");
+        FirstSceneKnightCall();
+        
+    }
+    public void FirstSceneKnightCall(){
+
+    standField = GameObject.FindGameObjectWithTag("StartField");
     if (standField != null) {
         navMeshAgent.SetDestination(standField.transform.position);
     } 
-
-        
     }
      private void SetDefaultValues(){
       
@@ -46,44 +49,50 @@ public class NPCBehaviour : MonoBehaviour
     protected virtual void Update()
     {   
         WalkingNPCAnim();
-        if(Target !=null){
-
         CheckAngle();
-        }else{
-            CheckAngleForWalking();
-        }
+        
     }
 
-    private void CheckAngle()
-    {   
-        
+ private void CheckAngle()
+{
+   
+    if (Target != null)
+    {
+
         Vector3 directionToTarget = Target.position - transform.position;
-        float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+    
+        Vector3 localDirection = transform.InverseTransformDirection(directionToTarget);
 
+        float angle = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;
+   
         if (angle >= 90 || angle <= -90)
         {
-            rend.flipX = true;
+            rend.flipX = true; 
         }
         else
         {
-            rend.flipX = false;
+            rend.flipX = false; 
         }
     }
-    private void CheckAngleForWalking()
-    {   
-        
-        Vector3 directionToTarget = standField.transform.position - transform.position;
-        float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
+    else
+    {
+        Vector3 velocity = navMeshAgent.velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float direction = Mathf.Sign(Vector3.Cross(transform.forward, localVelocity).y);
 
-        if (angle >= 90 || angle <= -90)
+        if (direction > 0)
         {
-            rend.flipX = true;
+            Debug.Log("Moving Right");
+            rend.flipX = false; 
         }
-        else
+        else if (direction < 0)
         {
-            rend.flipX = false;
+            Debug.Log("Moving Left");
+            rend.flipX = true; 
         }
     }
+}
+  
 
       private void WalkingNPCAnim(){
     if (navMeshAgent.velocity.magnitude > 0.1f)

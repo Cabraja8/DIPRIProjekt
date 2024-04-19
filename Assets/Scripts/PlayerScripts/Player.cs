@@ -6,6 +6,12 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    [Header("Player Health Settings")]
+
+        public int maxHealth=100;
+    public int currentHealth;
+    public HealthBar healthBar;
+    // Start is called before the first frame update
 
     [Header("Player Movement Settings")]
     public float MovementSpeed;
@@ -15,8 +21,12 @@ public class Player : MonoBehaviour
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
 
+
+
     public virtual void Start()
-    {
+    {   
+        currentHealth=maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -25,8 +35,6 @@ public class Player : MonoBehaviour
 
     public virtual void Update()
     {
-       
-
         CheckWalkingAnimation();
         CheckAngle();
     }
@@ -66,6 +74,13 @@ public class Player : MonoBehaviour
         MoveAmount = currentPosition;
 
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth-=damage;
+        healthBar.SetHealth(currentHealth);
+        PlayerAnimation.PlayTakeHitAnimation();
     }
 
 }
