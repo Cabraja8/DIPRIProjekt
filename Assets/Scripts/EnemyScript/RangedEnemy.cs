@@ -7,9 +7,11 @@ public class RangedEnemy : Enemy
 {   
     public Transform ShotPoint;
     public GameObject EnemyProjectile;
+
     // Start is called before the first frame update
    protected override  void Start()
     {
+    
       base.Start();
     }
 
@@ -22,33 +24,37 @@ public class RangedEnemy : Enemy
         {
             GoTowardsTarget();
         }
-    }
+         if (target == null)
+         {
+        return;
+        }
+    }   
 
      protected override void GoTowardsTarget()
     {
-        navMeshAgent.SetDestination(target.position);
-       if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(target.position.x, target.position.y)) <= stopDistance){
-            if (Time.time >= attackTime){
-                attackTime = Time.time + TimeBetweenAttacks;
-                enemyAnimation.StopWalkAnimation();
-                 enemyAnimation.PlayAttackAnimation();
+          navMeshAgent.SetDestination(target.position);
+        if (Vector2.Distance(transform.position, target.position) <= stopDistance)
+        {
+            if (Time.time >= attackTime)
+            {
+                enemyAnimation.PlayAttackAnimation();
                 
+                Debug.Log("Attack");
+                attackTime = Time.time + TimeBetweenAttacks;
             }
         }
     }
 
     public void RangedAttack()
-    {   
-        
-        CalculateShoot();
-        Instantiate(EnemyProjectile, ShotPoint.position, ShotPoint.rotation);
-    }
-
-    private void CalculateShoot()
     {
-        Vector2 direction = target.position - ShotPoint.position;
-        float angle = MathF.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        ShotPoint.rotation = rotation;
+        Vector3 direction = (target.position - ShotPoint.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
+
+        GameObject projectile = Instantiate(EnemyProjectile, ShotPoint.position, rotation);
+        EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
+        if (projectileScript != null)
+        {
+            projectileScript.StartMoving(direction);
+        }
     }
 }

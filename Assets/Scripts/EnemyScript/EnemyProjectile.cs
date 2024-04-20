@@ -6,39 +6,44 @@ public class EnemyProjectile : MonoBehaviour
 {   
 
     
-    public Vector2 TargetPosition;
+     private Transform target;
     public float lifeTime;
-    public int DamageAmount;
-    public float speed;
+    public int damageAmount;
+    public float Speed;
+
+    private Vector3 moveDirection;
+
+   
+    
 
     // Start is called before the first frame update
     void Start()
-    {   
-        TargetPosition = FindAnyObjectByType<PlayerMovement>().transform.position;
+    {      
         Destroy(gameObject, lifeTime);
     }
 
     // Update is called once per frame
-    void Update()
+ public void StartMoving(Vector3 direction)
     {
-        if(Vector2.Distance(transform.position,TargetPosition)> .1f){
-            transform.position = Vector2.MoveTowards(transform.position,TargetPosition,speed * Time.deltaTime);
-            
-        }else{
-            Destroy(gameObject);
-        }
+        moveDirection = direction;
     }
 
+    void Update()
+    {
+        // Move the projectile in the assigned direction
+        transform.position += moveDirection * Speed * Time.deltaTime;
+    }
 
-    /// <summary>
-    /// Sent when another object enters a trigger collider attached to this
-    /// object (2D physics only).
-    /// </summary>
-    /// <param name="other">The other Collider2D involved in this collision.</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player"){
-            Debug.Log("Player shot");
+        if(other.tag == "Player" || other.tag=="Knight"){
+        HealthManager healthManager = other.GetComponent<HealthManager>();
+            if (healthManager != null)
+            {
+                healthManager.TakeDamage(damageAmount);
+                other.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                Destroy(gameObject);
+            }
         }
     }
 }

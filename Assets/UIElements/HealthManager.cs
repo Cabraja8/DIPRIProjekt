@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
     public int maxHealth=100;
     public int currentHealth;
@@ -14,16 +14,8 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDamage(20);
-        }
-    }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth-=damage;
         healthBar.SetHealth(currentHealth);

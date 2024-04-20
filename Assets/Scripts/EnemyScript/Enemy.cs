@@ -109,7 +109,8 @@ public class Enemy : MonoBehaviour{
 
 
 protected virtual void DetectTarget()
-{
+{       
+    
     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, targetLayerMask);
     foreach (Collider2D collider in colliders)
     {

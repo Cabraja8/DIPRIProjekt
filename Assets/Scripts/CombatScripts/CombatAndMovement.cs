@@ -66,6 +66,7 @@ public class CombatAndMovement : MonoBehaviour
         if (meleeEnemy != null)
         {
             meleeEnemy.StartCoroutine(meleeEnemy.Attack());
+            meleeEnemy.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
         }
     }
 
