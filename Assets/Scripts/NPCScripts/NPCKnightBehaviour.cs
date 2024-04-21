@@ -14,6 +14,8 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     public float attackSpeed;
     public float TimeBetweenAttacks;
 
+    public int Damage;
+
    protected override void Start()
     {    
         base.Start();
@@ -72,7 +74,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
             {
                 NPCAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
-                
+                Target.GetComponent<HealthManager>().TakeDamage(Damage);
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }
@@ -90,6 +92,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
             float smoothPercent = Mathf.SmoothStep(0f, 1f, percent);
             float formula = (-Mathf.Pow(smoothPercent, 1) + smoothPercent) * 4;
             transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
+            
             yield return null;
         }
     }

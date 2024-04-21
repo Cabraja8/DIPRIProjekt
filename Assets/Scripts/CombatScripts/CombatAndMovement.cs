@@ -70,6 +70,17 @@ public class CombatAndMovement : MonoBehaviour
         }
     }
 
+      public void MeleeAttackEventKnight(){
+        NPCKnightBehaviour NPCKnight = GetComponentInParent<NPCKnightBehaviour>();
+        
+        if (NPCKnight != null)
+        {
+            NPCKnight.StartCoroutine(NPCKnight.Attack());
+            NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+        }
+    }
+
+
       public void RangedAttackEvent()
     {
         RangedEnemy rangedEnemy = GetComponentInParent<RangedEnemy>();

@@ -641,6 +641,7 @@ MonoBehaviour:
   attackTime: 2
   attackSpeed: 3
   TimeBetweenAttacks: 4
+  Damage: 10
 --- !u!70 &3585812007696585606
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
