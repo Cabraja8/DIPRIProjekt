@@ -7,6 +7,8 @@ public class PlayerControls : Player
     // Dodatne varijable za akcije
     public bool isDashing = false;
     public bool isSneaking = false;
+    public bool isShielding = false;
+    public bool isAoEActive = false;
 
     public float OriginalMovementSpeed;
 
@@ -83,13 +85,15 @@ public class PlayerControls : Player
     private void Shield()
     {
         Debug.Log("Shield!");
-        Invoke("ResetShield", 1f);
+        isShielding = true;
+        Invoke("ResetShield", 5f);
     }
 
     private void AoE()
-    {   
-        // tu ces kasnije nadodat drugi attack napad, ali kasnije ne treba sad još
+    {
         Debug.Log("AoE!");
+        isAoEActive = true;
+        Invoke("ResetAoe", 1f);
 
     }
 
@@ -105,10 +109,17 @@ public class PlayerControls : Player
         MovementSpeed = OriginalMovementSpeed;
         isSneaking = false;
     }
-      private void ResetShield()
+    private void ResetShield()
     {
-        Debug.Log("Currently shielding");
+        Debug.Log("Shield expired");
+        isShielding = false;
         PlayerAnimation.StopShieldAnimation();
+    }
+    private void ResetAoE()
+    {
+        Debug.Log("AoE expired");
+        isAoEActive = false;
+
     }
 
 
