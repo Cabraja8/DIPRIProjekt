@@ -51,7 +51,7 @@ public class CombatAndMovement : MonoBehaviour
     }
 
     public void DeathAnimation(){
-        animator.SetBool("Dead", true);
+        animator.SetTrigger("Dead");
     }
     public void SetSpeed(float speed)
     {
@@ -76,7 +76,12 @@ public class CombatAndMovement : MonoBehaviour
         if (NPCKnight != null)
         {
             NPCKnight.StartCoroutine(NPCKnight.Attack());
+            if(NPCKnight.Target.GetComponent<HealthManager>().currentHealth <=0){
+                NPCKnight.Target.GetComponent<Enemy>().DeathHandler();
+                NPCKnight.Target = null;
+            }else{
             NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+            }
         }
     }
 

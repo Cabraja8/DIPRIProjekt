@@ -134,6 +134,15 @@ protected virtual void DetectTarget()
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
+
+
+    public void DeathHandler(){
+        this.gameObject.tag="Dead";
+        this.gameObject.layer = 8;
+        GetComponent<Enemy>().enabled =false;
+        GetComponentInChildren<CombatAndMovement>().DeathAnimation();
+        GetComponentInChildren<CombatAndMovement>().enabled = false;
+    }
   
 
 
