@@ -71,31 +71,34 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         if (Vector2.Distance(transform.position, Target.position) <= stopDistance)
         {
             if (Time.time >= attackTime)
-            {
+            {   
+                if(Target.GetComponent<HealthManager>().currentHealth > 1){
+
                 NPCAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
                 Target.GetComponent<HealthManager>().TakeDamage(Damage);
                 attackTime = Time.time + TimeBetweenAttacks;
+                }
             }
         }
     }
 
-   public IEnumerator Attack()
-    {
-        Vector2 originalPosition = transform.position;
-        Vector2 targetPosition = Target.position;
-        float percent = 0;
+//    public IEnumerator Attack()
+//     {
+//         Vector2 originalPosition = transform.position;
+//         Vector2 targetPosition = Target.position;
+//         float percent = 0;
 
-        while (percent <= 1)
-        {
-            percent += Time.deltaTime * attackSpeed;
-            float smoothPercent = Mathf.SmoothStep(0f, 1f, percent);
-            float formula = (-Mathf.Pow(smoothPercent, 1) + smoothPercent) * 4;
-            transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
+//         while (percent <= 1)
+//         {
+//             percent += Time.deltaTime * attackSpeed;
+//             float smoothPercent = Mathf.SmoothStep(0f, 1f, percent);
+//             float formula = (-Mathf.Pow(smoothPercent, 1) + smoothPercent) * 4;
+//             transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
             
-            yield return null;
-        }
-    }
+//             yield return null;
+//         }
+//     }
 
 
 

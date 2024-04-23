@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour{
 
      protected virtual void Update()
     {
+        
         WalkEnemyAnim();
         CheckAngle();
        
@@ -137,11 +138,10 @@ protected virtual void DetectTarget()
 
 
     public void DeathHandler(){
-        this.gameObject.tag="Dead";
+        GetComponentInChildren<CombatAndMovement>().DeathAnimation();
+        this.gameObject.tag = "Dead";
         this.gameObject.layer = 8;
         GetComponent<Enemy>().enabled =false;
-        GetComponentInChildren<CombatAndMovement>().DeathAnimation();
-        GetComponentInChildren<CombatAndMovement>().enabled = false;
     }
   
 

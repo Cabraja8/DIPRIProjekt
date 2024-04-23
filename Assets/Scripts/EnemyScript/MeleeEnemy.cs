@@ -33,7 +33,9 @@ public class MeleeEnemy : Enemy
             {
                 enemyAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
+                    
                 target.GetComponent<HealthManager>().TakeDamage(Damage);
+               
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }

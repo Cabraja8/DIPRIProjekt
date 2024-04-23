@@ -65,7 +65,7 @@ public class CombatAndMovement : MonoBehaviour
         
         if (meleeEnemy != null)
         {
-            meleeEnemy.StartCoroutine(meleeEnemy.Attack());
+           
             meleeEnemy.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
         }
     }
@@ -75,12 +75,11 @@ public class CombatAndMovement : MonoBehaviour
         
         if (NPCKnight != null)
         {
-            NPCKnight.StartCoroutine(NPCKnight.Attack());
-            if(NPCKnight.Target.GetComponent<HealthManager>().currentHealth <=0){
+            if(NPCKnight.Target.GetComponent<HealthManager>().currentHealth < 1){
                 NPCKnight.Target.GetComponent<Enemy>().DeathHandler();
                 NPCKnight.Target = null;
             }else{
-            NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                 NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
             }
         }
     }

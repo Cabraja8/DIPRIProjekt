@@ -20,4 +20,6 @@ public class HealthManager : MonoBehaviour
         currentHealth-=damage;
         healthBar.SetHealth(currentHealth);
     }
+
+
 }
