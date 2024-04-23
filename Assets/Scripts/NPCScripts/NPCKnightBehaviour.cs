@@ -82,6 +82,12 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
             }
         }
     }
+    public void DeathHandler(){
+        GetComponentInChildren<CombatAndMovement>().DeathAnimation();
+        this.gameObject.tag = "Dead";
+        this.gameObject.layer = 8;
+        GetComponent<NPCBehaviour>().enabled =false;
+    }
 
 //    public IEnumerator Attack()
 //     {

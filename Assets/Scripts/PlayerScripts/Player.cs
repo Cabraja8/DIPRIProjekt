@@ -71,6 +71,10 @@ public class Player : MonoBehaviour
 
     }
 
+    public void DeathHandler(){
+        Debug.Log("Player is dead");
+    }
+
   
 
 }

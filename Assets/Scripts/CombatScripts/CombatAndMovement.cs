@@ -66,7 +66,17 @@ public class CombatAndMovement : MonoBehaviour
         if (meleeEnemy != null)
         {
            
-            meleeEnemy.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+             if(meleeEnemy.target.GetComponent<HealthManager>().currentHealth < 1){
+                  if(meleeEnemy.target.tag == "Knight"){
+                meleeEnemy.target.GetComponent<NPCKnightBehaviour>().DeathHandler();
+                }else if(meleeEnemy.target.tag == "Player"){
+                    meleeEnemy.target.GetComponent<Player>().DeathHandler();
+                    // Disable player movmeent treba nadodat kasnije
+                }
+                meleeEnemy.target = null;
+            }else{
+                 meleeEnemy.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+            }
         }
     }
 
@@ -92,6 +102,16 @@ public class CombatAndMovement : MonoBehaviour
         if (rangedEnemy != null)
         {
            rangedEnemy.RangedAttack();
+              if(rangedEnemy.target.GetComponent<HealthManager>().currentHealth < 1){
+                if(rangedEnemy.target.tag == "Knight"){
+                rangedEnemy.target.GetComponent<NPCKnightBehaviour>().DeathHandler();
+                }else if(rangedEnemy.target.tag == "Player"){
+                      rangedEnemy.target.GetComponent<Player>().DeathHandler();
+                    // Disable player movmeent treba nadodat kasnije
+                }
+
+                rangedEnemy.target = null;
+            }
         }
     }
 }
