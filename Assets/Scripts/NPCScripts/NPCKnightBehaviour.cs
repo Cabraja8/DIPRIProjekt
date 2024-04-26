@@ -19,7 +19,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
    protected override void Start()
     {    
         base.Start();
-        Interacted = true;
+        Interacted = true; // ovo trebam reworkat
     }
 
     protected override void Update()
@@ -87,6 +87,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         this.gameObject.tag = "Dead";
         this.gameObject.layer = 8;
         GetComponent<NPCBehaviour>().enabled =false;
+       
     }
 
 //    public IEnumerator Attack()

@@ -47,10 +47,15 @@ public class RangedEnemy : Enemy
 
     public void RangedAttack()
     {
-        Vector3 direction = (target.position - ShotPoint.position).normalized;
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
+        Vector2 direction = target.position - ShotPoint.position;
 
-        GameObject projectile = Instantiate(EnemyProjectile, ShotPoint.position, rotation);
+        float angle= Mathf.Atan2(direction.y,direction.x)* Mathf.Rad2Deg;
+
+        Quaternion rotation = Quaternion.AngleAxis(angle -90, Vector3.forward);
+
+        ShotPoint.rotation = rotation;
+
+        GameObject projectile = Instantiate(EnemyProjectile,ShotPoint.position, rotation);
         EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
         if (projectileScript != null)
         {

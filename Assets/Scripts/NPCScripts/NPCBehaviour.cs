@@ -82,12 +82,12 @@ public class NPCBehaviour : MonoBehaviour
 
         if (direction > 0)
         {
-            Debug.Log("Moving Right");
+           
             rend.flipX = false; 
         }
         else if (direction < 0)
         {
-            Debug.Log("Moving Left");
+         
             rend.flipX = true; 
         }
     }
