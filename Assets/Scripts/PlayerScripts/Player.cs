@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+
+    public GameObject HealthBarUI;
  
     // Start is called before the first frame update
 
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
             PlayerAnimation.StopWalkAnimation();
         }
 
-        // Update previous position for the next frame
+        
         MoveAmount = currentPosition;
 
 
@@ -73,6 +75,12 @@ public class Player : MonoBehaviour
 
     public void DeathHandler(){
         Debug.Log("Player is dead");
+        gameObject.tag = "Dead";
+        GetComponent<Player>().enabled =false;
+        GetComponent<PlayerControls>().enabled = false;
+        GetComponentInChildren<CombatAndMovement>().DeathAnimation();
+        HealthBarUI.SetActive(false);
+        // GAME OVER SCREEN!  FindObjectOfType mozes koristit za pozivat funkcije 
     }
 
   

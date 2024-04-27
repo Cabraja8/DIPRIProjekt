@@ -16,6 +16,8 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
 
     public int Damage;
 
+    public GameObject HealthBarUI;
+
    protected override void Start()
     {    
         base.Start();
@@ -87,7 +89,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         this.gameObject.tag = "Dead";
         this.gameObject.layer = 8;
         GetComponent<NPCBehaviour>().enabled =false;
-       
+        HealthBarUI.SetActive(false);
     }
 
 //    public IEnumerator Attack()

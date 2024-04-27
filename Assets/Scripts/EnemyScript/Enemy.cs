@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour{
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
 
+    public GameObject HealthBarUI;
+
     private List<Transform> targets = new List<Transform>();
     
     protected virtual void Start(){
@@ -142,6 +144,7 @@ protected virtual void DetectTarget()
         this.gameObject.tag = "Dead";
         this.gameObject.layer = 8;
         GetComponent<Enemy>().enabled =false;
+        HealthBarUI.SetActive(false);
     }
   
 
