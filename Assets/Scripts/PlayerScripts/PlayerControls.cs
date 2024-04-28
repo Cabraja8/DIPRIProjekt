@@ -13,9 +13,17 @@ public class PlayerControls : Player
     public float OriginalMovementSpeed;
     private GameObject attackArea = default;
     private bool attacking = false;
-    private float timeToAttack = 0.25f;
+    private float basicAttackCooldown = 1f;
+    private float dashCooldown = 5f;
+    private float sneakCooldown = 7f;
+    private float shieldCooldown = 7f;
+    private float aoeCooldown = 7f;
 
-    // private float timer = 0f; dodat ću 
+    private float basicAttackTimer = 0f;
+    private float dashTimer = 0f;
+    private float sneakTimer = 0f;
+    private float shieldTimer = 0f;
+    private float aoeTimer = 0f;
 
 
     // Start is called before the first frame update
@@ -32,38 +40,39 @@ public class PlayerControls : Player
         base.Update();
         PlayerControl();
 
+
     }
     private void PlayerControl()
     {
         float translation = Input.GetAxis("Horizontal") * MovementSpeed * Time.deltaTime;
         transform.Translate(translation, 0, 0);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isCooldownActive(dashTimer, dashCooldown))
         {
             Dash();
             PlayerAnimation.PlayDashAnimation();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isCooldownActive(sneakTimer, sneakCooldown))
         {
             Sneak();
             PlayerAnimation.PlayWalkAnimation();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isCooldownActive(shieldTimer, shieldCooldown))
         {
             Shield();
             PlayerAnimation.PlayShieldAnimation();
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !isCooldownActive(aoeTimer, aoeCooldown))
         {
             AoE();
             PlayerAnimation.PlayAttack3Animation();
         }
 
-        if (Input.GetMouseButtonDown(0) && !attacking)
+        if (Input.GetMouseButtonDown(0) && !attacking && !isCooldownActive(basicAttackTimer, basicAttackCooldown))
         {
             StartCoroutine(Attack());
             PlayerAnimation.PlayAttackAnimation();
@@ -113,6 +122,7 @@ public class PlayerControls : Player
     {
         MovementSpeed = OriginalMovementSpeed;
         isDashing = false;
+        dashTimer = Time.time;
     }
 
 
@@ -120,17 +130,20 @@ public class PlayerControls : Player
     {
         MovementSpeed = OriginalMovementSpeed;
         isSneaking = false;
+        sneakTimer = Time.time;
     }
     private void ResetShield()
     {
         Debug.Log("Shield expired");
         isShielding = false;
         PlayerAnimation.StopShieldAnimation();
+        shieldTimer = Time.time;
     }
     private void ResetAoE()
     {
         Debug.Log("AoE expired");
         isAoEActive = false;
+        aoeTimer = Time.time;
 
     }
     private IEnumerator Attack()
@@ -139,12 +152,17 @@ public class PlayerControls : Player
         attackArea.SetActive(true);
         Debug.Log("Player attacking");
 
-        yield return new WaitForSeconds(timeToAttack);
+        yield return new WaitForSeconds(0.25f);
 
         attacking = false;
         attackArea.SetActive(false);
-    }
 
+        basicAttackTimer = Time.time;
+    }
+    private bool isCooldownActive(float timer, float cooldown)
+    {
+        return Time.time - timer < cooldown;
+    }
 
 }
 
