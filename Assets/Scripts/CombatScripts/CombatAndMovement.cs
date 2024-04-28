@@ -89,6 +89,7 @@ public class CombatAndMovement : MonoBehaviour
                 NPCKnight.Target.GetComponent<Enemy>().DeathHandler();
                 NPCKnight.Target = null;
             }else{
+
                  NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
             }
         }
@@ -107,7 +108,7 @@ public class CombatAndMovement : MonoBehaviour
                 rangedEnemy.target.GetComponent<NPCKnightBehaviour>().DeathHandler();
                 }else if(rangedEnemy.target.tag == "Player"){
                       rangedEnemy.target.GetComponent<Player>().DeathHandler();
-                    // Disable player movmeent treba nadodat kasnije
+                    
                 }
 
                 rangedEnemy.target = null;

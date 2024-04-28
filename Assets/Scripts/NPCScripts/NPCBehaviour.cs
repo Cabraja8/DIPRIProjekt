@@ -33,7 +33,7 @@ public class NPCBehaviour : MonoBehaviour
 
     standField = GameObject.FindGameObjectWithTag("StartField");
     if (standField != null) {
-        navMeshAgent.SetDestination(standField.transform.position);
+        GetComponent<NPCKnightBehaviour>().GoToDestination(standField.transform);
     } 
     }
      private void SetDefaultValues(){

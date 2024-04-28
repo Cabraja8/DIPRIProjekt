@@ -14,10 +14,18 @@ public class CallTheGuards : MonoBehaviour, Interactable
 
     public GameObject CallTriggerGuards;
 
+    public GameObject door;
+    
+    public Sprite closed_door;
+    public Sprite opened_door;
+
+     SpriteRenderer doorSpriteRenderer;
     void Start()
     {   	
         CallTriggerGuards.SetActive(false);
         anim = GetComponent<Animator>();
+        doorSpriteRenderer = door.GetComponent<SpriteRenderer>();
+        
     }
 
     public void Interact(){
@@ -25,23 +33,41 @@ public class CallTheGuards : MonoBehaviour, Interactable
         IsRinged = true;
         anim.SetTrigger("Ring");
         isSpawning = true;
-        InvokeRepeating("SpawnGuard", 0f, 1f); 
+        Invoke("OpenDoor",1f);
+        InvokeRepeating("SpawnGuard", 1f, 2f); 
+        
     }
 
+    private void OpenDoor(){
+    
+
+    if (doorSpriteRenderer != null)
+    {
+        
+        doorSpriteRenderer.sprite = opened_door;
+    }
+    }
     public bool CanInteract(){
         return !IsRinged;
     }
     
     public void SpawnGuard(){
+    
         Debug.Log("Spawning a guard");
 
         if (guardsSpawned >= 6 || !isSpawning)
-        {
+        {   
+            if (doorSpriteRenderer != null)
+    {
+        
+        doorSpriteRenderer.sprite = closed_door;
+    }
 
             CancelInvoke("SpawnGuard");
             Invoke("EnableTrigger", 3f);
             return;
         }
+        
 
         if (spawnPoints.Length == 0)
         {
@@ -50,6 +76,7 @@ public class CallTheGuards : MonoBehaviour, Interactable
         }
 
         GameObject chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+   
         Instantiate(Guards, chosenSpawnPoint.transform.position, Quaternion.identity);
         guardsSpawned++;
     }

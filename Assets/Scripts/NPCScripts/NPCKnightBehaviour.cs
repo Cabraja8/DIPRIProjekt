@@ -18,10 +18,16 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
 
     public GameObject HealthBarUI;
 
+    public Transform Player;
+
+    private bool isFollowing = false;
+
    protected override void Start()
     {    
         base.Start();
         Interacted = true; // ovo trebam reworkat
+        Player = FindObjectOfType<Player>().transform;
+        //Invoke("FollowPlayer",5f); testing još
     }
 
     protected override void Update()
@@ -65,8 +71,18 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
  public virtual void SetTarget(Transform newTarget)
 {   
     Target = newTarget;
-  
 }   
+
+public void GoToDestination(Transform Destination){
+    navMeshAgent.SetDestination(Destination.transform.position);
+}
+
+public void FollowPlayer(){
+   if (Player != null) 
+        {
+            navMeshAgent.SetDestination(Player.position);
+        }
+}
 
     public void IfInRangeAttack(){
         navMeshAgent.SetDestination(Target.position);
@@ -92,22 +108,6 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         HealthBarUI.SetActive(false);
     }
 
-//    public IEnumerator Attack()
-//     {
-//         Vector2 originalPosition = transform.position;
-//         Vector2 targetPosition = Target.position;
-//         float percent = 0;
-
-//         while (percent <= 1)
-//         {
-//             percent += Time.deltaTime * attackSpeed;
-//             float smoothPercent = Mathf.SmoothStep(0f, 1f, percent);
-//             float formula = (-Mathf.Pow(smoothPercent, 1) + smoothPercent) * 4;
-//             transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
-            
-//             yield return null;
-//         }
-//     }
 
 
 
