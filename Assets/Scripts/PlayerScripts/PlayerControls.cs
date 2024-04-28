@@ -9,9 +9,11 @@ public class PlayerControls : Player
     public bool isSneaking = false;
     public bool isShielding = false;
     public bool isAoEActive = false;
-
     public float OriginalMovementSpeed;
-    private GameObject attackArea = default;
+
+    // private GameObject attackArea = default;
+    public GameObject attackArea;
+    public GameObject aoeArea;
     private bool attacking = false;
     private float basicAttackCooldown = 1f;
     private float dashCooldown = 5f;
@@ -70,14 +72,19 @@ public class PlayerControls : Player
         {
             AoE();
             PlayerAnimation.PlayAttack3Animation();
+
         }
+
 
         if (Input.GetMouseButtonDown(0) && !attacking && !isCooldownActive(basicAttackTimer, basicAttackCooldown))
         {
             StartCoroutine(Attack());
             PlayerAnimation.PlayAttackAnimation();
+
+            attackArea.SetActive(true);
         }
     }
+
 
     private void Dash()
     {
@@ -114,8 +121,7 @@ public class PlayerControls : Player
     {
         Debug.Log("AoE!");
         isAoEActive = true;
-        Invoke("ResetAoe", 1f);
-
+        Invoke("ResetAoE", 1f);
     }
 
     private void ResetDash()
@@ -144,6 +150,7 @@ public class PlayerControls : Player
         Debug.Log("AoE expired");
         isAoEActive = false;
         aoeTimer = Time.time;
+        aoeArea.SetActive(false); //možda je greška zbog ovog barem pretpostavljam jer kad to maknem onda radi ali to nam treba
 
     }
     private IEnumerator Attack()
