@@ -11,6 +11,11 @@ public class PlayerControls : Player
     public bool isAoEActive = false;
 
     public float OriginalMovementSpeed;
+    private GameObject attackArea = default;
+    private bool attacking = false;
+    private float timeToAttack = 0.25f;
+
+    // private float timer = 0f; dodat ću 
 
 
     // Start is called before the first frame update
@@ -18,7 +23,7 @@ public class PlayerControls : Player
     {
         base.Start();
         OriginalMovementSpeed = base.MovementSpeed;
-
+        attackArea = transform.GetChild(4).gameObject;
     }
 
     // Update is called once per frame
@@ -51,10 +56,17 @@ public class PlayerControls : Player
             PlayerAnimation.PlayShieldAnimation();
         }
 
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             AoE();
             PlayerAnimation.PlayAttack3Animation();
+        }
+
+        if (Input.GetMouseButtonDown(0) && !attacking)
+        {
+            StartCoroutine(Attack());
+            PlayerAnimation.PlayAttackAnimation();
         }
     }
 
@@ -120,6 +132,17 @@ public class PlayerControls : Player
         Debug.Log("AoE expired");
         isAoEActive = false;
 
+    }
+    private IEnumerator Attack()
+    {
+        attacking = true;
+        attackArea.SetActive(true);
+        Debug.Log("Player attacking");
+
+        yield return new WaitForSeconds(timeToAttack);
+
+        attacking = false;
+        attackArea.SetActive(false);
     }
 
 
