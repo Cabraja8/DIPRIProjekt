@@ -9,12 +9,12 @@ public class PlayerControls : Player
     public bool isSneaking = false;
     public bool isShielding = false;
     public bool isAoEActive = false;
-    public float OriginalMovementSpeed;
-
-    // private GameObject attackArea = default;
-    public GameObject attackArea;
-    public GameObject aoeArea;
     private bool attacking = false;
+
+    public float OriginalMovementSpeed;
+    private GameObject attackArea = default;
+    public GameObject aoeArea = default;
+
     private float basicAttackCooldown = 1f;
     private float dashCooldown = 5f;
     private float sneakCooldown = 7f;
@@ -26,7 +26,8 @@ public class PlayerControls : Player
     private float sneakTimer = 0f;
     private float shieldTimer = 0f;
     private float aoeTimer = 0f;
-
+    public float attackDamage = 10f;
+    public int Damage;
 
     // Start is called before the first frame update
     public override void Start()
@@ -150,26 +151,46 @@ public class PlayerControls : Player
         Debug.Log("AoE expired");
         isAoEActive = false;
         aoeTimer = Time.time;
-        aoeArea.SetActive(false); //možda je greška zbog ovog barem pretpostavljam jer kad to maknem onda radi ali to nam treba
-
+        // aoeArea.SetActive(false);
     }
+
     private IEnumerator Attack()
     {
         attacking = true;
         attackArea.SetActive(true);
         Debug.Log("Player attacking");
 
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackArea.transform.position, attackArea.transform.localScale, 0f);
+
+        foreach (Collider2D enemyCollider in hitEnemies)
+        {
+            if (enemyCollider.CompareTag("Enemy"))
+            {
+                enemyCollider.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
+        }
+
         yield return new WaitForSeconds(0.25f);
 
         attacking = false;
-        attackArea.SetActive(false);
 
         basicAttackTimer = Time.time;
     }
+
+
     private bool isCooldownActive(float timer, float cooldown)
     {
         return Time.time - timer < cooldown;
     }
 
-}
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy") && attacking)
+        {
+
+            other.GetComponent<Enemy>().TakeDamage(attackDamage);
+        }
+    }
+
+}

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
 
     public GameObject HealthBarUI;
- 
+
     // Start is called before the first frame update
 
     [Header("Player Movement Settings")]
@@ -20,10 +20,9 @@ public class Player : MonoBehaviour
     private SpriteRenderer rend;
 
 
-
     public virtual void Start()
-    {   
-       
+    {
+
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -67,23 +66,26 @@ public class Player : MonoBehaviour
             PlayerAnimation.StopWalkAnimation();
         }
 
-        
+
         MoveAmount = currentPosition;
 
 
     }
 
-    public void DeathHandler(){
+    public void DeathHandler()
+    {
         Debug.Log("Player is dead");
         gameObject.tag = "Dead";
-        GetComponent<Player>().enabled =false;
+        GetComponent<Player>().enabled = false;
         GetComponent<PlayerControls>().enabled = false;
         GetComponentInChildren<CombatAndMovement>().DeathAnimation();
         HealthBarUI.SetActive(false);
         // GAME OVER SCREEN!  FindObjectOfType mozes koristit za pozivat funkcije 
     }
 
-  
 
 }
+
+
+
 
