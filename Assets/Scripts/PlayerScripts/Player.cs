@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
+    public float maxHealth = 100f;
+    private float currentHealth;
 
 
     public virtual void Start()
@@ -81,6 +83,16 @@ public class Player : MonoBehaviour
         GetComponentInChildren<CombatAndMovement>().DeathAnimation();
         HealthBarUI.SetActive(false);
         // GAME OVER SCREEN!  FindObjectOfType mozes koristit za pozivat funkcije 
+    }
+
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            DeathHandler();
+        }
     }
 
 

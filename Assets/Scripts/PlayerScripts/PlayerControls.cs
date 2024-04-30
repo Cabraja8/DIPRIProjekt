@@ -26,8 +26,10 @@ public class PlayerControls : Player
     private float sneakTimer = 0f;
     private float shieldTimer = 0f;
     private float aoeTimer = 0f;
-    public float attackDamage = 10f;
+
     public int Damage;
+    public float detectionRadius = 5f;
+    public LayerMask targetLayerMask;
 
     // Start is called before the first frame update
     public override void Start()
@@ -82,7 +84,7 @@ public class PlayerControls : Player
             StartCoroutine(Attack());
             PlayerAnimation.PlayAttackAnimation();
 
-            attackArea.SetActive(true);
+            // attackArea.SetActive(true);
         }
     }
 
@@ -160,23 +162,25 @@ public class PlayerControls : Player
         attackArea.SetActive(true);
         Debug.Log("Player attacking");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackArea.transform.position, attackArea.transform.localScale, 0f);
-
-        foreach (Collider2D enemyCollider in hitEnemies)
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(attackArea.transform.position, attackArea.transform.localScale, 0f);
+        foreach (Collider2D collider in colliders)
         {
-            if (enemyCollider.CompareTag("Enemy"))
+            Debug.Log("Detected collider: " + collider.name);
+            if (collider.CompareTag("Enemy") || collider.CompareTag("Knight"))
             {
-                enemyCollider.GetComponent<Enemy>().TakeDamage(attackDamage);
+                collider.GetComponent<HealthManager>().TakeDamage(Damage);
+                Debug.Log("Attacked");
             }
         }
 
-        yield return new WaitForSeconds(0.25f);
 
+        yield return new WaitForSeconds(0.25f);
+        attackArea.SetActive(false);
         attacking = false;
 
         basicAttackTimer = Time.time;
-    }
 
+    }
 
     private bool isCooldownActive(float timer, float cooldown)
     {
@@ -184,13 +188,13 @@ public class PlayerControls : Player
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy") && attacking)
-        {
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("Enemy") && attacking)
+    //     {
 
-            other.GetComponent<Enemy>().TakeDamage(attackDamage);
-        }
-    }
+    //         other.GetComponent<HealthManager>().TakeDamage(Damage);
+    //     }
+    // }
 
 }
