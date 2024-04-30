@@ -12,7 +12,7 @@ public class PlayerControls : Player
     private bool attacking = false;
 
     public float OriginalMovementSpeed;
-    private GameObject attackArea = default;
+    public GameObject attackArea ;
     public GameObject aoeArea = default;
 
     private float basicAttackCooldown = 1f;
@@ -35,8 +35,9 @@ public class PlayerControls : Player
     public override void Start()
     {
         base.Start();
+        attackArea.SetActive(false);
         OriginalMovementSpeed = base.MovementSpeed;
-        attackArea = transform.GetChild(4).gameObject;
+        attackArea = transform.GetChild(5).gameObject;
     }
 
     // Update is called once per frame
@@ -156,31 +157,32 @@ public class PlayerControls : Player
         // aoeArea.SetActive(false);
     }
 
-    private IEnumerator Attack()
-    {
-        attacking = true;
-        attackArea.SetActive(true);
-        Debug.Log("Player attacking");
+private IEnumerator Attack()
+{
+    attacking = true;
+    attackArea.SetActive(true);
+    Debug.Log("Player attacking");
 
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(attackArea.transform.position, attackArea.transform.localScale, 0f);
-        foreach (Collider2D collider in colliders)
+    Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
+    if (collider != null)
+    {
+        if (collider.CompareTag("Enemy"))
         {
-            Debug.Log("Detected collider: " + collider.name);
-            if (collider.CompareTag("Enemy") || collider.CompareTag("Knight"))
+            HealthManager healthManager = collider.GetComponent<HealthManager>();
+            if (healthManager != null)
             {
-                collider.GetComponent<HealthManager>().TakeDamage(Damage);
-                Debug.Log("Attacked");
+                healthManager.TakeDamage(Damage);
+                Debug.Log("Attacked: " + collider.name);
             }
         }
-
-
-        yield return new WaitForSeconds(0.25f);
-        attackArea.SetActive(false);
-        attacking = false;
-
-        basicAttackTimer = Time.time;
-
     }
+
+    yield return new WaitForSeconds(0.25f);
+    attackArea.SetActive(false);
+    attacking = false;
+
+    basicAttackTimer = Time.time;
+}
 
     private bool isCooldownActive(float timer, float cooldown)
     {
