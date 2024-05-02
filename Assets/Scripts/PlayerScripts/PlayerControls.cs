@@ -12,8 +12,8 @@ public class PlayerControls : Player
     private bool attacking = false;
 
     public float OriginalMovementSpeed;
-    public GameObject attackArea ;
-    public GameObject aoeArea = default;
+    public GameObject attackArea;
+    public GameObject aoeArea;
 
     private float basicAttackCooldown = 1f;
     private float dashCooldown = 5f;
@@ -35,10 +35,15 @@ public class PlayerControls : Player
     public override void Start()
     {
         base.Start();
-        attackArea.SetActive(false);
-        OriginalMovementSpeed = base.MovementSpeed;
         attackArea = transform.GetChild(5).gameObject;
+        attackArea.SetActive(false);
+
+        OriginalMovementSpeed = base.MovementSpeed;
+
+        aoeArea = transform.GetChild(6).gameObject;
+        aoeArea.SetActive(false);
     }
+
 
     // Update is called once per frame
     public override void Update()
@@ -84,8 +89,6 @@ public class PlayerControls : Player
         {
             StartCoroutine(Attack());
             PlayerAnimation.PlayAttackAnimation();
-
-            // attackArea.SetActive(true);
         }
     }
 
@@ -108,7 +111,7 @@ public class PlayerControls : Player
         if (!isSneaking)
         {
             Debug.Log("Sneak!");
-            MovementSpeed /= 4f;
+            MovementSpeed /= 3f;
             isSneaking = true;
             Invoke("ResetSneak", 5f);
         }
@@ -126,6 +129,7 @@ public class PlayerControls : Player
         Debug.Log("AoE!");
         isAoEActive = true;
         Invoke("ResetAoE", 1f);
+        aoeArea.SetActive(true);
     }
 
     private void ResetDash()
@@ -154,35 +158,38 @@ public class PlayerControls : Player
         Debug.Log("AoE expired");
         isAoEActive = false;
         aoeTimer = Time.time;
-        // aoeArea.SetActive(false);
+        aoeArea.SetActive(false);
     }
 
-private IEnumerator Attack()
-{
-    attacking = true;
-    attackArea.SetActive(true);
-    Debug.Log("Player attacking");
-
-    Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
-    if (collider != null)
+    private IEnumerator Attack()
     {
-        if (collider.CompareTag("Enemy"))
+        attacking = true;
+        attackArea.SetActive(true);
+        Debug.Log("Player attacking");
+
+        Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
+        if (collider != null)
         {
-            HealthManager healthManager = collider.GetComponent<HealthManager>();
-            if (healthManager != null)
+            if (collider.CompareTag("Enemy"))
             {
-                healthManager.TakeDamage(Damage);
-                Debug.Log("Attacked: " + collider.name);
+                HealthManager healthManager = collider.GetComponent<HealthManager>();
+                if (healthManager != null)
+                {
+                    healthManager.TakeDamage(Damage);
+                    Debug.Log("Attacked: " + collider.name);
+                    GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    Debug.Log("take hit animacija");
+
+                }
             }
         }
+
+        yield return new WaitForSeconds(0.25f);
+        attackArea.SetActive(false);
+        attacking = false;
+
+        basicAttackTimer = Time.time;
     }
-
-    yield return new WaitForSeconds(0.25f);
-    attackArea.SetActive(false);
-    attacking = false;
-
-    basicAttackTimer = Time.time;
-}
 
     private bool isCooldownActive(float timer, float cooldown)
     {

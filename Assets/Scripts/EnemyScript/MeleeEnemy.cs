@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemy : Enemy
-{   
+{
     public int Damage;
     protected override void Start()
     {
@@ -19,9 +19,9 @@ public class MeleeEnemy : Enemy
             GoTowardsTarget();
         }
         if (target == null)
-    {
-        return;
-    }
+        {
+            return;
+        }
     }
 
     protected override void GoTowardsTarget()
@@ -33,18 +33,18 @@ public class MeleeEnemy : Enemy
             {
                 enemyAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
-                    
+
                 target.GetComponent<HealthManager>().TakeDamage(Damage);
-               
+
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }
     }
 
-    
 
 
-    
+
+
 
     public IEnumerator Attack()
     {
@@ -62,3 +62,4 @@ public class MeleeEnemy : Enemy
         }
     }
 }
+
