@@ -34,7 +34,11 @@ public class MeleeEnemy : Enemy
                 enemyAnimation.PlayAttackAnimation();
                 Debug.Log("Attack");
 
-                if (!PlayerControls.isShieldActive)
+                if (PlayerControls.isShieldActive)
+                {
+                    Debug.Log("Defended by shield");
+                }
+                else
                 {
                     target.GetComponent<HealthManager>().TakeDamage(Damage);
                 }
@@ -60,4 +64,3 @@ public class MeleeEnemy : Enemy
         }
     }
 }
-

@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
         GetComponent<CapsuleCollider2D>().enabled = false;
         GetComponent<Enemy>().enabled = false;
         HealthBarUI.SetActive(false);
-        
+
     }
 
     public void TakeDamage(float damage)

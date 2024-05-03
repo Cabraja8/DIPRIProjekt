@@ -14,6 +14,7 @@ public class PlayerControls : Player
     public float OriginalMovementSpeed;
     public GameObject attackArea;
     public GameObject aoeArea;
+    public GameObject swordHitbox;
 
     private float basicAttackCooldown = 1f;
     private float dashCooldown = 1f;
@@ -31,6 +32,8 @@ public class PlayerControls : Player
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
 
+    // Collider2D swordCollider;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -42,6 +45,8 @@ public class PlayerControls : Player
 
         aoeArea = transform.GetChild(6).gameObject;
         aoeArea.SetActive(false);
+
+        // swordCollider = swordHitbox.GetComponent<Collider2D>();
     }
 
 
