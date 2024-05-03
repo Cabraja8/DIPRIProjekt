@@ -5,21 +5,21 @@ using UnityEngine;
 public class PlayerControls : Player
 {
     // Dodatne varijable za akcije
-    public bool isDashing = false;
-    public bool isSneaking = false;
-    public bool isShielding = false;
+    public bool isDashActive = false;
+    public bool isSneakActive = false;
+    public static bool isShieldActive = false;
     public bool isAoEActive = false;
-    private bool attacking = false;
+    private bool isAttackActive = false;
 
     public float OriginalMovementSpeed;
     public GameObject attackArea;
     public GameObject aoeArea;
 
     private float basicAttackCooldown = 1f;
-    private float dashCooldown = 5f;
-    private float sneakCooldown = 7f;
-    private float shieldCooldown = 7f;
-    private float aoeCooldown = 7f;
+    private float dashCooldown = 1f;
+    private float sneakCooldown = 1f;
+    private float shieldCooldown = 1f;
+    private float aoeCooldown = 1f;
 
     private float basicAttackTimer = 0f;
     private float dashTimer = 0f;
@@ -85,7 +85,7 @@ public class PlayerControls : Player
         }
 
 
-        if (Input.GetMouseButtonDown(0) && !attacking && !isCooldownActive(basicAttackTimer, basicAttackCooldown))
+        if (Input.GetMouseButtonDown(0) && !isAttackActive && !isCooldownActive(basicAttackTimer, basicAttackCooldown))
         {
             StartCoroutine(Attack());
             PlayerAnimation.PlayAttackAnimation();
@@ -96,23 +96,23 @@ public class PlayerControls : Player
     private void Dash()
     {
 
-        if (!isDashing)
+        if (!isDashActive)
         {
             Debug.Log("Dash!");
 
             MovementSpeed *= 5f;
-            isDashing = true;
+            isDashActive = true;
             Invoke("ResetDash", 0.5f);
         }
     }
 
     private void Sneak()
     {
-        if (!isSneaking)
+        if (!isSneakActive)
         {
             Debug.Log("Sneak!");
             MovementSpeed /= 3f;
-            isSneaking = true;
+            isSneakActive = true;
             Invoke("ResetSneak", 5f);
         }
     }
@@ -120,9 +120,10 @@ public class PlayerControls : Player
     private void Shield()
     {
         Debug.Log("Shield!");
-        isShielding = true;
+        isShieldActive = true;
         Invoke("ResetShield", 5f);
     }
+
 
     private void AoE()
     {
@@ -135,7 +136,7 @@ public class PlayerControls : Player
     private void ResetDash()
     {
         MovementSpeed = OriginalMovementSpeed;
-        isDashing = false;
+        isDashActive = false;
         dashTimer = Time.time;
     }
 
@@ -143,13 +144,13 @@ public class PlayerControls : Player
     private void ResetSneak()
     {
         MovementSpeed = OriginalMovementSpeed;
-        isSneaking = false;
+        isSneakActive = false;
         sneakTimer = Time.time;
     }
     private void ResetShield()
     {
         Debug.Log("Shield expired");
-        isShielding = false;
+        isShieldActive = false;
         PlayerAnimation.StopShieldAnimation();
         shieldTimer = Time.time;
     }
@@ -163,7 +164,7 @@ public class PlayerControls : Player
 
     private IEnumerator Attack()
     {
-        attacking = true;
+        isAttackActive = true;
         //attackArea.SetActive(true);
         Debug.Log("Player attacking");
 
@@ -177,10 +178,13 @@ public class PlayerControls : Player
                 {
                     healthManager.TakeDamage(Damage);
                     Debug.Log("Attacked: " + collider.name);
-                    if(healthManager.currentHealth >1){
-                    collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
-                    }else{
-                    collider.GetComponent<Enemy>().DeathHandler();
+                    if (healthManager.currentHealth > 1)
+                    {
+                        collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    }
+                    else
+                    {
+                        collider.GetComponent<Enemy>().DeathHandler();
                     }
                     Debug.Log("take hit animacija");
 
@@ -190,7 +194,7 @@ public class PlayerControls : Player
 
         yield return new WaitForSeconds(0.25f);
         //attackArea.SetActive(false);
-        attacking = false;
+        isAttackActive = false;
 
         basicAttackTimer = Time.time;
     }

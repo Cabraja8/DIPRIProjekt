@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     public float maxHealth = 100f;
     private float currentHealth;
 
-
     public virtual void Start()
     {
 
@@ -88,16 +87,19 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
         {
-            DeathHandler();
+            currentHealth -= damage;
+
+            if (currentHealth <= 0)
+            {
+                DeathHandler();
+            }
         }
-
     }
-
-
 }
+
+
+
 
 
 
