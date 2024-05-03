@@ -149,9 +149,10 @@ public class Enemy : MonoBehaviour
         GetComponentInChildren<CombatAndMovement>().DeathAnimation();
         this.gameObject.tag = "Dead";
         this.gameObject.layer = 8;
+        GetComponent<CapsuleCollider2D>().enabled = false;
         GetComponent<Enemy>().enabled = false;
         HealthBarUI.SetActive(false);
-        Destroy(gameObject);
+        
     }
 
     public void TakeDamage(float damage)

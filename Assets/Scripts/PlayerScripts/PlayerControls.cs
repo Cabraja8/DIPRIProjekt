@@ -36,7 +36,7 @@ public class PlayerControls : Player
     {
         base.Start();
         attackArea = transform.GetChild(5).gameObject;
-        attackArea.SetActive(false);
+        //attackArea.SetActive(false);
 
         OriginalMovementSpeed = base.MovementSpeed;
 
@@ -164,7 +164,7 @@ public class PlayerControls : Player
     private IEnumerator Attack()
     {
         attacking = true;
-        attackArea.SetActive(true);
+        //attackArea.SetActive(true);
         Debug.Log("Player attacking");
 
         Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
@@ -177,7 +177,11 @@ public class PlayerControls : Player
                 {
                     healthManager.TakeDamage(Damage);
                     Debug.Log("Attacked: " + collider.name);
-                    GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    if(healthManager.currentHealth >1){
+                    collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    }else{
+                    collider.GetComponent<Enemy>().DeathHandler();
+                    }
                     Debug.Log("take hit animacija");
 
                 }
@@ -185,7 +189,7 @@ public class PlayerControls : Player
         }
 
         yield return new WaitForSeconds(0.25f);
-        attackArea.SetActive(false);
+        //attackArea.SetActive(false);
         attacking = false;
 
         basicAttackTimer = Time.time;
