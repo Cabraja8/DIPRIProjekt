@@ -14,7 +14,6 @@ public class PlayerControls : Player
     public float OriginalMovementSpeed;
     public GameObject attackArea;
     public GameObject aoeArea;
-    public GameObject swordHitbox;
 
     private float basicAttackCooldown = 1f;
     private float dashCooldown = 1f;
@@ -32,8 +31,6 @@ public class PlayerControls : Player
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
 
-    // Collider2D swordCollider;
-
     // Start is called before the first frame update
     public override void Start()
     {
@@ -46,7 +43,6 @@ public class PlayerControls : Player
         aoeArea = transform.GetChild(6).gameObject;
         aoeArea.SetActive(false);
 
-        // swordCollider = swordHitbox.GetComponent<Collider2D>();
     }
 
 
@@ -126,17 +122,41 @@ public class PlayerControls : Player
     {
         Debug.Log("Shield!");
         isShieldActive = true;
-        Invoke("ResetShield", 5f);
+        Invoke("ResetShield", 2f);
     }
-
 
     private void AoE()
     {
         Debug.Log("AoE!");
         isAoEActive = true;
-        Invoke("ResetAoE", 1f);
         aoeArea.SetActive(true);
+
+        Collider2D collider = Physics2D.OverlapBox(aoeArea.transform.position, aoeArea.transform.localScale, 0f);
+        if (collider != null)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                HealthManager healthManager = collider.GetComponent<HealthManager>();
+                if (healthManager != null)
+                {
+                    healthManager.TakeDamage(Damage);
+                    Debug.Log("Aoe hit: " + collider.name);
+                    if (healthManager.currentHealth > 1)
+                    {
+                        collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    }
+                    else
+                    {
+                        collider.GetComponent<Enemy>().DeathHandler();
+                    }
+
+                }
+            }
+        }
+        Invoke("ResetAoE", 1f);
+        isAoEActive = false;
     }
+
 
     private void ResetDash()
     {
@@ -170,8 +190,8 @@ public class PlayerControls : Player
     private IEnumerator Attack()
     {
         isAttackActive = true;
-        //attackArea.SetActive(true);
         Debug.Log("Player attacking");
+        attackArea.SetActive(true);
 
         Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
         if (collider != null)
@@ -191,16 +211,12 @@ public class PlayerControls : Player
                     {
                         collider.GetComponent<Enemy>().DeathHandler();
                     }
-                    Debug.Log("take hit animacija");
-
                 }
             }
         }
 
         yield return new WaitForSeconds(0.25f);
-        //attackArea.SetActive(false);
         isAttackActive = false;
-
         basicAttackTimer = Time.time;
     }
 
@@ -208,15 +224,5 @@ public class PlayerControls : Player
     {
         return Time.time - timer < cooldown;
     }
-
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (other.CompareTag("Enemy") && attacking)
-    //     {
-
-    //         other.GetComponent<HealthManager>().TakeDamage(Damage);
-    //     }
-    // }
 
 }

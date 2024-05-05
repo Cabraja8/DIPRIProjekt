@@ -35,24 +35,37 @@ public class Player : MonoBehaviour
         CheckWalkingAnimation();
         CheckAngle();
     }
-
     private void CheckAngle()
     {
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        float angle = Vector2.SignedAngle(Vector2.right, moveDirection);
-
-        if (angle >= 90 || angle <= -90)
-        {   //okretanje bez spriterenderera
-            //transform.localScale = new Vector3(-1f, 1f, 1f);
-            rend.flipX = true;
+        if (moveDirection.x != 0)
+        {
+            if (moveDirection.x < 0)
+            {
+                rend.flipX = true;
+            }
+            else
+            {
+                rend.flipX = false;
+            }
         }
         else
         {
-            //okretanje bez spriterenderera
-            // transform.localScale = new Vector3(1f, 1f, 1f);
-            rend.flipX = false;
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0f;
+            Vector2 playerToMouse = mousePosition - transform.position;
+
+            if (playerToMouse.x < 0)
+            {
+                rend.flipX = true;
+            }
+            else
+            {
+                rend.flipX = false;
+            }
         }
     }
+
     public void CheckWalkingAnimation()
     {
         Vector2 currentPosition = transform.position;
@@ -97,10 +110,4 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-
-
-
-
-
 
