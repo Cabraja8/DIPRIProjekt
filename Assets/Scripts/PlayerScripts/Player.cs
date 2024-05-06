@@ -23,10 +23,10 @@ public class Player : MonoBehaviour
 
     public virtual void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
+        Debug.Log("MovementSpeed: " + MovementSpeed);
     }
 
 
@@ -34,6 +34,10 @@ public class Player : MonoBehaviour
     {
         CheckWalkingAnimation();
         CheckAngle();
+    }
+    public float GetMovementSpeed()
+    {
+        return MovementSpeed;
     }
     private void CheckAngle()
     {

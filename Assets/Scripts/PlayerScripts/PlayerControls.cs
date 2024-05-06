@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerControls : Player
 {
-    // Dodatne varijable za akcije
     public bool isDashActive = false;
     public bool isSneakActive = false;
     public static bool isShieldActive = false;
@@ -30,19 +29,17 @@ public class PlayerControls : Player
     public int Damage;
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
+    private PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         attackArea = transform.GetChild(5).gameObject;
-        //attackArea.SetActive(false);
-
-        OriginalMovementSpeed = base.MovementSpeed;
-
+        playerMovement = GetComponent<PlayerMovement>();
+        OriginalMovementSpeed = playerMovement.MovementSpeed;
         aoeArea = transform.GetChild(6).gameObject;
         aoeArea.SetActive(false);
-
     }
 
 
@@ -51,9 +48,8 @@ public class PlayerControls : Player
     {
         base.Update();
         PlayerControl();
-
-
     }
+
     private void PlayerControl()
     {
         float translation = Input.GetAxis("Horizontal") * MovementSpeed * Time.deltaTime;
@@ -96,12 +92,10 @@ public class PlayerControls : Player
 
     private void Dash()
     {
-
         if (!isDashActive)
         {
             Debug.Log("Dash!");
-
-            MovementSpeed *= 5f;
+            MovementSpeed *= 2;
             isDashActive = true;
             Invoke("ResetDash", 0.5f);
         }
@@ -112,17 +106,21 @@ public class PlayerControls : Player
         if (!isSneakActive)
         {
             Debug.Log("Sneak!");
-            MovementSpeed /= 3f;
+            MovementSpeed /= 2f;
             isSneakActive = true;
-            Invoke("ResetSneak", 5f);
+            Invoke("ResetSneak", 0.5f);
         }
     }
 
     private void Shield()
     {
-        Debug.Log("Shield!");
-        isShieldActive = true;
-        Invoke("ResetShield", 2f);
+        if (!isShieldActive)
+        {
+            Debug.Log("Shield!");
+            isShieldActive = true;
+            Invoke("ResetShield", 2f);
+
+        }
     }
 
     private void AoE()

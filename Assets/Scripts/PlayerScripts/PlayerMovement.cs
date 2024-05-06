@@ -9,6 +9,7 @@ public class PlayerMovement : Player
     public override void Start()
     {
         base.Start();
+        MovementSpeed = 10f;
     }
 
     // Update is called once per frame
