@@ -62,6 +62,7 @@ public class WaveSpawner : MonoBehaviour
                     StartCoroutine(StartNextWave(currentWaveIndex));
                 }else{
                    // End of waves
+                   Debug.Log("End of wave");
                 }
         }
     }

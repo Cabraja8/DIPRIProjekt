@@ -157,7 +157,8 @@ public class PlayerControls : Player
 
 
     private void ResetDash()
-    {
+    {   
+        
         MovementSpeed = OriginalMovementSpeed;
         isDashActive = false;
         dashTimer = Time.time;
