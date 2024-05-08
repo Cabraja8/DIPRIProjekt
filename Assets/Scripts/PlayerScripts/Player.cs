@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
-    public float maxHealth = 100f;
+    // public float maxHealth = 100f;
     private float currentHealth;
 
     public virtual void Start()
@@ -26,19 +26,19 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
-        Debug.Log("MovementSpeed: " + MovementSpeed);
     }
-
 
     public virtual void Update()
     {
         CheckWalkingAnimation();
         CheckAngle();
     }
+
     public float GetMovementSpeed()
     {
         return MovementSpeed;
     }
+
     private void CheckAngle()
     {
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -84,10 +84,7 @@ public class Player : MonoBehaviour
             PlayerAnimation.StopWalkAnimation();
         }
 
-
         MoveAmount = currentPosition;
-
-
     }
 
     public void DeathHandler()
@@ -100,7 +97,6 @@ public class Player : MonoBehaviour
         HealthBarUI.SetActive(false);
         // GAME OVER SCREEN!  FindObjectOfType mozes koristit za pozivat funkcije 
     }
-
 
     public void TakeDamage(float damage)
     {

@@ -27,8 +27,6 @@ public class PlayerControls : Player
     private float aoeTimer = 0f;
 
     public int Damage;
-    public float detectionRadius = 5f;
-    public LayerMask targetLayerMask;
     private PlayerMovement playerMovement;
 
     // Start is called before the first frame update
@@ -78,7 +76,6 @@ public class PlayerControls : Player
         {
             AoE();
             PlayerAnimation.PlayAttack3Animation();
-
         }
 
 
@@ -88,7 +85,6 @@ public class PlayerControls : Player
             PlayerAnimation.PlayAttackAnimation();
         }
     }
-
 
     private void Dash()
     {
@@ -119,7 +115,6 @@ public class PlayerControls : Player
             Debug.Log("Shield!");
             isShieldActive = true;
             Invoke("ResetShield", 2f);
-
         }
     }
 
@@ -151,19 +146,17 @@ public class PlayerControls : Player
                 }
             }
         }
-        Invoke("ResetAoE", 1f);
+        Invoke("ResetAoE", 0.25f);
         isAoEActive = false;
+        aoeTimer = Time.time;
     }
 
-
     private void ResetDash()
-    {   
-        
+    {
         MovementSpeed = OriginalMovementSpeed;
         isDashActive = false;
         dashTimer = Time.time;
     }
-
 
     private void ResetSneak()
     {
@@ -171,6 +164,7 @@ public class PlayerControls : Player
         isSneakActive = false;
         sneakTimer = Time.time;
     }
+
     private void ResetShield()
     {
         Debug.Log("Shield expired");
@@ -178,6 +172,7 @@ public class PlayerControls : Player
         PlayerAnimation.StopShieldAnimation();
         shieldTimer = Time.time;
     }
+
     private void ResetAoE()
     {
         Debug.Log("AoE expired");
@@ -223,5 +218,4 @@ public class PlayerControls : Player
     {
         return Time.time - timer < cooldown;
     }
-
 }
