@@ -24,9 +24,22 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform player;
 
+    public GameObject InvisibleBorder;
+
+    public SceneTransfer sceneTransfer;
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        InvisibleBorder.SetActive(false);
+    }
+
     private void Start() {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(StartNextWave(currentWaveIndex));
+        InvisibleBorder.SetActive(true);
     }
 
     IEnumerator StartNextWave( int index){
@@ -43,6 +56,8 @@ public class WaveSpawner : MonoBehaviour
                 Enemy randomEnemy=currentWave.enemies[Random.Range(0,currentWave.enemies.Length)];
                 Transform randomSpot = spawnPoints[Random.Range(0,spawnPoints.Length)];
                 Instantiate(randomEnemy,randomSpot.position,randomSpot.rotation);
+                Transform closestTarget = FindClosestTarget(randomSpot.position, "Player", "Knight");
+                randomEnemy.target = closestTarget;
                 if(i == currentWave.count -1){
                     finishedSpawning = true;
                 }else{
@@ -53,6 +68,23 @@ public class WaveSpawner : MonoBehaviour
         }
 
     }
+    Transform FindClosestTarget(Vector3 position, params string[] tags) {
+    Transform closestTarget = null;
+    float closestDistance = Mathf.Infinity;
+
+    foreach (string tag in tags) {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject target in targets) {
+            float distanceToTarget = Vector3.Distance(position, target.transform.position);
+            if (distanceToTarget < closestDistance) {
+                closestTarget = target.transform;
+                closestDistance = distanceToTarget;
+            }
+        }
+    }
+
+    return closestTarget;
+}
     private void Update() {
         
         if(finishedSpawning==true && GameObject.FindGameObjectsWithTag("Enemy").Length==0 ){
@@ -63,6 +95,8 @@ public class WaveSpawner : MonoBehaviour
                 }else{
                    // End of waves
                    Debug.Log("End of wave");
+                   InvisibleBorder.SetActive(false);
+                   sceneTransfer.CanGo();
                 }
         }
     }
