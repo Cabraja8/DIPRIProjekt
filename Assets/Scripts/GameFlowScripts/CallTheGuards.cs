@@ -34,7 +34,7 @@ public class CallTheGuards : MonoBehaviour, Interactable
         anim.SetTrigger("Ring");
         isSpawning = true;
         Invoke("OpenDoor",1f);
-        InvokeRepeating("SpawnGuard", 1f, 2f); 
+        InvokeRepeating("SpawnGuard", 0.2f, 0.5f); 
         
     }
 

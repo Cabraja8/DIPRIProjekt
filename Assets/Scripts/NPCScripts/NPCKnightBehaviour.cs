@@ -20,31 +20,53 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
 
     public Transform Player;
 
-    private bool isFollowing = false;
+    public bool isFollowing = false;
 
    protected override void Start()
     {    
         base.Start();
         Interacted = true; // ovo trebam reworkat
         Player = FindObjectOfType<Player>().transform;
-        //Invoke("FollowPlayer",5f); testing još
+        
     }
 
     protected override void Update()
     {      
       base.Update();
+    if(isFollowing){
+        FollowPlayer();
+    }
     
     DetectTarget();
     if(Target !=null){
-
+    isFollowing = false;
     IfInRangeAttack();
     }
     if (Target == null)
     {
+        Target  = FindClosestTarget(transform.position, "Enemy");
         return;
     }
 
+
     }
+     Transform FindClosestTarget(Vector3 position, params string[] tags) {
+    Transform closestTarget = null;
+    float closestDistance = Mathf.Infinity;
+
+    foreach (string tag in tags) {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject target in targets) {
+            float distanceToTarget = Vector3.Distance(position, target.transform.position);
+            if (distanceToTarget < closestDistance) {
+                closestTarget = target.transform;
+                closestDistance = distanceToTarget;
+            }
+        }
+    }
+
+    return closestTarget;
+}
 
     protected virtual void DetectTarget()
 {   

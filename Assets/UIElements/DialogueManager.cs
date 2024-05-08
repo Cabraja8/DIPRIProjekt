@@ -47,6 +47,10 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         Debug.Log("End of convo");
+        NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
+    knightBehaviour.isFollowing = true;
+}
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
