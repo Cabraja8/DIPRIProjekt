@@ -5,7 +5,6 @@ using UnityEngine;
 public class RotateToMouse : MonoBehaviour
 {
 
-
     // Update is called once per frame
     void Update()
     {
@@ -16,6 +15,5 @@ public class RotateToMouse : MonoBehaviour
         transform.rotation = rotation;
 
     }
-
 
 }

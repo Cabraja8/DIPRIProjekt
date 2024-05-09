@@ -34,10 +34,12 @@ public class PlayerControls : Player
     {
         base.Start();
         attackArea = transform.GetChild(5).gameObject;
-        playerMovement = GetComponent<PlayerMovement>();
-        OriginalMovementSpeed = playerMovement.MovementSpeed;
+        attackArea.SetActive(false);
         aoeArea = transform.GetChild(6).gameObject;
         aoeArea.SetActive(false);
+
+        playerMovement = GetComponent<PlayerMovement>();
+        OriginalMovementSpeed = playerMovement.MovementSpeed;
     }
 
 
@@ -86,6 +88,11 @@ public class PlayerControls : Player
         }
     }
 
+    private bool isCooldownActive(float timer, float cooldown)
+    {
+        return Time.time - timer < cooldown;
+    }
+
     private void Dash()
     {
         if (!isDashActive)
@@ -114,7 +121,7 @@ public class PlayerControls : Player
         {
             Debug.Log("Shield!");
             isShieldActive = true;
-            Invoke("ResetShield", 2f);
+            Invoke("ResetShield", 0.5f);
         }
     }
 
@@ -151,6 +158,37 @@ public class PlayerControls : Player
         aoeTimer = Time.time;
     }
 
+    private IEnumerator Attack()
+    {
+        isAttackActive = true;
+        Debug.Log("Player attacking");
+        attackArea.SetActive(true);
+
+        Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
+        if (collider != null)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                HealthManager healthManager = collider.GetComponent<HealthManager>();
+                if (healthManager != null)
+                {
+                    healthManager.TakeDamage(Damage);
+                    Debug.Log("Attacked: " + collider.name);
+                    if (healthManager.currentHealth > 1)
+                    {
+                        collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+                    }
+                    else
+                    {
+                        collider.GetComponent<Enemy>().DeathHandler();
+                    }
+                }
+            }
+        }
+        Invoke("ResetAttack", 0.25f);
+        yield return new WaitForSeconds(0.25f);
+    }
+
     private void ResetDash()
     {
         MovementSpeed = OriginalMovementSpeed;
@@ -180,42 +218,11 @@ public class PlayerControls : Player
         aoeTimer = Time.time;
         aoeArea.SetActive(false);
     }
-
-    private IEnumerator Attack()
+    private void ResetAttack()
     {
-        isAttackActive = true;
-        Debug.Log("Player attacking");
-        attackArea.SetActive(true);
-
-        Collider2D collider = Physics2D.OverlapBox(attackArea.transform.position, attackArea.transform.localScale, 0f);
-        if (collider != null)
-        {
-            if (collider.CompareTag("Enemy"))
-            {
-                HealthManager healthManager = collider.GetComponent<HealthManager>();
-                if (healthManager != null)
-                {
-                    healthManager.TakeDamage(Damage);
-                    Debug.Log("Attacked: " + collider.name);
-                    if (healthManager.currentHealth > 1)
-                    {
-                        collider.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
-                    }
-                    else
-                    {
-                        collider.GetComponent<Enemy>().DeathHandler();
-                    }
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(0.25f);
+        Debug.Log("Attack expired");
         isAttackActive = false;
         basicAttackTimer = Time.time;
-    }
-
-    private bool isCooldownActive(float timer, float cooldown)
-    {
-        return Time.time - timer < cooldown;
+        attackArea.SetActive(false);
     }
 }
