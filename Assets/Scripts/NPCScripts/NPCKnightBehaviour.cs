@@ -36,16 +36,15 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     if(isFollowing){
         FollowPlayer();
     }
-    
-    DetectTarget();
-    if(Target !=null){
-    isFollowing = false;
-    IfInRangeAttack();
-    }
     if (Target == null)
     {
         Target  = FindClosestTarget(transform.position, "Enemy");
         return;
+    }
+    DetectTarget();
+    if(Target !=null){
+    isFollowing = false;
+    IfInRangeAttack();
     }
 
 
@@ -118,6 +117,8 @@ public void FollowPlayer(){
                 Debug.Log("Attack");
                 Target.GetComponent<HealthManager>().TakeDamage(Damage);
                 attackTime = Time.time + TimeBetweenAttacks;
+                }else if(Target.GetComponent<HealthManager>().currentHealth < 1) {
+                   DetectTarget();
                 }
             }
         }

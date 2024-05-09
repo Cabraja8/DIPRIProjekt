@@ -578,7 +578,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.14
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NPCAnimation: {fileID: 0}
   navMeshAgent: {fileID: 0}
-  speed: 3
+  speed: 5
   Target: {fileID: 0}
   stopDistance: 2
   detectionRadius: 5
@@ -644,6 +644,7 @@ MonoBehaviour:
   Damage: 10
   HealthBarUI: {fileID: 4434187834378836576}
   Player: {fileID: 0}
+  isFollowing: 0
 --- !u!70 &3585812007696585606
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

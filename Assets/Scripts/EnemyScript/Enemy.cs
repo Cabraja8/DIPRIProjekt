@@ -49,12 +49,29 @@ public class Enemy : MonoBehaviour
         WalkEnemyAnim();
         CheckAngle();
 
+        DetectTarget();
         if (target == null)
         {
-            DetectTarget();
-
+            target  = FindClosestTarget(transform.position, "Player", "Knight");
         }
     }
+    Transform FindClosestTarget(Vector3 position, params string[] tags) {
+    Transform closestTarget = null;
+    float closestDistance = Mathf.Infinity;
+
+    foreach (string tag in tags) {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject target in targets) {
+            float distanceToTarget = Vector3.Distance(position, target.transform.position);
+            if (distanceToTarget < closestDistance) {
+                closestTarget = target.transform;
+                closestDistance = distanceToTarget;
+            }
+        }
+    }
+
+    return closestTarget;
+}
 
 
     public virtual void SetTarget(Transform newTarget)
