@@ -41,7 +41,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         Target  = FindClosestTarget(transform.position, "Enemy");
         return;
     }
-    DetectTarget();
+    //DetectTarget();
     if(Target !=null){
     isFollowing = false;
     IfInRangeAttack();

@@ -82,12 +82,12 @@ public class CombatAndMovement : MonoBehaviour
                 else if (meleeEnemy.target.tag == "Player")
                 {
                     meleeEnemy.target.GetComponent<Player>().DeathHandler();
-                    // Disable player movmeent treba nadodat kasnije
+                    
                 }
                 meleeEnemy.target = null;
             }
             else
-            {
+            {   
                 meleeEnemy.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
             }
         }
@@ -105,8 +105,7 @@ public class CombatAndMovement : MonoBehaviour
                 NPCKnight.Target = null;
             }
             else
-            {
-
+            {   
                 NPCKnight.Target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
             }
         }
@@ -123,7 +122,7 @@ public class CombatAndMovement : MonoBehaviour
             if (rangedEnemy.target.GetComponent<HealthManager>().currentHealth < 1)
             {
                 if (rangedEnemy.target.tag == "Knight")
-                {
+                {   
                     rangedEnemy.target.GetComponent<NPCKnightBehaviour>().DeathHandler();
                 }
                 else if (rangedEnemy.target.tag == "Player")
