@@ -18,14 +18,17 @@ public class Player : MonoBehaviour
 
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
-    // public float maxHealth = 100f;
+    public float maxHealth = 100f;
     private float currentHealth;
 
+    public GameObject swordHitbox;
+    Collider2D swordCollider;
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
+        swordCollider = swordHitbox.GetComponent<Collider2D>();
     }
 
     public virtual void Update()
