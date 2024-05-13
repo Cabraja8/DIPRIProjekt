@@ -13,19 +13,24 @@ public class EnemyProjectile : MonoBehaviour
 
     private Vector3 moveDirection;
 
-   
+    public Animator anim;
     
 
     // Start is called before the first frame update
     void Start()
     {      
         Destroy(gameObject, lifeTime);
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
  public void StartMoving(Vector3 direction)
     {
         moveDirection = direction;
+    }
+
+    public void PlayFireAnimation(){
+        anim.SetTrigger("Fire");
     }
 
     void Update()

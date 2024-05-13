@@ -45,21 +45,23 @@ public class RangedEnemy : Enemy
         }
     }
 
-    public void RangedAttack()
+   public void RangedAttack()
+{
+    Vector2 direction = target.position - ShotPoint.position;
+
+    
+    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+    
+    GameObject projectile = Instantiate(EnemyProjectile, ShotPoint.position, Quaternion.identity);
+    projectile.transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+
+    EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
+    if (projectileScript != null)
     {
-        Vector2 direction = target.position - ShotPoint.position;
 
-        float angle= Mathf.Atan2(direction.y,direction.x)* Mathf.Rad2Deg;
-
-        Quaternion rotation = Quaternion.AngleAxis(angle -90, Vector3.forward);
-
-        ShotPoint.rotation = rotation;
-
-        GameObject projectile = Instantiate(EnemyProjectile,ShotPoint.position, rotation);
-        EnemyProjectile projectileScript = projectile.GetComponent<EnemyProjectile>();
-        if (projectileScript != null)
-        {
-            projectileScript.StartMoving(direction);
-        }
+        projectileScript.StartMoving(direction);
+        projectileScript.PlayFireAnimation();
     }
+}
 }
