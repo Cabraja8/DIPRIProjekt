@@ -33,6 +33,7 @@ public class PlayerControls : Player
     public override void Start()
     {
         base.Start();
+
         attackArea = transform.GetChild(5).gameObject;
         attackArea.SetActive(false);
         aoeArea = transform.GetChild(6).gameObject;
@@ -98,7 +99,7 @@ public class PlayerControls : Player
         if (!isDashActive)
         {
             Debug.Log("Dash!");
-            MovementSpeed *= 2;
+            MovementSpeed *= 2f;
             isDashActive = true;
             Invoke("ResetDash", 0.5f);
         }

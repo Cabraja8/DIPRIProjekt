@@ -37,10 +37,10 @@ public class Player : MonoBehaviour
         CheckAngle();
     }
 
-    public float GetMovementSpeed()
-    {
-        return MovementSpeed;
-    }
+    // public float GetMovementSpeed()
+    // {
+    //     return MovementSpeed;
+    // }
 
     private void CheckAngle()
     {
