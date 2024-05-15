@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class PlayerMovement : Player
 {
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         MovementSpeed = 7f;
+
     }
 
     // Update is called once per frame
@@ -21,12 +23,26 @@ public class PlayerMovement : Player
 
     private void PlayerMove()
     {
-        float MoveX = Input.GetAxisRaw("Horizontal");
-        float MoveY = Input.GetAxisRaw("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
 
-        Vector2 MoveInput = new Vector2(MoveX, MoveY);
-        MoveAmount = MoveInput.normalized * MovementSpeed;
+        Vector2 moveInput = new Vector2(moveX, moveY).normalized;
+        PlayerControls playerControls = GetComponent<PlayerControls>();
+
+        if (playerControls != null && playerControls.isDashActive)
+        {
+            moveInput = moveInput.normalized;
+        }
+
+        if (playerControls != null && playerControls.isSneakActive)
+        {
+            moveInput = moveInput.normalized;
+        }
+
+        MoveAmount = moveInput * MovementSpeed;
     }
+
+
     /// FixedUpdate is called every fixed framerate frame
     void FixedUpdate()
     {

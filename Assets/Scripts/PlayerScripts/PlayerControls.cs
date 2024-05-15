@@ -29,7 +29,6 @@ public class PlayerControls : Player
     public int Damage;
     private PlayerMovement playerMovement;
 
-    private float dashSpeedMultiplier = 2f;
 
     // Start is called before the first frame update
     public override void Start()
@@ -101,8 +100,7 @@ public class PlayerControls : Player
         if (!isDashActive)
         {
             Debug.Log("Dash!");
-            MovementSpeed *= dashSpeedMultiplier;
-            // MovementSpeed *= 2f;
+            MovementSpeed *= 2f;
             isDashActive = true;
             Invoke("ResetDash", 0.5f);
         }

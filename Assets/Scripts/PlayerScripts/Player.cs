@@ -37,11 +37,6 @@ public class Player : MonoBehaviour
         CheckAngle();
     }
 
-    // public float GetMovementSpeed()
-    // {
-    //     return MovementSpeed;
-    // }
-
     private void CheckAngle()
     {
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
