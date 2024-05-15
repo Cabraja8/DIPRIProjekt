@@ -193,14 +193,16 @@ public class PlayerControls : Player
 
     private void ResetDash()
     {
-        MovementSpeed = OriginalMovementSpeed;
+        MovementSpeed /= 2f;
+        // MovementSpeed = OriginalMovementSpeed;
         isDashActive = false;
         dashTimer = Time.time;
     }
 
     private void ResetSneak()
     {
-        MovementSpeed = OriginalMovementSpeed;
+        MovementSpeed *= 2f;
+        // MovementSpeed = OriginalMovementSpeed;
         isSneakActive = false;
         sneakTimer = Time.time;
     }

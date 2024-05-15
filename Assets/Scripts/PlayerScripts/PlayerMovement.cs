@@ -29,15 +29,15 @@ public class PlayerMovement : Player
         Vector2 moveInput = new Vector2(moveX, moveY).normalized;
         PlayerControls playerControls = GetComponent<PlayerControls>();
 
-        if (playerControls != null && playerControls.isDashActive)
-        {
-            moveInput = moveInput.normalized;
-        }
+        // if (playerControls != null && playerControls.isDashActive)
+        // {
+        //     moveInput = moveInput.normalized;
+        // }
 
-        if (playerControls != null && playerControls.isSneakActive)
-        {
-            moveInput = moveInput.normalized;
-        }
+        // if (playerControls != null && playerControls.isSneakActive)
+        // {
+        //     moveInput = moveInput.normalized;
+        // }
 
         MoveAmount = moveInput * MovementSpeed;
     }
