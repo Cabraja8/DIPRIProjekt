@@ -34,4 +34,17 @@ public class CameraFollow : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, new Vector2(clampedX, clampedY), Speed);
         }
     }
+
+    public void IncreaseMaxX(float Increase){
+        maxX += Increase;
+    }
+    public void IncreaseMaxY(float Increase){
+        maxY += Increase;
+    }
+    public void IncreaseMinX(float Increase){
+        minX += Increase;
+    }
+    public void IncreaseMinY(float Increase){
+        minY += Increase;
+    }
 }

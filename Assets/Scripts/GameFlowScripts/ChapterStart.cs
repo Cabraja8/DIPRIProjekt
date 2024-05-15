@@ -6,6 +6,13 @@ public class ChapterStart : MonoBehaviour
 {   
 
     public bool CanStartChapter;
+    public GameObject ChapterBorder;
+
+    public float IncreaseMaxY;
+    public float IncreaseMinY;
+
+    public float IncreaseMaxX;
+    public float IncreaseMinX;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +38,8 @@ public class ChapterStart : MonoBehaviour
     {   
         if(CanStartChapter){
         Debug.Log("Start next chapter");
+        ChapterBorder.SetActive(false);
+        FindObjectOfType<CameraFollow>().IncreaseMaxY(IncreaseMaxY);
         }
     }
 }
