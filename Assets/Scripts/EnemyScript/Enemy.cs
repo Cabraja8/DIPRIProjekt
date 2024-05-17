@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
 
+    public bool CanDetectFromFar=true;
+
     public GameObject HealthBarUI;
 
     private List<Transform> targets = new List<Transform>();
@@ -49,10 +51,13 @@ public class Enemy : MonoBehaviour
         WalkEnemyAnim();
         CheckAngle();
 
+        if(!CanDetectFromFar){
         DetectTarget();
+        }else{
         if (target == null)
         {
             target = FindClosestTarget(transform.position, "Player", "Knight");
+        }
         }
     }
     Transform FindClosestTarget(Vector3 position, params string[] tags)
