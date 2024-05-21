@@ -20,6 +20,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
 
     public Transform Player;
 
+    public bool CanDetectFromFar=false;
     public bool isFollowing = false;
 
    protected override void Start()
@@ -36,12 +37,15 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     if(isFollowing){
         FollowPlayer();
     }
-    if (Target == null)
-    {
-        Target  = FindClosestTarget(transform.position, "Enemy");
+    if(CanDetectFromFar){
+        DetectTarget();
+        }else{
+        if (Target == null)
+        {
+            Target  = FindClosestTarget(transform.position, "Enemy");
         return;
-    }
-    //DetectTarget();
+        }
+        }
     if(Target !=null){
     isFollowing = false;
     IfInRangeAttack();

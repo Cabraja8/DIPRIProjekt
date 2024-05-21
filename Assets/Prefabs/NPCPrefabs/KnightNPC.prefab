@@ -644,6 +644,7 @@ MonoBehaviour:
   Damage: 10
   HealthBarUI: {fileID: 4434187834378836576}
   Player: {fileID: 0}
+  CanDetectFromFar: 1
   isFollowing: 0
 --- !u!70 &3585812007696585606
 CapsuleCollider2D:

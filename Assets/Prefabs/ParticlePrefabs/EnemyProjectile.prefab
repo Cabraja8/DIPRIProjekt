@@ -134,7 +134,7 @@ MonoBehaviour:
   lifeTime: 2
   damageAmount: 10
   Speed: 3
-  anim: {fileID: 0}
+  anim: {fileID: 5129249711709461903}
 --- !u!70 &3718392732651643872
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ public class WaveSpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(StartNextWave(currentWaveIndex));
         InvisibleBorder.SetActive(true);
+        //MakeKnightsAttack();
     }
 
     IEnumerator StartNextWave(int index)
@@ -106,6 +107,26 @@ foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
     Debug.Log("follow player");
     knightBehaviour.Target = null;
     knightBehaviour.isFollowing = true;
+    
+}
+}
+
+public void MakeKnightsAttack(){
+     NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
+    Debug.Log("follow player");
+    knightBehaviour.CanDetectFromFar = false;
+    
+    
+}
+}
+
+public void DontAttackKnights(){
+    NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
+    Debug.Log("follow player");
+    knightBehaviour.CanDetectFromFar = true;
+    
     
 }
 }
