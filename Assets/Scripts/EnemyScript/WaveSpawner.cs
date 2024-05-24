@@ -25,24 +25,24 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform player;
 
-    public GameObject InvisibleBorder;
+   
 
     public ChapterStart chapter;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
-    {
-        InvisibleBorder.SetActive(false);
-    }
+    public StartWave waveStarter;
+  
 
     private void Start()
-    {
+    {   
+        
+        //MakeKnightsAttack();
+    }
+
+    public void StartSpawning(){
+        Debug.Log("Spawning");
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(StartNextWave(currentWaveIndex));
-        InvisibleBorder.SetActive(true);
-        //MakeKnightsAttack();
     }
 
     IEnumerator StartNextWave(int index)
@@ -94,7 +94,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 // End of waves
                 Debug.Log("End of wave");
-                InvisibleBorder.SetActive(false);
+                waveStarter.DisableBorder();
                 chapter.SetToTrueChapterStart();
                Invoke("FollowPlayerKnights",2f);
             }
