@@ -24,7 +24,8 @@ public class Player : MonoBehaviour
     public GameObject swordHitbox;
     Collider2D swordCollider;
     public virtual void Start()
-    {
+    {   
+        
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -74,7 +75,9 @@ public class Player : MonoBehaviour
         float distance = Vector2.Distance(currentPosition, MoveAmount);
 
         if (distance > 0.01f)
-        {
+        {   
+            Debug.Log("Distance"+ distance);
+            Debug.Log("Moving"+ currentPosition +"+" + MoveAmount );
             PlayerAnimation.PlayWalkAnimation();
         }
         else
