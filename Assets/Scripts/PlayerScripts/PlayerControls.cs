@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerControls : Player
 {
@@ -14,11 +16,18 @@ public class PlayerControls : Player
     public GameObject attackArea;
     public GameObject aoeArea;
 
+    public Image dashCooldownImage;
+    public TextMeshProUGUI dashCooldownText;
+    public Image shieldCooldownImage;
+    public TextMeshProUGUI shieldCooldownText;
+    public Image aoeCooldownImage;
+    public TextMeshProUGUI aoeCooldownText;
+
     private float basicAttackCooldown = 1f;
-    private float dashCooldown = 1f;
-    private float sneakCooldown = 1f;
-    private float shieldCooldown = 1f;
-    private float aoeCooldown = 1f;
+    private float dashCooldown = 5f;  // Adjusted cooldown times for better testing
+    private float sneakCooldown = 5f;
+    private float shieldCooldown = 5f;
+    private float aoeCooldown = 5f;
 
     private float basicAttackTimer = 0f;
     private float dashTimer = 0f;
@@ -28,7 +37,6 @@ public class PlayerControls : Player
 
     public int Damage;
     private PlayerMovement playerMovement;
-
 
     // Start is called before the first frame update
     public override void Start()
@@ -44,12 +52,12 @@ public class PlayerControls : Player
         OriginalMovementSpeed = playerMovement.MovementSpeed;
     }
 
-
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
         PlayerControl();
+        UpdateCooldownUI();
     }
 
     private void PlayerControl()
@@ -75,13 +83,11 @@ public class PlayerControls : Player
             PlayerAnimation.PlayShieldAnimation();
         }
 
-
         if (Input.GetKeyDown(KeyCode.Q) && !isCooldownActive(aoeTimer, aoeCooldown))
         {
             AoE();
             PlayerAnimation.PlayAttack3Animation();
         }
-
 
         if (Input.GetMouseButtonDown(0) && !isAttackActive && !isCooldownActive(basicAttackTimer, basicAttackCooldown))
         {
@@ -151,13 +157,12 @@ public class PlayerControls : Player
                     {
                         collider.GetComponent<Enemy>().DeathHandler();
                     }
-
                 }
             }
         }
         Invoke("ResetAoE", 0.25f);
         isAoEActive = false;
-        aoeTimer = Time.time;
+        aoeTimer = Time.time; // Start the cooldown timer
     }
 
     private IEnumerator Attack()
@@ -222,11 +227,41 @@ public class PlayerControls : Player
         aoeTimer = Time.time;
         aoeArea.SetActive(false);
     }
+
     private void ResetAttack()
     {
         Debug.Log("Attack expired");
         isAttackActive = false;
         basicAttackTimer = Time.time;
         attackArea.SetActive(false);
+    }
+
+    private void UpdateCooldownUI()
+    {
+        UpdateCooldown(dashCooldownImage, dashCooldownText, dashTimer, dashCooldown);
+        UpdateCooldown(shieldCooldownImage, shieldCooldownText, shieldTimer, shieldCooldown);
+        UpdateCooldown(aoeCooldownImage, aoeCooldownText, aoeTimer, aoeCooldown);
+    }
+
+    private void UpdateCooldown(Image cooldownImage, TextMeshProUGUI cooldownText, float timer, float cooldown)
+    {
+        if (timer < 0)
+        {
+            cooldownImage.fillAmount = 0;
+            cooldownText.text = "";
+            return;
+        }
+
+        float timeRemaining = cooldown - (Time.time - timer);
+        if (timeRemaining > 0)
+        {
+            cooldownImage.fillAmount = 1 - (Time.time - timer) / cooldown;
+            cooldownText.text = Mathf.Ceil(timeRemaining).ToString();
+        }
+        else
+        {
+            cooldownImage.fillAmount = 0;
+            cooldownText.text = "";
+        }
     }
 }
