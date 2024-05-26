@@ -34,7 +34,7 @@ TagManager:
   - Layer 3
   - Layer 4
   - topTree
-  - 
+  - Layer 5
   - 
   - 
   - 
@@ -56,4 +56,7 @@ TagManager:
     locked: 0
   - name: New Layer 4
     uniqueID: 1837448627
+    locked: 0
+  - name: Layer 5
+    uniqueID: 2875424659
     locked: 0
