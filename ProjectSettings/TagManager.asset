@@ -8,6 +8,7 @@ TagManager:
   - StartField
   - Knight
   - Dead
+  - PatrolPoint
   layers:
   - Default
   - TransparentFX

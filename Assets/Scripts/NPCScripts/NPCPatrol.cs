@@ -7,16 +7,20 @@ public class NPCPatrol : NPC
 {
     public Transform[] patrolPoints;
     private int currentPointIndex = 0;
-    private NavMeshAgent agent;
 
-    public bool  IsIdle;
     public float waitTime = 2f; 
 
-    void Start()
+     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; 
-        agent.updateUpAxis = false; 
+
+        // Find all patrol points by tag
+        GameObject[] patrolPointObjects = GameObject.FindGameObjectsWithTag("PatrolPoint");
+        patrolPoints = new Transform[patrolPointObjects.Length];
+        for (int i = 0; i < patrolPointObjects.Length; i++)
+        {
+            patrolPoints[i] = patrolPointObjects[i].transform;
+        }
 
         if (patrolPoints.Length > 0)
         {
