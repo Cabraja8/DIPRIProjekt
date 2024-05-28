@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8770426526686254613}
   - component: {fileID: 5275326899033329766}
   - component: {fileID: 3281876410805016111}
+  - component: {fileID: 4649576470116038887}
   m_Layer: 0
   m_Name: NPC_Male_1
   m_TagString: Untagged
@@ -134,8 +135,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  IsIdle: 0
   waitTime: 2
+--- !u!114 &4649576470116038887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943902113051636063}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8e7f52bd94b8145a3a3cf5a5b3f2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsIdle: 0
+  agent: {fileID: 0}
 --- !u!1 &8852950396646552230
 GameObject:
   m_ObjectHideFlags: 0

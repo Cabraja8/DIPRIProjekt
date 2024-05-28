@@ -9,6 +9,8 @@ TagManager:
   - Knight
   - Dead
   - PatrolPoint
+  - HomePoint
+  - IdlePoint
   layers:
   - Default
   - TransparentFX

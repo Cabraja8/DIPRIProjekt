@@ -14,10 +14,11 @@ public class NPC : MonoBehaviour
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
-    {
+    {   
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false; 
         agent.updateUpAxis = false; 
+        agent.avoidancePriority = 30;
     }
 
     // Start is called before the first frame update

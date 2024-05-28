@@ -6,11 +6,11 @@ using UnityEngine.AI;
 public class NPCPatrol : NPC
 {
     public Transform[] patrolPoints;
-    private int currentPointIndex = 0;
+    private NavMeshAgent agent;
 
-    public float waitTime = 2f; 
+    public float waitTime = 2f;
 
-     void Start()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
@@ -24,7 +24,7 @@ public class NPCPatrol : NPC
 
         if (patrolPoints.Length > 0)
         {
-            agent.SetDestination(patrolPoints[currentPointIndex].position);
+            SetRandomDestination();
         }
     }
 
@@ -38,10 +38,16 @@ public class NPCPatrol : NPC
 
     private IEnumerator WaitAtPoint()
     {
-      
         yield return new WaitForSeconds(waitTime); 
-        currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
-        agent.SetDestination(patrolPoints[currentPointIndex].position);
-       
+        SetRandomDestination();
+    }
+
+    private void SetRandomDestination()
+    {
+        if (patrolPoints.Length == 0)
+            return;
+
+        int randomIndex = Random.Range(0, patrolPoints.Length);
+        agent.SetDestination(patrolPoints[randomIndex].position);
     }
 }
