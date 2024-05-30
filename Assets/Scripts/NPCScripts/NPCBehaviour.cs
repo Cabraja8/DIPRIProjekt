@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 
@@ -11,24 +12,30 @@ public class NPCBehaviour : MonoBehaviour
      public CombatAndMovement NPCAnimation;
      public NavMeshAgent navMeshAgent;
      public float speed = 5f; 
-    GameObject standField;
+   public GameObject standField;
 
     private SpriteRenderer rend;
     public Transform Target; 
     public float stopDistance = 2f;
+    
+    
+
    protected virtual void Start()
     {
         NPCAnimation = GetComponentInChildren<CombatAndMovement>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         rend = GetComponentInChildren<SpriteRenderer>();
-        SetDefaultValues();
         if (navMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component not found.");
         }
-        FirstSceneKnightCall();
         
+        SetDefaultValues();
+        
+            FirstSceneKnightCall();
+            
     }
+
     public void FirstSceneKnightCall(){
 
     standField = GameObject.FindGameObjectWithTag("StartField");
