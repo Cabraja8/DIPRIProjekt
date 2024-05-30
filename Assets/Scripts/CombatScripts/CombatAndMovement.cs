@@ -16,12 +16,14 @@ public class CombatAndMovement : MonoBehaviour
     {
 
         animator.SetBool("IsWalking", true);
+        //AudioManager.Instance.PlaySFX("walk");
     }
 
     public void StopWalkAnimation()
     {
 
         animator.SetBool("IsWalking", false);
+        //AudioManager.Instance.sfxSource.Stop();
     }
 
     public void PlayAttackAnimation()
