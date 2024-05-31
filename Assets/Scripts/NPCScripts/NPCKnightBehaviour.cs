@@ -27,6 +27,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     {    
         base.Start();
         Interacted = true; // ovo trebam reworkat
+        CanDetectFromFar=false;
         Player = FindObjectOfType<Player>().transform;
         
     }
