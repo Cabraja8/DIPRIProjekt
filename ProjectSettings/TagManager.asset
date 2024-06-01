@@ -11,6 +11,7 @@ TagManager:
   - PatrolPoint
   - HomePoint
   - IdlePoint
+  - DefendPoint
   layers:
   - Default
   - TransparentFX
