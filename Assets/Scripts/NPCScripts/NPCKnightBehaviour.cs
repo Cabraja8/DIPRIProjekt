@@ -103,6 +103,16 @@ public void GoToDestination(Transform Destination){
     navMeshAgent.SetDestination(Destination.transform.position);
 }
 
+public void ArmTheDefences()  {
+        GameObject[] defendPoints = GameObject.FindGameObjectsWithTag("DefendPoint");
+
+        foreach (GameObject defendPoint in defendPoints)
+        {
+            Vector3 destination = defendPoint.transform.position;
+            GoToDestination(defendPoint.transform);
+        }
+    }
+
 public void FollowPlayer(){
    if (Player != null) 
         {

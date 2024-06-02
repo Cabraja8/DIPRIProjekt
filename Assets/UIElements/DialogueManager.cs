@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -47,10 +48,21 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         Debug.Log("End of convo");
-        NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
-foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
-    knightBehaviour.isFollowing = true;
-}
+         if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+            foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+            {
+                knightBehaviour.isFollowing = true;
+            }
+        }else if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+            foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+            {
+                knightBehaviour.ArmTheDefences();
+            }
+        }
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
