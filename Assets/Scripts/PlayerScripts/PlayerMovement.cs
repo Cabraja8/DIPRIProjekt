@@ -10,7 +10,7 @@ public class PlayerMovement : Player
     public override void Start()
     {
         base.Start();
-        MovementSpeed = 7f;
+        MovementSpeed = 5f;
 
     }
 

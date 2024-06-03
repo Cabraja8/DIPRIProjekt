@@ -24,8 +24,9 @@ public class Player : MonoBehaviour
     public GameObject swordHitbox;
     Collider2D swordCollider;
     public virtual void Start()
-    {   
-        
+    {
+         MoveAmount = transform.position;
+        Debug.Log("Initial MoveAmount: " + MoveAmount);
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -69,23 +70,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void CheckWalkingAnimation()
+     public void CheckWalkingAnimation()
     {
         Vector2 currentPosition = transform.position;
         float distance = Vector2.Distance(currentPosition, MoveAmount);
-
-        if (distance > 0.01f)
-        {   
-            Debug.Log("Distance"+ distance);
-            Debug.Log("Moving"+ currentPosition +"+" + MoveAmount );
+        if (distance > 0.1f)
+        {
             PlayerAnimation.PlayWalkAnimation();
+         
         }
         else
         {
             PlayerAnimation.StopWalkAnimation();
+
         }
 
         MoveAmount = currentPosition;
+     
     }
 
     public void DeathHandler()

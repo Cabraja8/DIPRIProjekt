@@ -490,6 +490,12 @@ MonoBehaviour:
   OriginalMovementSpeed: 0
   attackArea: {fileID: 151255755177500537}
   aoeArea: {fileID: 5599731237221805857}
+  dashCooldownImage: {fileID: 0}
+  dashCooldownText: {fileID: 0}
+  shieldCooldownImage: {fileID: 0}
+  shieldCooldownText: {fileID: 0}
+  aoeCooldownImage: {fileID: 0}
+  aoeCooldownText: {fileID: 0}
   Damage: 10
 --- !u!114 &4391464833501597041
 MonoBehaviour:
@@ -600,6 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cd39b10aae8144dbffb8305b99e19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionText: {fileID: 0}
 --- !u!1 &3265903670928301095
 GameObject:
   m_ObjectHideFlags: 0
