@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     Collider2D swordCollider;
     public virtual void Start()
     {
-         MoveAmount = transform.position;
+        // MoveAmount = transform.position;
         Debug.Log("Initial MoveAmount: " + MoveAmount);
         rb = GetComponent<Rigidbody2D>();
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
@@ -74,13 +74,17 @@ public class Player : MonoBehaviour
     {
         Vector2 currentPosition = transform.position;
         float distance = Vector2.Distance(currentPosition, MoveAmount);
+        Debug.Log("distance " + distance);
+        Debug.Log(MoveAmount + "MoveAmount");
         if (distance > 0.1f)
-        {
+        {   
+            Debug.Log("Play movement ");
             PlayerAnimation.PlayWalkAnimation();
          
         }
         else
-        {
+        {   
+            Debug.Log("Stop movement ");
             PlayerAnimation.StopWalkAnimation();
 
         }

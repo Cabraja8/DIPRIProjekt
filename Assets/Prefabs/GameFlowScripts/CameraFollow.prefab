@@ -184,7 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 0}
   Speed: 0.125
-  minX: -55
-  maxX: 20
-  minY: -215
-  maxY: 11
+  minX: 50
+  maxX: 300
+  minY: -130
+  maxY: 300
