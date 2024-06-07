@@ -7,6 +7,7 @@ public class ArmTheDefendPoints : MonoBehaviour
        public GameObject TriggerArmTheDefences;
     public bool Triggered;
 
+
     void Start()
     {
         Triggered = false;
@@ -18,6 +19,7 @@ public class ArmTheDefendPoints : MonoBehaviour
         {
             Triggered = true;
             TriggerArmTheDefences.SetActive(true);
+            FindObjectOfType<TheKing>().RedirectTheKing();
         }
     }
 }

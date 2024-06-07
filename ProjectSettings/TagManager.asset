@@ -12,6 +12,7 @@ TagManager:
   - HomePoint
   - IdlePoint
   - DefendPoint
+  - KingStand
   layers:
   - Default
   - TransparentFX
