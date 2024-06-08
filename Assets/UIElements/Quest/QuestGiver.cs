@@ -19,4 +19,10 @@ public class QuestGiver: MonoBehaviour
         titleText.text=quest.title;
         descriptionText.text=quest.description;
     }
+
+    public void AcceptQuest()
+    {
+        questWindow.SetActive(false);
+        quest.isActive=true;
+    }
 }
