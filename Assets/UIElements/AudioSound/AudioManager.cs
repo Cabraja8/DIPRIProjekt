@@ -45,6 +45,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string name)
     {
+        if (sfxSource == null)
+        {
+            Debug.LogError("sfxSource is not assigned in the AudioManager.");
+            return;
+        }
+
         Sound s = Array.Find(sfxSounds, x => x.name == name);
 
         if (s == null)
@@ -53,25 +59,67 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sfxSource.clip = s.clip;
-            sfxSource.Play();
+            if (sfxSource.clip != s.clip || !sfxSource.isPlaying)
+            {
+                sfxSource.clip = s.clip;
+                sfxSource.loop = true; // Ensure the clip is set to loop
+                sfxSource.Play();
+            }
+        }
+    }
+
+    public void StopSFX(string name)
+    {
+        if (sfxSource == null)
+        {
+            Debug.LogError("sfxSource is not assigned in the AudioManager.");
+            return;
+        }
+
+        Sound s = Array.Find(sfxSounds, x => x.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound not found");
+        }
+        else
+        {
+            if (sfxSource.clip == s.clip && sfxSource.isPlaying)
+            {
+                sfxSource.Stop();
+            }
         }
     }
 
     public void ToggleSFX()
     {
-        sfxSource.mute=!sfxSource.mute;
+        if (sfxSource != null)
+        {
+            sfxSource.mute = !sfxSource.mute;
+        }
     }
+
     public void ToggleMusic()
     {
-        musicSource.mute=!musicSource.mute;
+        if (musicSource != null)
+        {
+            musicSource.mute = !musicSource.mute;
+        }
     }
+
     public void SFXVolume(float volume)
     {
-        sfxSource.volume=volume;
+        if (sfxSource != null)
+        {
+            sfxSource.volume = volume;
+        }
     }
+
     public void MusicVolume(float volume)
     {
-        musicSource.volume=volume;
+        if (musicSource != null)
+        {
+            musicSource.volume = volume;
+        }
     }
 }
