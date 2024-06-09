@@ -55,17 +55,37 @@ public class DialogueManager : MonoBehaviour
             {
                 knightBehaviour.isFollowing = true;
             }
-        }else if (SceneManager.GetActiveScene().buildIndex == 3)
+        }else if (SceneManager.GetActiveScene().buildIndex == 2)
+{
+    NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+    
+    bool allKnightsUnarmed = true;
+
+    foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+    {
+        if (knightBehaviour.ArmedTheDefence)
         {
-            NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
-            foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
-            {
-                knightBehaviour.ArmTheDefences();
-            }
+            allKnightsUnarmed = false;
+            break;
         }
+    }
+
+    if (allKnightsUnarmed)
+    {
+        foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+        {
+            knightBehaviour.ArmTheDefences();
+        }
+    }
+     KingDialogue();
+}
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
+    }
+
+    public void KingDialogue(){
+
     }
 
 }

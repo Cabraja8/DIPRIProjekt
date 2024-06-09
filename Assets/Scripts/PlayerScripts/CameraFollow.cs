@@ -35,16 +35,18 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    public void IncreaseMaxX(float Increase){
-        maxX += Increase;
+    public void SetMaxX(float Increase){
+        maxX = Increase;
     }
-    public void IncreaseMaxY(float Increase){
-        maxY += Increase;
+    public void SetMaxY(float Increase){
+        maxY = Increase;
     }
-    public void IncreaseMinX(float Increase){
-        minX += Increase;
+    public void SetMinX(float Increase){
+        minX = Increase;
     }
-    public void IncreaseMinY(float Increase){
-        minY += Increase;
+    public void SetMinY(float Increase){
+        minY = Increase;
     }
+
+
 }

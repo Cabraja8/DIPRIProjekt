@@ -23,13 +23,15 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     public bool CanDetectFromFar=false;
     public bool isFollowing = false;
 
+    public bool ArmedTheDefence;
+
    protected override void Start()
     {    
         base.Start();
         Interacted = true; // ovo trebam reworkat
         CanDetectFromFar=false;
         Player = FindObjectOfType<Player>().transform;
-        
+        ArmedTheDefence = false;
     }
 
     protected override void Update()
@@ -104,13 +106,12 @@ public void GoToDestination(Transform Destination){
 }
 
 public void ArmTheDefences()  {
-        GameObject[] defendPoints = GameObject.FindGameObjectsWithTag("DefendPoint");
-
-        foreach (GameObject defendPoint in defendPoints)
-        {
-            Vector3 destination = defendPoint.transform.position;
-            GoToDestination(defendPoint.transform);
-        }
+       GameObject defendPoint = GameObject.FindWithTag("DefendPoint");
+        ArmedTheDefence = true;
+    if (defendPoint != null) {
+        Vector3 destination = defendPoint.transform.position;
+        GoToDestination(defendPoint.transform);
+    }
     }
 
 public void FollowPlayer(){

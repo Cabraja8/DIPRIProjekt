@@ -7,16 +7,18 @@ public class ChapterStart : MonoBehaviour
 
     public bool CanStartChapter;
     public GameObject ChapterBorder;
+    public GameObject BackBorder;
 
-    public float IncreaseMaxY;
-    public float IncreaseMinY;
+    public float SetMaxY;
+    public float SetMinY;
 
-    public float IncreaseMaxX;
-    public float IncreaseMinX;
+    public float SetMaxX;
+    public float SetMinX;
     // Start is called before the first frame update
     void Start()
     {
        CanStartChapter = false; 
+       BackBorder.SetActive(false);
     }
 
     public void SetToTrueChapterStart(){
@@ -39,7 +41,13 @@ public class ChapterStart : MonoBehaviour
         if(CanStartChapter){
         Debug.Log("Start next chapter");
         ChapterBorder.SetActive(false);
-        FindObjectOfType<CameraFollow>().IncreaseMaxY(IncreaseMaxY);
+        BackBorder.SetActive(true);
+        FindObjectOfType<CameraFollow>().SetMaxY(SetMaxY);
+        FindObjectOfType<CameraFollow>().SetMinY(SetMinY);
+        FindObjectOfType<CameraFollow>().SetMaxX(SetMaxX);
+        FindObjectOfType<CameraFollow>().SetMinX(SetMinX);
         }
     }
+
+    
 }
