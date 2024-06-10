@@ -13,6 +13,7 @@ TagManager:
   - IdlePoint
   - DefendPoint
   - KingStand
+  - King
   layers:
   - Default
   - TransparentFX

@@ -77,15 +77,24 @@ public class DialogueManager : MonoBehaviour
             knightBehaviour.ArmTheDefences();
         }
     }
-     KingDialogue();
+    if(FindObjectOfType<InteractWithKing>().IsInteracted == false){
+
+     EnableInteractionWithTheKing();
+     
+     }
 }
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
     }
 
-    public void KingDialogue(){
-
+    public void DisableBorder(){
+        FindObjectOfType<CannotPassCollider>().DisableCollider();
+       
+    }
+    public void EnableInteractionWithTheKing(){
+        FindObjectOfType<EnableKingInteraction>().EnableKingInteract();
+        DisableBorder();
     }
 
 }
