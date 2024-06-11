@@ -3770,7 +3770,7 @@ GameObject:
   - component: {fileID: 1198799336}
   m_Layer: 0
   m_Name: Interact
-  m_TagString: Untagged
+  m_TagString: StartField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3858,7 +3858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ee650f098a66341b0f1ae4de2d8614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsInteracted: 0
+  IsInteracted: 1
 --- !u!1 &1245395893
 GameObject:
   m_ObjectHideFlags: 0
@@ -10088,9 +10088,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1438799595}
   - component: {fileID: 1438799594}
+  - component: {fileID: 1438799596}
+  - component: {fileID: 1438799597}
   m_Layer: 0
   m_Name: King
-  m_TagString: Untagged
+  m_TagString: King
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10107,7 +10109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2816957fab7b1c8499ea50607a9ab8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowPlayer: 0
+  IsFollowing: 0
+  Player: {fileID: 0}
+  navMeshAgent: {fileID: 0}
 --- !u!4 &1438799595
 Transform:
   m_ObjectHideFlags: 0
@@ -10124,6 +10128,40 @@ Transform:
   - {fileID: 535759140}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1438799596
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438799593}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1438799597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438799593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ba1dfde92fd7a4da363e7fa166848d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1463142191
 GameObject:
   m_ObjectHideFlags: 0

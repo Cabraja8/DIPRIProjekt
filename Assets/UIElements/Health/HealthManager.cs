@@ -15,11 +15,31 @@ public class HealthManager : MonoBehaviour
     }
 
 
+    // public void TakeDamage(int damage)
+    // {
+    //     currentHealth -= damage;
+    //     healthBar.SetHealth(currentHealth);
+    // }
+
+    //novi 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (currentHealth < 0)
+            currentHealth = 0;
         healthBar.SetHealth(currentHealth);
     }
 
+    public void SetHealth(int health)
+    {
+        currentHealth = health;
+        healthBar.SetHealth(currentHealth);
+    }
 
+    public void SetMaxHealth(int health)
+    {
+        maxHealth = health;
+        currentHealth = health;
+        healthBar.SetMaxHealth(health);
+    }
 }

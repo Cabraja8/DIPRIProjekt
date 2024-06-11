@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
 
     public GameObject HealthBarUI;
+    public HealthManager healthManager;
 
     // Start is called before the first frame update
 
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
     public float maxHealth = 100f;
-    private float currentHealth;
+    public float currentHealth;
 
     public GameObject swordHitbox;
     Collider2D swordCollider;
@@ -29,6 +30,9 @@ public class Player : MonoBehaviour
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
         swordCollider = swordHitbox.GetComponent<Collider2D>();
+        currentHealth = maxHealth;
+        healthManager = GetComponent<HealthManager>();
+        healthManager.SetMaxHealth((int)maxHealth);
     }
 
     public virtual void Update()
@@ -67,7 +71,7 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+
 
     public void DeathHandler()
     {
@@ -84,11 +88,13 @@ public class Player : MonoBehaviour
     {
         {
             currentHealth -= damage;
-
+            healthManager.TakeDamage((int)damage); // novo
             if (currentHealth <= 0)
             {
                 DeathHandler();
             }
+
+            GetComponent<HealthRegen>().TookDamage();
         }
     }
 }
