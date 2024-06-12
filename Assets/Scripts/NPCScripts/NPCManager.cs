@@ -28,6 +28,8 @@ public class NPCManager : MonoBehaviour
             if (Random.value > 0.5f)
             {
                 EnablePatrol(npcInstance);
+            }else{
+                GoToIdlePoints(npcInstance);
             }
         }
     }
@@ -73,5 +75,18 @@ public class NPCManager : MonoBehaviour
             Debug.LogWarning($"NPCController component not found on {npc.name}");
             Destroy(npc);
         }
+    }
+
+    public void GoToIdlePoints(GameObject npc){
+        NPCIdle idle = npc.GetComponent<NPCIdle>();
+          if (idle != null)
+        {
+            idle.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning($"NPCPatrol component not found on {npc.name}");
+        }
+
     }
 }
