@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     public GameObject swordHitbox;
     Collider2D swordCollider;
+
+
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour
         swordCollider = swordHitbox.GetComponent<Collider2D>();
         currentHealth = maxHealth;
         healthManager = GetComponent<HealthManager>();
-        healthManager.SetMaxHealth((int)maxHealth);
+        // healthManager.SetMaxHealth((int)maxHealth);
     }
 
     public virtual void Update()

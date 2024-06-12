@@ -9,12 +9,14 @@ public class HealthRegen : MonoBehaviour
     private float lastDamageTime;
     private Player player;
     private HealthManager healthManager;
+    private HealthBar healthBar;
 
     void Start()
     {
         player = GetComponent<Player>();
         lastDamageTime = Time.time;
         healthManager = GetComponent<HealthManager>();
+        healthBar = FindObjectOfType<HealthBar>();
     }
 
     void Update()
@@ -28,6 +30,7 @@ public class HealthRegen : MonoBehaviour
     public void TookDamage()
     {
         lastDamageTime = Time.time;
+        healthBar.SetDirection(false);
     }
 
     private void RegenerateHealth()
@@ -40,6 +43,10 @@ public class HealthRegen : MonoBehaviour
                 player.currentHealth = player.maxHealth;
             }
             healthManager.SetHealth((int)player.currentHealth);
+
+            // Ažuriramo HealthBar
+            healthBar.SetHealth((int)player.currentHealth);
+            healthBar.SetDirection(true);
         }
     }
 }
