@@ -3,38 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Seal : MonoBehaviour, Interactable
-{
+{   
+    public bool Interacted;
     public List<StoneType> requiredStoneTypes;
     private List<StoneType> placedStoneTypes = new List<StoneType>();
 
     public void Interact()
-    {
+    {   
+        Interacted = true;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        // Inventory inventory = player.GetComponent<Inventory>();
-        // if (inventory != null)
-        // {
-        //     foreach (GameObject stone in inventory.stones)
-        //     {
-        //         Stone stoneScript = stone.GetComponent<Stone>();
-        //         if (stoneScript != null && requiredStoneTypes.Contains(stoneScript.stoneType))
-        //         {
-        //             placedStoneTypes.Add(stoneScript.stoneType);
-        //             inventory.stones.Remove(stone);
-        //             Destroy(stone);
-        //             break;
-        //         }
-        //     }
+        Inventory inventory = player.GetComponent<Inventory>();
+        if (inventory != null)
+        {
+            foreach (GameObject stone in inventory.stones)
+            {
+                Stone stoneScript = stone.GetComponent<Stone>();
+                if (stoneScript != null && requiredStoneTypes.Contains(stoneScript.stoneType))
+                {
+                    placedStoneTypes.Add(stoneScript.stoneType);
+                    inventory.stones.Remove(stone);
+                    Destroy(stone);
+                    break;
+                }
+            }
 
-        //     if (CheckIfPuzzleSolved())
-        //     {
-        //         OpenSeal();
-        //     }
-        // }
+            if (CheckIfPuzzleSolved())
+            {
+                OpenSeal();
+            }
+        }
     }
 
     public bool CanInteract()
     {
-        return true;
+        Invoke("ResetInteraction",2f);
+        return !Interacted;
     }
 
     private bool CheckIfPuzzleSolved()
@@ -50,8 +53,13 @@ public class Seal : MonoBehaviour, Interactable
     }
 
     private void OpenSeal()
-    {
+    {   
         Debug.Log("Seal Opened!");
-        // Add your logic to open the seal
+        
+    }
+
+
+    public void ResetInteraction(){
+        Interacted = false;
     }
 }
