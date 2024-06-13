@@ -10,7 +10,7 @@ public class InteractWithKing : MonoBehaviour,Interactable
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+       
         dialogueTrigger = GetComponent<DialogueTrigger>(); // Get reference to DialogueTrigger script
     }
 
@@ -32,4 +32,7 @@ public class InteractWithKing : MonoBehaviour,Interactable
     public void ResetInteraction(){
         IsInteracted = false;
     }
+
+
+   
 }
