@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CannotPassCollider : MonoBehaviour
-{
+{   
+    public bool Triggered;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        Triggered = false;
         gameObject.SetActive(true);
     }
 
@@ -17,6 +19,9 @@ public class CannotPassCollider : MonoBehaviour
     }
 
     public void DisableCollider(){
+        if(!Triggered){
+        Triggered = true;
         gameObject.SetActive(false);
+        }
     }
 }

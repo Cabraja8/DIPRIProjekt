@@ -7,25 +7,25 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI  nameText;
-    public TextMeshProUGUI  dialogueText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI dialogueText;
     public Animator animator;
     private Queue<string> sentences;
     // Start is called before the first frame update
     void Start()
     {
-        sentences=new Queue<string>();
+        sentences = new Queue<string>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         animator.SetBool("IsOpen", true);
 
-        nameText.text=dialogue.name;
+        nameText.text = dialogue.name;
 
         sentences.Clear();
 
-        foreach(string sentence in dialogue.sentences)
+        foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
         }
@@ -35,66 +35,63 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if(sentences.Count==0)
+        if (sentences.Count == 0)
         {
             EndDialogue();
             return;
         }
 
-        string sentence=sentences.Dequeue();
-        dialogueText.text=sentence;
+        string sentence = sentences.Dequeue();
+        dialogueText.text = sentence;
     }
 
     void EndDialogue()
     {
         Debug.Log("End of convo");
-         if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
             foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
             {
                 knightBehaviour.isFollowing = true;
             }
-        }else if (SceneManager.GetActiveScene().buildIndex == 2)
-{
-    NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
-    
-    bool allKnightsUnarmed = true;
-
-    foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
-    {
-        if (knightBehaviour.ArmedTheDefence)
-        {
-            allKnightsUnarmed = false;
-            break;
         }
-    }
-
-    if (allKnightsUnarmed)
-    {
-        foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+        else if (SceneManager.GetActiveScene().buildIndex == 2)
         {
-            knightBehaviour.ArmTheDefences();
-        }
-    }
-    if(FindObjectOfType<InteractWithKing>().IsInteracted == false){
+            NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
 
-     EnableInteractionWithTheKing();
-     
-     }
-}
+            bool allKnightsUnarmed = true;
+
+            foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+            {
+                if (knightBehaviour.ArmedTheDefence)
+                {
+                    allKnightsUnarmed = false;
+                    break;
+                }
+            }
+
+            if (allKnightsUnarmed)
+            {
+                foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+                {
+                    knightBehaviour.ArmTheDefences();
+                }
+            }
+            if(!FindObjectOfType<InteractWithKing>().IsInteracted){
+                KingDialogueEnable();
+            }
+
+        }
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
     }
 
-    public void DisableBorder(){
+    public void KingDialogueEnable()
+    {   
         FindObjectOfType<CannotPassCollider>().DisableCollider();
-       
-    }
-    public void EnableInteractionWithTheKing(){
         FindObjectOfType<EnableKingInteraction>().EnableKingInteract();
-        DisableBorder();
     }
 
 }

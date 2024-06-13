@@ -6,7 +6,8 @@ public class EnableKingInteraction : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        GetComponent<CircleCollider2D>().enabled = false;
         GetComponent<InteractWithKing>().enabled=false;
     }
 
@@ -17,6 +18,7 @@ public class EnableKingInteraction : MonoBehaviour
     }
 
     public void EnableKingInteract(){
+        GetComponent<CircleCollider2D>().enabled = true;
        GetComponent<InteractWithKing>().enabled=true;
     }
 }
