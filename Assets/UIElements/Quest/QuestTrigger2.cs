@@ -5,10 +5,13 @@ using UnityEngine;
 public class QuestTrigger2 : MonoBehaviour
 {
     public QuestGiver questGiver; // Reference to the QuestGiver
+    public Transform player; // Reference to the player's transform
+    public float proximityThreshold = 5.0f; // Distance threshold for triggering the quest
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("Player"))
+        float distance = Vector3.Distance(player.position, transform.position);
+        if (distance <= proximityThreshold)
         {
             TriggerQuest();
         }
@@ -16,6 +19,10 @@ public class QuestTrigger2 : MonoBehaviour
 
     public void TriggerQuest()
     {
-        questGiver.StartQuest(); // Start the quest when the player reaches the object
+        if (questGiver != null)
+        {
+            questGiver.StartQuest();
+            enabled = false; // Disable the script to prevent multiple triggers
+        }
     }
 }
