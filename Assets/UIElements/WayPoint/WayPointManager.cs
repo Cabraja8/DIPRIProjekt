@@ -4,64 +4,69 @@ using UnityEngine.UI;
 
 public class WayPointManager : MonoBehaviour
 {
+    public static WayPointManager Instance; // Singleton instance
     public List<Transform> waypoints;
-    public Image waypointImage; // UI Image to indicate the waypoint
-    public Camera mainCamera; // Main camera to convert world position to screen position
-    public Transform player; // Reference to the player transform
+    public Image waypointImage;
+    public Camera mainCamera;
+    public Transform player;
     private int currentWaypointIndex = 0;
-    private bool waypointsCompleted = false; // Flag to indicate all waypoints are visited
+    private bool waypointsCompleted = false;
+    public Quest activeQuest; // Reference to the active quest
+    public QuestGiver questGiver; // Reference to the QuestGiver
 
-    public float proximityThreshold = 5.0f; // Adjusted threshold to match observed distances
-    public float edgeBuffer = 50f; // Buffer to keep the waypoint image inside the screen edges
+    public float proximityThreshold = 5.0f;
+    public float edgeBuffer = 50.0f;
 
-    private void Start()
+    private void Awake()
     {
-        if (waypoints.Count == 0)
-            return;
-
-        UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
+        Instance = this;
     }
 
     private void Update()
     {
-        if (waypoints.Count == 0 || waypointsCompleted)
+        if (waypointsCompleted || waypoints.Count == 0)
             return;
 
-        Transform currentWaypoint = waypoints[currentWaypointIndex];
-        float distanceToWaypoint = Vector3.Distance(player.position, currentWaypoint.position);
+        float distance = Vector3.Distance(player.position, waypoints[currentWaypointIndex].position);
 
-        UpdateWaypointImagePosition(currentWaypoint);
-
-        if (distanceToWaypoint < proximityThreshold)
+        if (distance <= proximityThreshold)
         {
-            MoveToNextWaypoint();
+            ReachWaypoint();
         }
+
+        UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
     }
 
-    private void MoveToNextWaypoint()
+    private void ReachWaypoint()
     {
+        Transform reachedWaypoint = waypoints[currentWaypointIndex];
         currentWaypointIndex++;
         if (currentWaypointIndex >= waypoints.Count)
         {
             waypointsCompleted = true;
-            waypointImage.enabled = false; // Hide the waypoint image when done
+            waypointImage.enabled = false;
             Debug.Log("All waypoints visited!");
-            return;
         }
 
-        UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
+        if (activeQuest != null && activeQuest.CheckIfCompleted(reachedWaypoint))
+        {
+            questGiver.ClearQuestWindow(); // Clear the quest window text
+            activeQuest = null; // Clear the active quest once completed
+        }
+
+        if (!waypointsCompleted)
+        {
+            UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
+        }
     }
 
     private void UpdateWaypointImagePosition(Transform waypoint)
     {
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(waypoint.position);
-
-        // Check if the waypoint is off-screen
         bool isOffScreen = screenPosition.z < 0 || screenPosition.x < 0 || screenPosition.x > Screen.width || screenPosition.y < 0 || screenPosition.y > Screen.height;
 
         if (isOffScreen)
         {
-            // Keep the waypoint image at the edge of the screen with a buffer
             screenPosition = ClampToScreenEdge(screenPosition);
         }
 
@@ -70,7 +75,6 @@ public class WayPointManager : MonoBehaviour
 
     private Vector3 ClampToScreenEdge(Vector3 screenPosition)
     {
-        // Flip screen position if waypoint is behind the camera
         if (screenPosition.z < 0)
         {
             screenPosition *= -1;
@@ -80,6 +84,17 @@ public class WayPointManager : MonoBehaviour
         screenPosition.y = Mathf.Clamp(screenPosition.y, edgeBuffer, Screen.height - edgeBuffer);
 
         return screenPosition;
+    }
+
+    public void SetActiveWaypoint(Transform waypoint, Quest quest)
+    {
+        waypoints.Clear();
+        waypoints.Add(waypoint);
+        currentWaypointIndex = 0;
+        waypointsCompleted = false;
+        activeQuest = quest;
+        waypointImage.enabled = true;
+        UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
     }
 
     private void OnDrawGizmos()

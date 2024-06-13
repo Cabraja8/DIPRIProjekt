@@ -8,12 +8,22 @@ public class Quest
     public bool isActive;
     public string title;
     public string description;
+    public QuestSystem goal; // Represents the goal type and specifics
+    public Transform waypoint; // Represents the location to reach for the quest
 
-    public QuestSystem goal;
-    
     public void Complete()
     {
-        isActive=false;
-        Debug.Log(title+"was completed");
+        isActive = false;
+        Debug.Log(title + " was completed");
+    }
+
+    public bool CheckIfCompleted(Transform reachedWaypoint)
+    {
+        if (isActive && waypoint == reachedWaypoint)
+        {
+            Complete();
+            return true;
+        }
+        return false;
     }
 }
