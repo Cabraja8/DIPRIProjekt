@@ -13,15 +13,7 @@ public class QuestGiver : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            OpenQuestWindow();
-        }
-    }
-
-    public void OpenQuestWindow()
+    public void StartQuest()
     {
         questWindow.SetActive(true);
         titleText.text = quest.title;

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -11,14 +10,16 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Animator animator;
     private Queue<string> sentences;
-    // Start is called before the first frame update
+    private QuestGiver questGiver; // Reference to the QuestGiver
+
     void Start()
     {
         sentences = new Queue<string>();
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, QuestGiver questGiver = null)
     {
+        this.questGiver = questGiver; // Assign the QuestGiver
         animator.SetBool("IsOpen", true);
 
         nameText.text = dialogue.name;
@@ -78,20 +79,26 @@ public class DialogueManager : MonoBehaviour
                     knightBehaviour.ArmTheDefences();
                 }
             }
-            if(!FindObjectOfType<InteractWithKing>().IsInteracted){
+            if (!FindObjectOfType<InteractWithKing>().IsInteracted)
+            {
                 KingDialogueEnable();
             }
-
         }
+
         animator.SetBool("IsOpen", false);
         nameText.text = ""; // Clear the name text
         dialogueText.text = ""; // Clear the dialogue text
+
+        // Start the quest if a QuestGiver is assigned
+        if (questGiver != null)
+        {
+            questGiver.StartQuest();
+        }
     }
 
     public void KingDialogueEnable()
-    {   
+    {
         FindObjectOfType<CannotPassCollider>().DisableCollider();
         FindObjectOfType<EnableKingInteraction>().EnableKingInteract();
     }
-
 }

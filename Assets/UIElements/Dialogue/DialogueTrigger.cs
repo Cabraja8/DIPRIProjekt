@@ -5,6 +5,7 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    public QuestGiver questGiver; // Reference to the QuestGiver
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,8 +14,9 @@ public class DialogueTrigger : MonoBehaviour
             TriggerDialogue();
         }
     }
+
     public void TriggerDialogue()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue, questGiver);
     }
 }
