@@ -22,16 +22,5 @@ public class HealthBar : MonoBehaviour
 
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
-
-    public void SetDirection(bool isRegenerating)
-    {
-        if (isRegenerating)
-        {
-            slider.direction = Slider.Direction.RightToLeft;
-        }
-        else
-        {
-            slider.direction = Slider.Direction.LeftToRight;
-        }
-    }
 }
+

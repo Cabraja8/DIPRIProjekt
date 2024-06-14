@@ -19,9 +19,6 @@ public class Player : MonoBehaviour
 
     public CombatAndMovement PlayerAnimation;
     private SpriteRenderer rend;
-    public float maxHealth = 100f;
-    public float currentHealth;
-
     public GameObject swordHitbox;
     Collider2D swordCollider;
 
@@ -32,9 +29,24 @@ public class Player : MonoBehaviour
         PlayerAnimation = GetComponentInChildren<CombatAndMovement>();
         rend = GetComponentInChildren<SpriteRenderer>();
         swordCollider = swordHitbox.GetComponent<Collider2D>();
-        currentHealth = maxHealth;
-        healthManager = GetComponent<HealthManager>();
-        // healthManager.SetMaxHealth((int)maxHealth);
+        // healthManager = GetComponent<HealthManager>();
+        // healthManager.healthBar = HealthBarUI.GetComponent<HealthBar>();
+
+        if (healthManager == null)
+        {
+            healthManager = GetComponent<HealthManager>();
+        }
+
+        if (healthManager != null && healthManager.healthBar == null)
+        {
+            healthManager.healthBar = HealthBarUI.GetComponent<HealthBar>();
+        }
+
+        // inicijalizacija helath manager
+        if (healthManager != null)
+        {
+            healthManager.Initialize();
+        }
     }
 
     public virtual void Update()
@@ -73,8 +85,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
     public void DeathHandler()
     {
         Debug.Log("Player is dead");
@@ -88,15 +98,13 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (healthManager != null)
         {
-            currentHealth -= damage;
-            healthManager.TakeDamage((int)damage); // novo
-            if (currentHealth <= 0)
+            healthManager.TakeDamage((int)damage);
+            if (healthManager.currentHealth <= 0)
             {
                 DeathHandler();
             }
-
-            GetComponent<HealthRegen>().TookDamage();
         }
     }
 }
