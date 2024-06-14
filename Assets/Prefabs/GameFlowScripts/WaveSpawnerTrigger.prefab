@@ -92,3 +92,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaveSpawner: {fileID: 0}
   NotStarted: 0
+  InvisibleBorder: {fileID: 0}

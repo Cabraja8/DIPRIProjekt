@@ -14,6 +14,7 @@ TagManager:
   - DefendPoint
   - KingStand
   - King
+  - EyeSpy
   layers:
   - Default
   - TransparentFX
