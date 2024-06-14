@@ -18,7 +18,7 @@ public class NPCAnimationController : MonoBehaviour
 
     private void Update()
     {
-        Vector2 movementDirection = new Vector2(navMeshAgent.velocity.x, navMeshAgent.velocity.y);
+        Vector2 movementDirection = new Vector2(navMeshAgent.velocity.x, navMeshAgent.velocity.z);
 
         // Update animation based on movement direction
         UpdateAnimation(movementDirection);
@@ -26,20 +26,58 @@ public class NPCAnimationController : MonoBehaviour
 
     private void UpdateAnimation(Vector2 movementDirection)
     {
-        bool isWalkingDown = movementDirection.y < 0;
-        bool isSideWalking = Mathf.Abs(movementDirection.x) > 0;
-        bool isUpWalking = movementDirection.y > 0;
-        bool isMovingRight = movementDirection.x > 0;
+        bool isMoving = movementDirection.magnitude > 0.1f;
 
-        // Update animator parameters
-        animator.SetBool("IsWalkingDown", isWalkingDown && !isSideWalking);
-        animator.SetBool("IsSideWalking", isSideWalking);
-        animator.SetBool("IsUpWalking", isUpWalking && !isSideWalking);
-
-        // Handle sprite flipping for right-side movement
-        if (isSideWalking)
+        if (isMoving)
         {
-            spriteRenderer.flipX = isMovingRight;
+            float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+            angle = (angle + 360) % 360; // Normalize angle to be between 0 and 360
+
+            
+
+            // Determine side movement (left or right) based on angle
+            if ((angle >= 0 && angle < 45) || (angle >= 315 && angle < 360))
+            {
+               
+                SetAnimatorParameters(false, true, false);
+                spriteRenderer.flipX = true;
+            }
+            else if (angle > 135 && angle <= 225)
+            {
+                
+                SetAnimatorParameters(false, true, false);
+                spriteRenderer.flipX = false;
+            }
+            else if (angle >= 45 && angle < 135)
+            {
+               
+                SetAnimatorParameters(true, false, false);
+                spriteRenderer.flipX = false;
+            }
+            else if (angle > 225 && angle < 315)
+            {
+                
+                SetAnimatorParameters(false, false, true);
+                spriteRenderer.flipX = false;
+            }
+        }
+        else
+        {
+            // Idle
+            SetAnimatorParameters(false, false, false);
         }
     }
+
+    private void SetAnimatorParameters(bool isWalkingDown, bool isSideWalking, bool isUpWalking)
+    {
+        animator.SetBool("IsWalkingDown", isWalkingDown);
+        animator.SetBool("IsSideWalking", isSideWalking);
+        animator.SetBool("IsUpWalking", isUpWalking);
+    }
 }
+
+
+
+
+
+

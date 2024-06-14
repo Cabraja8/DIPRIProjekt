@@ -18,13 +18,13 @@ public class NPC : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false; 
         agent.updateUpAxis = false; 
-        agent.avoidancePriority = 30;
+        agent.avoidancePriority = 0;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+         agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -34,18 +34,19 @@ public class NPC : MonoBehaviour
     }
 
 
-     public void MoveTo(Vector3 destination, System.Action onDestinationReached)
+         public void MoveTo(Vector3 targetPosition, System.Action onReach)
     {
-        agent.SetDestination(destination);
-        StartCoroutine(CheckIfReachedDestination(onDestinationReached));
+        agent.SetDestination(targetPosition);
+        StartCoroutine(WaitForDestinationReached(onReach));
     }
 
-    private IEnumerator CheckIfReachedDestination(System.Action onDestinationReached)
+    private IEnumerator WaitForDestinationReached(System.Action onReach)
     {
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        while (agent.pathPending || agent.remainingDistance > 0.1f)
         {
             yield return null;
         }
+        onReach?.Invoke();
     }
 }
       

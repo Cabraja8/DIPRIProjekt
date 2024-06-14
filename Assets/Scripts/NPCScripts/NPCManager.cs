@@ -49,30 +49,47 @@ public class NPCManager : MonoBehaviour
 
     public void SecondStage()
     {
-       
+        Debug.Log("Second Stage");
         for (int i = 0; i < spawnedNPCs.Count; i++)
         {
             GameObject npc = spawnedNPCs[i];
+            NPCIdle idleComponent = npc.GetComponent<NPCIdle>();
+            if (idleComponent != null)
+            {
+                idleComponent.enabled = false;
+            }
+
+            NPCPatrol patrolComponent = npc.GetComponent<NPCPatrol>();
+            if (patrolComponent != null)
+            {
+                patrolComponent.enabled = false;
+            }
+
             if (i < homePoints.Length)
             {
                 MoveToHomePointAndDisappear(npc, homePoints[i]);
+            }
+            else
+            {
+                Debug.LogWarning($"No home point assigned for NPC {npc.name}");
+                Destroy(npc);
             }
         }
     }
 
     void MoveToHomePointAndDisappear(GameObject npc, Transform homePoint)
     {
-        
         NPC npcController = npc.GetComponent<NPC>();
         if (npcController != null)
         {
             npcController.MoveTo(homePoint.position, () => {
+                
                 Destroy(npc);
             });
         }
         else
         {
-            Debug.LogWarning($"NPCController component not found on {npc.name}");
+            
             Destroy(npc);
         }
     }

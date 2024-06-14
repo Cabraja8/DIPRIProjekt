@@ -6,13 +6,13 @@ using UnityEngine.AI;
 public class NPCPatrol : NPC
 {
     public Transform[] patrolPoints;
-    private NavMeshAgent agent;
+    private NavMeshAgent patrolAgent; // Renamed from 'agent' to 'patrolAgent'
 
     public float waitTime = 2f;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        patrolAgent = GetComponent<NavMeshAgent>(); // Adjusted to 'patrolAgent'
 
         // Find all patrol points by tag
         GameObject[] patrolPointObjects = GameObject.FindGameObjectsWithTag("PatrolPoint");
@@ -30,7 +30,7 @@ public class NPCPatrol : NPC
 
     void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.1f)
+        if (!patrolAgent.pathPending && patrolAgent.remainingDistance < 0.1f) // Adjusted to 'patrolAgent'
         {
             StartCoroutine(WaitAtPoint());
         }
@@ -48,6 +48,6 @@ public class NPCPatrol : NPC
             return;
 
         int randomIndex = Random.Range(0, patrolPoints.Length);
-        agent.SetDestination(patrolPoints[randomIndex].position);
+        patrolAgent.SetDestination(patrolPoints[randomIndex].position); // Adjusted to 'patrolAgent'
     }
 }
