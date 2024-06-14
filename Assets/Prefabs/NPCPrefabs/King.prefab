@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 8073758686227697876}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6a54db7ed103b8344982d6cb92a007d1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 36969ddca96454b468417d57a4b729d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 3144135526121596424}
   - component: {fileID: 3280778944641923074}
   - component: {fileID: 7447409798230057093}
+  - component: {fileID: 8749655177883035819}
   m_Layer: 0
   m_Name: King
   m_TagString: King
@@ -178,3 +179,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8749655177883035819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787533405852952548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe5e66cdafbec7418c919884684730c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  navMeshAgent: {fileID: 0}

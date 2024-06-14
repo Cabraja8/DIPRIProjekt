@@ -97,8 +97,25 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void KingDialogueEnable()
+{
+    var collider = FindObjectOfType<CannotPassCollider>();
+    if (collider == null)
     {
-        FindObjectOfType<CannotPassCollider>().DisableCollider();
-        FindObjectOfType<EnableKingInteraction>().EnableKingInteract();
+        Debug.LogError("CannotPassCollider not found!");
     }
+    else
+    {
+        collider.DisableCollider();
+    }
+
+    var kingInteraction = FindObjectOfType<EnableKingInteraction>();
+    if (kingInteraction == null)
+    {
+        Debug.LogError("EnableKingInteraction not found!");
+    }
+    else
+    {
+        kingInteraction.EnableKingInteract();
+    }
+}
 }
