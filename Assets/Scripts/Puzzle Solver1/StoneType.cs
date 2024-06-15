@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum StoneType
 {
-    Fire,
-    Water,
-    Earth,
-    Air
+   Amberfall,
+    Duskstone,
+    Embercrest,
+    Frostbane
 }

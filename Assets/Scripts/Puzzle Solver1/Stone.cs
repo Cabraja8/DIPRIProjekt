@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class Stone : MonoBehaviour, Interactable
 {
     public StoneType stoneType;
@@ -13,8 +17,15 @@ public class Stone : MonoBehaviour, Interactable
         Inventory inventory = player.GetComponent<Inventory>();
         if (inventory != null)
         {
-            inventory.AddStone(gameObject);
-            Destroy(gameObject);
+            if (inventory.stones.Count < inventory.maxCapacity)
+            {
+                inventory.AddStone(stoneType);
+                Destroy(gameObject); // Destroy the stone GameObject after adding its type to the inventory
+            }
+            else
+            {
+                Debug.Log("Inventory is full. Cannot pick up more stones.");
+            }
         }
     }
 
@@ -23,3 +34,4 @@ public class Stone : MonoBehaviour, Interactable
         return true;
     }
 }
+

@@ -1,22 +1,28 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     public int maxCapacity = 1; 
-    public List<GameObject> stones = new List<GameObject>();
+    public List<StoneType> stones = new List<StoneType>();
 
-    public void AddStone(GameObject stone)
+    public void AddStone(StoneType stoneType)
     {
         if (stones.Count < maxCapacity)
         {
-            stones.Add(stone);
-            Debug.Log("Stone added to inventory: " + stone.GetComponent<Stone>().stoneType);
+            stones.Add(stoneType);
+            Debug.Log("Stone added to inventory: " + stoneType);
         }
         else
         {
             Debug.Log("Inventory is full. Cannot add more stones.");
         }
     }
+
+    public void RemoveStone(StoneType stoneType)
+    {
+        stones.Remove(stoneType);
+        Debug.Log("Stone removed from inventory: " + stoneType);
+    }
 }
+
