@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondScene.unity
     guid: 6ad49cc8e8d7f7f468be5361417f11d9
+  - enabled: 1
+    path: Assets/Scenes/Castle_FirstScene.unity
+    guid: 8cc7cd838b8688d49b9e8624545ee138
   m_configObjects: {}
