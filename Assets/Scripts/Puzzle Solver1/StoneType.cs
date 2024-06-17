@@ -4,8 +4,7 @@ using UnityEngine;
 
 public enum StoneType
 {
-   Amberfall,
+    Frostbane,
     Duskstone,
-    Embercrest,
-    Frostbane
+    Embercrest
 }

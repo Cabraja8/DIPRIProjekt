@@ -9,6 +9,14 @@ public class Seal : MonoBehaviour, Interactable
     public int requiredStoneCount; // Number of correct stones needed to open the seal
     private List<StoneType> placedStoneTypes = new List<StoneType>();
 
+    public GameObject stonePlacementIndicator; 
+    public Sprite[] correctStoneSprites; 
+    public Sprite[] incorrectStoneSprites; 
+    public Sprite defaultSprite; 
+    public float incorrectDisplayDuration = 1f; 
+
+    private int currentIndex = 0; 
+
     public void Interact()
     {
         Interacted = true;
@@ -24,14 +32,17 @@ public class Seal : MonoBehaviour, Interactable
                 {
                     placedStoneTypes.Add(stoneType);
                     stonesToRemove.Add(stoneType);
+                    ChangeStonePlacementIndicator(true); 
+                    currentIndex++; 
                     if (placedStoneTypes.Count >= requiredStoneCount)
                     {
-                        break; // Stop placing stones once the required count is reached
+                        break; 
                     }
                 }
                 else
                 {
                     Debug.Log("This stone doesn't fit.");
+                    StartCoroutine(DisplayIncorrectSprite()); 
                 }
             }
 
@@ -80,7 +91,40 @@ public class Seal : MonoBehaviour, Interactable
     {
         Interacted = false;
     }
+
+    private void ChangeStonePlacementIndicator(bool correct)
+    {
+        if (stonePlacementIndicator != null)
+        {
+            SpriteRenderer spriteRenderer = stonePlacementIndicator.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                if (correct && currentIndex < correctStoneSprites.Length)
+                {
+                    spriteRenderer.sprite = correctStoneSprites[currentIndex];
+                }
+            }
+        }
+    }
+
+    private IEnumerator DisplayIncorrectSprite()
+    {
+        if (stonePlacementIndicator != null)
+        {
+            SpriteRenderer spriteRenderer = stonePlacementIndicator.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                if (currentIndex < incorrectStoneSprites.Length)
+                {
+                    spriteRenderer.sprite = incorrectStoneSprites[currentIndex];
+                    yield return new WaitForSeconds(incorrectDisplayDuration);
+                    spriteRenderer.sprite = currentIndex < correctStoneSprites.Length ? correctStoneSprites[currentIndex] : defaultSprite;
+                }
+            }
+        }
+    }
 }
+
 
 
 
