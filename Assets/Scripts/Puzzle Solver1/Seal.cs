@@ -15,7 +15,7 @@ public class Seal : MonoBehaviour, Interactable
     public Sprite defaultSprite; 
     public float incorrectDisplayDuration = 1f; 
 
-    private int currentIndex = 0; 
+    public int currentIndex = 0; 
 
     public void Interact()
     {
@@ -40,7 +40,8 @@ public class Seal : MonoBehaviour, Interactable
                     }
                 }
                 else
-                {
+                {   
+                    inventory.RemoveStone(stoneType);
                     Debug.Log("This stone doesn't fit.");
                     StartCoroutine(DisplayIncorrectSprite()); 
                 }
@@ -116,15 +117,22 @@ public class Seal : MonoBehaviour, Interactable
             {
                 if (currentIndex < incorrectStoneSprites.Length)
                 {
+                    // Display incorrect sprite at the current index
                     spriteRenderer.sprite = incorrectStoneSprites[currentIndex];
                     yield return new WaitForSeconds(incorrectDisplayDuration);
-                    spriteRenderer.sprite = currentIndex < correctStoneSprites.Length ? correctStoneSprites[currentIndex] : defaultSprite;
+
+                    // Revert to correct sprite or default sprite if no correct stones placed yet
+                    if (currentIndex > 0 && currentIndex - 1 < correctStoneSprites.Length)
+                    {
+                        spriteRenderer.sprite = correctStoneSprites[currentIndex - 1];
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = defaultSprite;
+                    }
                 }
             }
         }
     }
 }
-
-
-
 
