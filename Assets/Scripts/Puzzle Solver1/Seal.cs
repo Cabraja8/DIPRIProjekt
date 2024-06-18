@@ -6,16 +6,23 @@ public class Seal : MonoBehaviour, Interactable
 {
     public bool Interacted;
     public List<StoneType> requiredStoneTypes;
-    public int requiredStoneCount; // Number of correct stones needed to open the seal
+    public int requiredStoneCount; 
     private List<StoneType> placedStoneTypes = new List<StoneType>();
-
     public GameObject stonePlacementIndicator; 
     public Sprite[] correctStoneSprites; 
     public Sprite[] incorrectStoneSprites; 
     public Sprite defaultSprite; 
     public float incorrectDisplayDuration = 1f; 
-
     public int currentIndex = 0; 
+    public GameObject door;
+    public Sprite OpenedDoor;
+    public GameObject Crown;
+
+    void Start()
+    {
+        Crown.SetActive(false);
+        
+    }
 
     public void Interact()
     {
@@ -25,6 +32,7 @@ public class Seal : MonoBehaviour, Interactable
         if (inventory != null)
         {
             List<StoneType> stonesToRemove = new List<StoneType>();
+            List<StoneType> incorrectStones = new List<StoneType>();
 
             foreach (StoneType stoneType in inventory.stones)
             {
@@ -41,15 +49,20 @@ public class Seal : MonoBehaviour, Interactable
                 }
                 else
                 {   
-                    inventory.RemoveStone(stoneType);
-                    Debug.Log("This stone doesn't fit.");
-                    StartCoroutine(DisplayIncorrectSprite()); 
+                    incorrectStones.Add(stoneType);
                 }
             }
 
             foreach (StoneType stoneType in stonesToRemove)
             {
                 inventory.RemoveStone(stoneType);
+            }
+
+            foreach (StoneType stoneType in incorrectStones)
+            {
+                inventory.RemoveStone(stoneType);
+                Debug.Log("This stone doesn't fit.");
+                StartCoroutine(DisplayIncorrectSprite()); 
             }
 
             if (CheckIfPuzzleSolved())
@@ -85,12 +98,32 @@ public class Seal : MonoBehaviour, Interactable
     private void OpenSeal()
     {
         Debug.Log("Seal Opened!");
-        // Add more logic here if needed to handle the seal opening
+        door.GetComponent<SpriteRenderer>().sprite = OpenedDoor;
+        Crown.SetActive(true);
+        RemoveStones();
+        RemoveInteractable();
+        // pokreni wave spawner napad
+    }
+    private void RemoveInteractable(){
+        Destroy(this);
     }
 
     public void ResetInteraction()
     {
         Interacted = false;
+    }
+    private void RemoveStones()
+    {
+        Stone[] stones = FindObjectsOfType<Stone>();
+        foreach (Stone stone in stones)
+        {
+            stone.enabled = false;
+            CircleCollider2D collider = stone.GetComponent<CircleCollider2D>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+        }
     }
 
     private void ChangeStonePlacementIndicator(bool correct)
@@ -117,11 +150,11 @@ public class Seal : MonoBehaviour, Interactable
             {
                 if (currentIndex < incorrectStoneSprites.Length)
                 {
-                    // Display incorrect sprite at the current index
+                    
                     spriteRenderer.sprite = incorrectStoneSprites[currentIndex];
                     yield return new WaitForSeconds(incorrectDisplayDuration);
 
-                    // Revert to correct sprite or default sprite if no correct stones placed yet
+                
                     if (currentIndex > 0 && currentIndex - 1 < correctStoneSprites.Length)
                     {
                         spriteRenderer.sprite = correctStoneSprites[currentIndex - 1];
@@ -135,4 +168,5 @@ public class Seal : MonoBehaviour, Interactable
         }
     }
 }
+
 
