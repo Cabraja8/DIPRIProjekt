@@ -5,6 +5,8 @@ using UnityEngine;
 public class ArmTheDefendPoints : MonoBehaviour
 {
        public GameObject TriggerArmTheDefences;
+
+       
     public bool Triggered;
 
 
