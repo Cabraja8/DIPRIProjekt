@@ -137,4 +137,26 @@ public class CombatAndMovement : MonoBehaviour
             }
         }
     }
+
+    public void MeleeAttackUndeadEvent(){
+        Undead undead = GetComponentInParent<Undead>();
+
+        if (undead != null)
+        {
+
+            if (undead.target.GetComponent<HealthManager>().currentHealth < 1)
+            {
+               
+                 if (undead.target.tag == "Player")
+                {
+                    undead.target.GetComponent<Player>().DeathHandler();
+                    
+                }
+            }
+            else
+            {   
+                undead.target.GetComponentInChildren<CombatAndMovement>().PlayTakeHitAnimation();
+            }
+        }
+    }
 }
