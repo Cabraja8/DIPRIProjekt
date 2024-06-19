@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InteractWithKnights : MonoBehaviour, Interactable
-{   
+{
     private bool Interacted;
     private DialogueTrigger dialogueTrigger;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         dialogueTrigger = GetComponent<DialogueTrigger>(); // Get reference to DialogueTrigger script
     }
 
