@@ -16,7 +16,7 @@ public class InteractionDetector : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
         if (interactablesInRange.Count > 0)
         {
             interactionText.enabled = true; // Show the text when near an interactable

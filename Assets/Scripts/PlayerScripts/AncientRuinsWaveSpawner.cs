@@ -24,18 +24,19 @@ public class AncientRuinsWaveSpawner : MonoBehaviour
     public int currentWaveIndex;
 
     public Transform player;
+    public GameObject InvisibleBorder;
 
 
     private void Start()
     {   
-    
+        InvisibleBorder.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player").transform;
     
     }
 
     public void StartSpawning(){
         Debug.Log("Spawning");
-
+        InvisibleBorder.SetActive(true);
         StartCoroutine(StartNextWave(currentWaveIndex));
     }
 
@@ -88,7 +89,7 @@ public class AncientRuinsWaveSpawner : MonoBehaviour
             {
                 // End of waves
                 Debug.Log("End of wave");
-               
+               InvisibleBorder.SetActive(false);
             }
         }
     }

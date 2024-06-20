@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 using UnityEngine;
 
 public class Seal : MonoBehaviour, Interactable
@@ -38,7 +39,7 @@ public class Seal : MonoBehaviour, Interactable
             foreach (StoneType stoneType in inventory.stones)
             {
                 if (requiredStoneTypes.Contains(stoneType))
-                {
+                {   
                     placedStoneTypes.Add(stoneType);
                     stonesToRemove.Add(stoneType);
                     ChangeStonePlacementIndicator(true); 
@@ -71,12 +72,18 @@ public class Seal : MonoBehaviour, Interactable
                 
                 Invoke("OpenSeal",3f);
             }
+                    Light2D light = GetComponentInChildren<Light2D>();
+                     if (light != null)
+                     {
+                     light.enabled = false;
+                    }
         }
     }
 
     public bool CanInteract()
     {
         Invoke("ResetInteraction", 2f);
+        
         return !Interacted;
     }
 
