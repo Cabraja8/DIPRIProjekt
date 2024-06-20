@@ -18,6 +18,7 @@ public class Seal : MonoBehaviour, Interactable
     public Sprite OpenedDoor;
     public GameObject Crown;
 
+
     void Start()
     {
         Crown.SetActive(false);
@@ -67,7 +68,8 @@ public class Seal : MonoBehaviour, Interactable
 
             if (CheckIfPuzzleSolved())
             {
-                OpenSeal();
+                
+                Invoke("OpenSeal",3f);
             }
         }
     }
@@ -102,7 +104,7 @@ public class Seal : MonoBehaviour, Interactable
         Crown.SetActive(true);
         RemoveStones();
         RemoveInteractable();
-        // pokreni wave spawner napad
+    
     }
     private void RemoveInteractable(){
         Destroy(this);

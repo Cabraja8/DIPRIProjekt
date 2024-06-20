@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -56,6 +57,8 @@ public class DialogueManager : MonoBehaviour
             {
                 knightBehaviour.isFollowing = true;
             }
+            
+            
         }
         else if (SceneManager.GetActiveScene().buildIndex == 2)
         {

@@ -28,14 +28,14 @@ public class AncientRuinsWaveSpawner : MonoBehaviour
 
     private void Start()
     {   
-        gameObject.SetActive(false);
+    
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     
     }
 
     public void StartSpawning(){
         Debug.Log("Spawning");
 
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(StartNextWave(currentWaveIndex));
     }
 

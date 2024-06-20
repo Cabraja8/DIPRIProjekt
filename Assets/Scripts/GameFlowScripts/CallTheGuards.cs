@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class CallTheGuards : MonoBehaviour, Interactable
 {      
@@ -35,6 +36,11 @@ public class CallTheGuards : MonoBehaviour, Interactable
         isSpawning = true;
         Invoke("OpenDoor",1f);
         InvokeRepeating("SpawnGuard", 0.2f, 0.5f); 
+        Light2D light = GetComponentInChildren<Light2D>();
+            if (light != null)
+            {
+                light.enabled = false;
+            }
         
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class InteractWithKnights : MonoBehaviour, Interactable
 {
@@ -23,6 +24,11 @@ public class InteractWithKnights : MonoBehaviour, Interactable
         {
             dialogueTrigger.TriggerDialogue(); // Call TriggerDialogue method from DialogueTrigger script
         }
+        Light2D light = GetComponentInChildren<Light2D>();
+            if (light != null)
+            {
+                light.enabled = false;
+            }
     }
 
     public bool CanInteract()
