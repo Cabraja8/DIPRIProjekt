@@ -30,6 +30,9 @@ public class WaveSpawner : MonoBehaviour
     public ChapterStart chapter;
 
     public StartWave waveStarter;
+
+    // Add a reference to the Quest or QuestGiver
+    public Quest questToTrigger; // Option 1: Direct reference to the quest
   
 
     private void Start()
@@ -97,7 +100,20 @@ public class WaveSpawner : MonoBehaviour
                 waveStarter.DisableBorder();
                 chapter.SetToTrueChapterStart();
                Invoke("FollowPlayerKnights",2f);
+
+                // Trigger the quest after all waves have ended
+                TriggerQuestAfterWaves();
             }
+        }
+    }
+
+    //Quest
+    private void TriggerQuestAfterWaves()
+    {
+        // Option 1: Trigger a specific quest
+        if (questToTrigger != null)
+        {
+            QuestManager.Instance.AddQuest(questToTrigger);
         }
     }
 

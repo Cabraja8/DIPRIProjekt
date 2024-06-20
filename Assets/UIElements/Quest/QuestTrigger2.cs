@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class QuestTrigger2 : MonoBehaviour
 {
-    public QuestGiver questGiver; // Reference to the QuestGiver
     public Transform player; // Reference to the player's transform
+    public Quest quest; // Reference to the quest to be added to the queue
     public float proximityThreshold = 5.0f; // Distance threshold for triggering the quest
 
     private void Update()
@@ -19,9 +19,9 @@ public class QuestTrigger2 : MonoBehaviour
 
     public void TriggerQuest()
     {
-        if (questGiver != null)
+        if (quest != null)
         {
-            questGiver.StartQuest();
+            QuestManager.Instance.AddQuest(quest); // Add the quest to the QuestManager's queue
             enabled = false; // Disable the script to prevent multiple triggers
         }
     }

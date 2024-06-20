@@ -12,14 +12,21 @@ public class WayPointManager : MonoBehaviour
     private int currentWaypointIndex = 0;
     private bool waypointsCompleted = false;
     public Quest activeQuest; // Reference to the active quest
-    public QuestGiver questGiver; // Reference to the QuestGiver
 
     public float proximityThreshold = 5.0f;
     public float edgeBuffer = 50.0f;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -50,7 +57,7 @@ public class WayPointManager : MonoBehaviour
 
         if (activeQuest != null && activeQuest.CheckIfCompleted(reachedWaypoint))
         {
-            questGiver.ClearQuestWindow(); // Clear the quest window text
+            QuestManager.Instance.CompleteCurrentQuest(reachedWaypoint); // Notify QuestManager of quest completion
             activeQuest = null; // Clear the active quest once completed
         }
 
