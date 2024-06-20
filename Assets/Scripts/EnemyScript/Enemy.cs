@@ -178,6 +178,7 @@ public class Enemy : MonoBehaviour
         GetComponent<CapsuleCollider2D>().enabled = false;
         GetComponent<Enemy>().enabled = false;
         HealthBarUI.SetActive(false);
+        Destroy(gameObject, 2f);
 
     }
 

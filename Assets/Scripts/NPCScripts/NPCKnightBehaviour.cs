@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCKnightBehaviour : NPCBehaviour, Interactable
+public class NPCKnightBehaviour : NPCBehaviour
 {   
-    private bool Interacted;
+   
   
     public float detectionRadius = 5f;
     public LayerMask targetLayerMask;
@@ -28,8 +28,8 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
    protected override void Start()
     {    
         base.Start();
-        Interacted = true; // ovo trebam reworkat
-        CanDetectFromFar=false;
+       
+        CanDetectFromFar=true;
         Player = FindObjectOfType<Player>().transform;
         ArmedTheDefence = false;
     }
@@ -40,7 +40,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
     if(isFollowing){
         FollowPlayer();
     }
-    if(CanDetectFromFar){
+    if(!CanDetectFromFar){
         DetectTarget();
         }else{
         if (Target == null)
@@ -49,6 +49,7 @@ public class NPCKnightBehaviour : NPCBehaviour, Interactable
         return;
         }
         }
+
     if(Target !=null){
     isFollowing = false;
     IfInRangeAttack();
@@ -145,19 +146,13 @@ public void FollowPlayer(){
         this.gameObject.layer = 8;
         GetComponent<NPCBehaviour>().enabled =false;
         HealthBarUI.SetActive(false);
+        Destroy(gameObject, 2f);
     }
 
 
 
 
-    // za sad ovo pa cu kasnije izmjenit
-     public void Interact(){
-        Interacted = true;
-        Debug.Log("Talking with guards");
-    }
-
-    public bool CanInteract(){
-        return !Interacted;
-    }
+   
+    
    
 }
