@@ -16,10 +16,12 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
     {
         interacted = true;
 
-        // Set the spawn point in the SpawnManager
+        // Store spawn point information
         if (spawnPoint != null)
         {
             SpawnManager.playerSpawnPosition = spawnPoint.position;
+            PlayerPrefs.SetInt("ActivateSpawnPoint", 1); // Set a flag to activate the spawn point
+            PlayerPrefs.Save(); // Ensure the PlayerPrefs are saved
         }
 
         // Load the scene specified by sceneIndex
@@ -36,6 +38,10 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
         interacted = false;
     }
 }
+
+
+
+
 
 
 
