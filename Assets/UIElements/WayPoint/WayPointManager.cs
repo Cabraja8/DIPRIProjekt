@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class WayPointManager : MonoBehaviour
 {
     public static WayPointManager Instance; // Singleton instance
-    public List<Transform> waypoints;
+    public List<Transform> waypoints = new List<Transform>();
     public Image waypointImage;
     public Camera mainCamera;
     public Transform player;
@@ -15,6 +15,8 @@ public class WayPointManager : MonoBehaviour
 
     public float proximityThreshold = 5.0f;
     public float edgeBuffer = 50.0f;
+
+    private Dictionary<string, Transform> waypointReferences = new Dictionary<string, Transform>();
 
     private void Awake()
     {
@@ -102,6 +104,23 @@ public class WayPointManager : MonoBehaviour
         activeQuest = quest;
         waypointImage.enabled = true;
         UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
+    }
+
+    public void RegisterWaypoint(string id, Transform waypoint)
+    {
+        if (!waypointReferences.ContainsKey(id))
+        {
+            waypointReferences.Add(id, waypoint);
+        }
+    }
+
+    public Transform GetWaypoint(string id)
+    {
+        if (waypointReferences.ContainsKey(id))
+        {
+            return waypointReferences[id];
+        }
+        return null;
     }
 
     private void OnDrawGizmos()
