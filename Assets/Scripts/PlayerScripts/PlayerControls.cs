@@ -47,8 +47,6 @@ public class PlayerControls : Player
         attackArea.SetActive(false);
         aoeArea = transform.GetChild(6).gameObject;
         aoeArea.SetActive(false);
-        MoveAmount.x = 0;
-        MoveAmount.y = 0;
         playerMovement = GetComponent<PlayerMovement>();
         OriginalMovementSpeed = playerMovement.MovementSpeed;
     }

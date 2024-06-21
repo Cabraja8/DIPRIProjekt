@@ -16,20 +16,20 @@ public class KnightsStayOutsideTheCastle : MonoBehaviour
     {
         if (!Triggered && other.CompareTag("Player"))
         {
-            Triggered = true;
+        Triggered = true;
             NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
-             GameObject[] defendGameObjects = GameObject.FindGameObjectsWithTag("DefendPoint");
-        Transform[] DefendPoints = new Transform[defendGameObjects.Length];
-        for (int i = 0; i < defendGameObjects.Length; i++)
-        {
-            DefendPoints[i] = defendGameObjects[i].transform;
-        }
+            GameObject[] defendGameObjects = GameObject.FindGameObjectsWithTag("DefendPoint");
+            Transform[] DefendPoints = new Transform[defendGameObjects.Length];
+            for (int i = 0; i < defendGameObjects.Length; i++)
+            {
+                DefendPoints[i] = defendGameObjects[i].transform;
+            }
 
-        
-        for (int i = 0; i < knightBehaviours.Length && i < DefendPoints.Length; i++)
-        {
-            knightBehaviours[i].GoToDestination(DefendPoints[i]);
-        }
+            for (int i = 0; i < knightBehaviours.Length && i < DefendPoints.Length; i++)
+            {
+                knightBehaviours[i].isFollowing = false;  // Set isFollowing to false
+                knightBehaviours[i].GoToDestination(DefendPoints[i]);
+            }
         }
     }
 

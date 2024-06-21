@@ -1,75 +1,59 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
-    public static Vector3? playerSpawnPosition = null; // Nullable Vector3 to store the spawn position
-    public Transform defaultSpawnPoint; // Default spawn point in the scene
-    public Transform specificSpawnPoint; // The specific spawn point to activate
-    public float SetMaxY;
-    public float SetMinY;
-    public float SetMaxX;
-    public float SetMinX;
+    public static SpawnManager Instance;
+    private Vector3 spawnPointPosition; // Position of the spawn point
 
-    private void Awake()
+    void Awake()
     {
-        // Ensure this GameObject persists across scene loads
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject); // Ensures only one instance exists
+        }
     }
 
-    private void OnEnable()
+    // Sets the spawn point position
+    public void SetSpawnPoint(Vector3 spawnPoint)
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        spawnPointPosition = spawnPoint;
     }
 
-    private void OnDisable()
+    // Retrieves the spawn point position
+    public Vector3 GetSpawnPoint()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        return spawnPointPosition;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // Clears the spawn point position
+    public void ClearSpawnPoint()
     {
-        // Find the player GameObject and move it to the spawn point
+        spawnPointPosition = Vector3.zero; // Or any default value you prefer
+    }
+
+    // Example function to spawn player at the stored spawn point
+    public void SpawnPlayerAtSpawnPoint()
+    {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            if (PlayerPrefs.GetInt("ActivateSpawnPoint", 0) == 1 && specificSpawnPoint != null)
-            {
-                specificSpawnPoint.gameObject.SetActive(true);
-                player.transform.position = specificSpawnPoint.position;
-                PlayerPrefs.SetInt("ActivateSpawnPoint", 0); // Reset the flag
-                PlayerPrefs.Save(); // Ensure the PlayerPrefs are saved
-            }
-            else if (playerSpawnPosition.HasValue)
-            {
-                player.transform.position = playerSpawnPosition.Value;
-                playerSpawnPosition = null; // Clear the spawn position after use
-            }
-            else if (defaultSpawnPoint != null)
-            {
-                player.transform.position = defaultSpawnPoint.position;
-            }
-
-            // Call ChapterFinished only if the loaded scene index is 3
-            if (scene.buildIndex == 3)
-            {
-                ChapterFinished();
-            }
+            player.transform.position = spawnPointPosition;
         }
-    }
-
-    public void ChapterFinished()
-    {
-        CameraFollow cameraFollow = FindObjectOfType<CameraFollow>();
-        if (cameraFollow != null)
+        else
         {
-            cameraFollow.SetMaxY(SetMaxY);
-            cameraFollow.SetMinY(SetMinY);
-            cameraFollow.SetMaxX(SetMaxX);
-            cameraFollow.SetMinX(SetMinX);
+            Debug.LogError("Player GameObject not found!");
         }
     }
 }
+
+
+
+
 
 
 

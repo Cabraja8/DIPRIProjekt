@@ -15,6 +15,7 @@ TagManager:
   - KingStand
   - King
   - EyeSpy
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

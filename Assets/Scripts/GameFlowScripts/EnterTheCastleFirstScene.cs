@@ -1,31 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EnterTheCastleFirstScene : MonoBehaviour, Interactable
-{   
-    public int SceneIndex;
-    public bool Interacted;
-    // Start is called before the first frame update
+{
+    public int SceneIndex; // Index of Scene 3
+    private bool interacted; // Flag to track if interaction has occurred
+
     void Start()
     {
-        Interacted = false;
+        interacted = false;
     }
 
-    
     public void Interact()
     {
-        Interacted = true;
+        interacted = true;
         SceneManager.LoadScene(SceneIndex);
-        
     }
 
-    public bool CanInteract(){
-        Invoke("ResetInteraction",2f);
-        return !Interacted;
-    }   
-     public void ResetInteraction(){
-        Interacted = false;
+    public bool CanInteract()
+    {
+        return !interacted;
+    }
+
+    public void ResetInteraction()
+    {
+        interacted = false;
     }
 }
+
+
+
+
