@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class EnterTheFirstScene : MonoBehaviour, Interactable
 {
-    public int sceneIndex; // Index of Scene 1
-    private bool interacted; // Flag to track if interaction has occurred
+    public int sceneIndex; 
+    public bool interacted; 
 
     void Start()
     {
@@ -17,8 +17,6 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
             return;
 
         interacted = true;
-
-        // Load Scene 1
         SceneManager.LoadScene(sceneIndex);
     }
 
@@ -32,17 +30,14 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
         interacted = false;
     }
 
-    // This method is called when Scene 1 is loaded
+   
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Check if SpawnManager.Instance is valid
+        
         if (SpawnManager.Instance != null)
         {
-            // Retrieve spawn point from the spawn manager
+         
             Vector3 spawnPointPosition = SpawnManager.Instance.GetSpawnPoint();
-
-            // Example: You might want to set this spawn point in another manager or script
-            // For demonstration, we'll try to spawn the player at this position
             SpawnPlayerAtSpawnPoint(spawnPointPosition);
         }
         else
@@ -66,13 +61,12 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
 
     void OnEnable()
     {
-        // Register callback for scene loaded event
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnDisable()
     {
-        // Deregister callback to prevent memory leaks
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

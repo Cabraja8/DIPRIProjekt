@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -11,32 +12,40 @@ public class SpawnManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded; 
         }
         else
-        {
-            Destroy(gameObject); // Ensures only one instance exists
+        {   
+            
+            Destroy(gameObject); 
         }
     }
 
-    // Sets the spawn point position
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+       
+    }
+
+    
     public void SetSpawnPoint(Vector3 spawnPoint)
     {
         spawnPointPosition = spawnPoint;
     }
 
-    // Retrieves the spawn point position
     public Vector3 GetSpawnPoint()
     {
         return spawnPointPosition;
     }
 
-    // Clears the spawn point position
     public void ClearSpawnPoint()
     {
-        spawnPointPosition = Vector3.zero; // Or any default value you prefer
+        spawnPointPosition = Vector3.zero; 
     }
 
-    // Example function to spawn player at the stored spawn point
     public void SpawnPlayerAtSpawnPoint()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -49,7 +58,24 @@ public class SpawnManager : MonoBehaviour
             Debug.LogError("Player GameObject not found!");
         }
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 1)
+        {
+            SpawnPlayerAtSpawnPoint();
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded; 
+        }
+    }
 }
+
 
 
 

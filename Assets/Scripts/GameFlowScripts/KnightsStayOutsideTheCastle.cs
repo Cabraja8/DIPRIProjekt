@@ -26,7 +26,8 @@ public class KnightsStayOutsideTheCastle : MonoBehaviour
             }
 
             for (int i = 0; i < knightBehaviours.Length && i < DefendPoints.Length; i++)
-            {
+            {   
+                knightBehaviours[i].CanDetectFromFar = false;
                 knightBehaviours[i].isFollowing = false;  // Set isFollowing to false
                 knightBehaviours[i].GoToDestination(DefendPoints[i]);
             }
