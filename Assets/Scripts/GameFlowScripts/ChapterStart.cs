@@ -42,11 +42,16 @@ public class ChapterStart : MonoBehaviour
         Debug.Log("Start next chapter");
         ChapterBorder.SetActive(false);
         BackBorder.SetActive(true);
+        SetChapter();
+        }
+    }
+
+    public void SetChapter(){
+
         FindObjectOfType<CameraFollow>().SetMaxY(SetMaxY);
         FindObjectOfType<CameraFollow>().SetMinY(SetMinY);
         FindObjectOfType<CameraFollow>().SetMaxX(SetMaxX);
         FindObjectOfType<CameraFollow>().SetMinX(SetMinX);
-        }
     }
 
     

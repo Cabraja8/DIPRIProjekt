@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance;
-    private Vector3 spawnPointPosition; // Position of the spawn point
+    private Transform spawnPoint; 
+    private const string PreviousSceneKey = "PreviousScene";
 
     void Awake()
     {
@@ -12,46 +13,42 @@ public class SpawnManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; 
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
-        {   
-            
-            Destroy(gameObject); 
+        {
+            Destroy(gameObject);
         }
     }
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-    void Start()
+    public void SetSpawnPoint(Transform spawnPointTransform)
     {
-       
+        spawnPoint = spawnPointTransform;
     }
 
-    
-    public void SetSpawnPoint(Vector3 spawnPoint)
+    public Transform GetSpawnPoint()
     {
-        spawnPointPosition = spawnPoint;
-    }
-
-    public Vector3 GetSpawnPoint()
-    {
-        return spawnPointPosition;
+        return spawnPoint;
     }
 
     public void ClearSpawnPoint()
     {
-        spawnPointPosition = Vector3.zero; 
+        spawnPoint = null;
     }
 
     public void SpawnPlayerAtSpawnPoint()
     {
+        if (spawnPoint == null)
+        {
+            Debug.LogError("Spawn point is not set!");
+            return;
+        }
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            player.transform.position = spawnPointPosition;
+            player.transform.position = spawnPoint.position;
+            player.transform.rotation = spawnPoint.rotation;
         }
         else
         {
@@ -61,20 +58,35 @@ public class SpawnManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 1)
+        Debug.Log("OnSceneLoaded: " + scene.name);
+
+       
+        int previousSceneIndex = PlayerPrefs.GetInt(PreviousSceneKey, -1);
+
+        if (previousSceneIndex == 3 && scene.buildIndex == 1)
         {
+        
+            Debug.Log("Previous scene was 3, current scene is 1. Spawning at specific point.");
+            FindObjectOfType<ChapterStart>().SetChapter();
             SpawnPlayerAtSpawnPoint();
         }
+
+        PlayerPrefs.SetInt(PreviousSceneKey, scene.buildIndex);
+        PlayerPrefs.Save();
     }
 
     void OnDestroy()
     {
         if (Instance == this)
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded; 
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 }
+
+
+
+
 
 
 

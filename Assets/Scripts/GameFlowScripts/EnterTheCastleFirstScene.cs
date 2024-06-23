@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class EnterTheCastleFirstScene : MonoBehaviour, Interactable
 {
-    public int SceneIndex; // Index of Scene 3
-    private bool interacted; // Flag to track if interaction has occurred
+    public int SceneIndex; 
+    private bool interacted; 
 
     void Start()
     {
@@ -13,6 +13,9 @@ public class EnterTheCastleFirstScene : MonoBehaviour, Interactable
 
     public void Interact()
     {
+        if (!CanInteract())
+            return;
+
         interacted = true;
         SceneManager.LoadScene(SceneIndex);
     }
@@ -27,6 +30,7 @@ public class EnterTheCastleFirstScene : MonoBehaviour, Interactable
         interacted = false;
     }
 }
+
 
 
 

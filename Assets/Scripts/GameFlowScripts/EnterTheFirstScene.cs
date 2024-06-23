@@ -7,7 +7,7 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
     public bool interacted; 
 
     void Start()
-    {
+    {   
         interacted = false;
     }
 
@@ -30,15 +30,12 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
         interacted = false;
     }
 
-   
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        Debug.Log("on scene loaded");
         if (SpawnManager.Instance != null)
         {
-         
-            Vector3 spawnPointPosition = SpawnManager.Instance.GetSpawnPoint();
-            SpawnPlayerAtSpawnPoint(spawnPointPosition);
+            Transform spawnPointTransform = SpawnManager.Instance.GetSpawnPoint();
         }
         else
         {
@@ -46,12 +43,13 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
         }
     }
 
-    void SpawnPlayerAtSpawnPoint(Vector3 spawnPointPosition)
+    void SpawnPlayerAtSpawnPoint(Transform spawnPointTransform)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            player.transform.position = spawnPointPosition;
+            player.transform.position = spawnPointTransform.position;
+            player.transform.rotation = spawnPointTransform.rotation;
         }
         else
         {
@@ -61,7 +59,6 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
 
     void OnEnable()
     {
-        
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -70,6 +67,8 @@ public class EnterTheFirstScene : MonoBehaviour, Interactable
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
+
+
 
 
 

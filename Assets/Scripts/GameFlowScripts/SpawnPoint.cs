@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SpawnPoint : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
-        SpawnManager.Instance.SetSpawnPoint(transform.position);
+        Debug.Log("start of spawn point");
+        SpawnManager.Instance.SetSpawnPoint(transform);
     }
 }
+
