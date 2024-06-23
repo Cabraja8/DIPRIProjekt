@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance;
-    private Transform spawnPoint; 
-    private const string PreviousSceneKey = "PreviousScene";
+    private Transform spawnPoint;
+    private static int previousSceneIndex = -1;  // Static variable to track the previous scene index
 
     void Awake()
     {
@@ -60,19 +60,15 @@ public class SpawnManager : MonoBehaviour
     {
         Debug.Log("OnSceneLoaded: " + scene.name);
 
-       
-        int previousSceneIndex = PlayerPrefs.GetInt(PreviousSceneKey, -1);
-
         if (previousSceneIndex == 3 && scene.buildIndex == 1)
         {
-        
             Debug.Log("Previous scene was 3, current scene is 1. Spawning at specific point.");
             FindObjectOfType<ChapterStart>().SetChapter();
             SpawnPlayerAtSpawnPoint();
         }
 
-        PlayerPrefs.SetInt(PreviousSceneKey, scene.buildIndex);
-        PlayerPrefs.Save();
+        // Update the previousSceneIndex to the current scene's build index
+        previousSceneIndex = scene.buildIndex;
     }
 
     void OnDestroy()
@@ -83,6 +79,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 }
+
 
 
 
