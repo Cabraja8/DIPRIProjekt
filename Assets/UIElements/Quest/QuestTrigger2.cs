@@ -19,7 +19,7 @@ public class QuestTrigger2 : MonoBehaviour
 
     public void TriggerQuest()
     {
-        if (quest != null)
+        if (quest != null && quest.order == QuestManager.Instance.currentQuestOrder + 1) // Check the order
         {
             QuestManager.Instance.AddQuest(quest); // Add the quest to the QuestManager's queue
             enabled = false; // Disable the script to prevent multiple triggers

@@ -10,12 +10,13 @@ public class Quest
     public string description;
     public QuestSystem goal; // Represents the goal type and specifics
     public Transform waypoint; // Represents the location to reach for the quest
+    public int order; // Represents the order of the quest
 
     public void Complete()
     {
         isActive = false;
         Debug.Log(title + " was completed");
-        QuestManager.Instance.CompleteCurrentQuest(waypoint); ////novoIvana
+        QuestManager.Instance.CompleteCurrentQuest(waypoint);
     }
 
     public bool CheckIfCompleted(Transform reachedWaypoint)

@@ -15,4 +15,9 @@ public class QuestGiver : MonoBehaviour
     {
         QuestManager.Instance.AcceptCurrentQuest();
     }
+
+    private void Start()
+    {
+        quest.order = 1; // Assign the order value, e.g., 1 for the first quest
+    }
 }
