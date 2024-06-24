@@ -15,6 +15,7 @@ public class Quest
     {
         isActive = false;
         Debug.Log(title + " was completed");
+        QuestManager.Instance.CompleteCurrentQuest(waypoint); ////novoIvana
     }
 
     public bool CheckIfCompleted(Transform reachedWaypoint)
