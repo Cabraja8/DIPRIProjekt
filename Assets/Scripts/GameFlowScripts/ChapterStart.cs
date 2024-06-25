@@ -44,6 +44,8 @@ public class ChapterStart : MonoBehaviour
         BackBorder.SetActive(true);
         SetChapter();
     }
+
+
     // Update is called once per frame
     void Update()
     {
