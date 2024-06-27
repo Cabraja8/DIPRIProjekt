@@ -32,7 +32,10 @@ public class NPCBehaviour : MonoBehaviour
         
         SetDefaultValues();
         
+       if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
             FirstSceneKnightCall();
+        }
             
     }
 

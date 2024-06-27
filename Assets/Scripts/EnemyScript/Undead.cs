@@ -9,7 +9,10 @@ public class Undead : Enemy
     protected override void Start()
     {
         base.Start();
-        target = GameObject.FindWithTag("Player").transform;
+        if (target == null)
+        {
+            target = FindClosestTarget(transform.position, "Player", "Knight");
+        }
     }
 
     // Update is called once per frame
@@ -49,7 +52,27 @@ public class Undead : Enemy
             }
         }
     }
+     Transform FindClosestTarget(Vector3 position, params string[] tags)
+    {
+        Transform closestTarget = null;
+        float closestDistance = Mathf.Infinity;
 
+        foreach (string tag in tags)
+        {
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject target in targets)
+            {
+                float distanceToTarget = Vector3.Distance(position, target.transform.position);
+                if (distanceToTarget < closestDistance)
+                {
+                    closestTarget = target.transform;
+                    closestDistance = distanceToTarget;
+                }
+            }
+        }
+
+        return closestTarget;
+    }
 
     public IEnumerator Attack()
     {

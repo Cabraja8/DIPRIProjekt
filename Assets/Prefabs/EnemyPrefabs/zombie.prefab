@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4126373285202363928}
   - component: {fileID: 5393770935770359314}
   - component: {fileID: 1520576438234775115}
+  - component: {fileID: 7535526899048858196}
   m_Layer: 7
   m_Name: zombie
   m_TagString: Enemy
@@ -281,6 +282,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &7535526899048858196
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953505111083828102}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.28359535, y: 0}
+  m_Size: {x: 0.7445689, y: 0.0001}
+  m_Direction: 0
 --- !u!1 &2633709378731364159
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +495,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1869315837
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &7626570187605890760
