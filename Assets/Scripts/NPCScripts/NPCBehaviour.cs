@@ -32,8 +32,9 @@ public class NPCBehaviour : MonoBehaviour
         
         SetDefaultValues();
         
-       if (SceneManager.GetActiveScene().buildIndex == 1)
+       if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2)
         {
+             standField = GameObject.FindGameObjectWithTag("StartField");
             FirstSceneKnightCall();
         }
             
@@ -41,7 +42,6 @@ public class NPCBehaviour : MonoBehaviour
 
     public void FirstSceneKnightCall(){
 
-    standField = GameObject.FindGameObjectWithTag("StartField");
     if (standField != null) {
         GetComponent<NPCKnightBehaviour>().GoToDestination(standField.transform);
     } 
