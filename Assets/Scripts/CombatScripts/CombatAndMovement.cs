@@ -105,11 +105,51 @@ public class CombatAndMovement : MonoBehaviour
         }
     }
 }
+    public void MeleeAttackCorruptedKing()
+{
+    CorruptedKing corruptedKing = GetComponentInParent<CorruptedKing>();
 
+    if (corruptedKing != null && corruptedKing.target != null)
+    {
+        HealthManager targetHealth = corruptedKing.target.GetComponent<HealthManager>();
+        if (targetHealth != null && targetHealth.currentHealth < 1)
+        {
+            if (corruptedKing.target.CompareTag("Knight"))
+            {
+                NPCKnightBehaviour knightBehaviour = corruptedKing.target.GetComponent<NPCKnightBehaviour>();
+                if (knightBehaviour != null)
+                {
+                    knightBehaviour.DeathHandler();
+                }
+            }
+            else if (corruptedKing.target.CompareTag("Player"))
+            {
+                Player player = corruptedKing.target.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.DeathHandler();
+                }
+            }
+            corruptedKing.target = null;
+        }
+        else
+        {
+            CombatAndMovement combatAndMovement = corruptedKing.target.GetComponentInChildren<CombatAndMovement>();
+            if (combatAndMovement != null)
+            {
+                combatAndMovement.PlayTakeHitAnimation();
+            }
+        }
+    }
+}
 
    public void MeleeAttackEventKnight()
 {
     NPCKnightBehaviour NPCKnight = GetComponentInParent<NPCKnightBehaviour>();
+
+    if( NPCKnight != null && NPCKnight.Target.tag == "Dead"){
+        NPCKnight.Target = null;
+    }
 
     if (NPCKnight != null && NPCKnight.Target != null)
     {

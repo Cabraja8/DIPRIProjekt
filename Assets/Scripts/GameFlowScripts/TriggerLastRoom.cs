@@ -6,6 +6,8 @@ public class TriggerLastRoom : MonoBehaviour
 {   
     public OpenTheDoorInsideTheCastle LastDoor;
     public TriggerStatues triggerStatues;
+
+    public SpawnKingForTheLastScene spawnKing;
      void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -16,6 +18,6 @@ public class TriggerLastRoom : MonoBehaviour
     public void CloseDoor(){
       
         LastDoor.CloseDoor();
-
+        spawnKing.SpawnKing();
     }
 }

@@ -587,11 +587,11 @@ MonoBehaviour:
   TimeBetweenAttacks: 3
   navMeshAgent: {fileID: 0}
   enemyAnimation: {fileID: 0}
-  detectionRadius: 5
+  detectionRadius: 30
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  CanDetectFromFar: 1
+  CanDetectFromFar: 0
   HealthBarUI: {fileID: 359261796803177762}
   maxHealth: 100
   ShotPoint: {fileID: 7765795204330461353}
