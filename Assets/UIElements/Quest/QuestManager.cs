@@ -74,9 +74,7 @@ public class QuestManager : MonoBehaviour
         {
             OnAllQuestsCompleted?.Invoke();
             // Invoke the event
-
         }
-
     }
 
     public void CompleteCurrentQuest(Transform reachedWaypoint)
@@ -86,7 +84,6 @@ public class QuestManager : MonoBehaviour
             completedQuests.Add(currentQuest);
             currentQuest = null;
             StartNextQuest(); // Start the next quest in the queue, if any
-
         }
     }
 
@@ -99,6 +96,45 @@ public class QuestManager : MonoBehaviour
         Debug.Log("New Quest Started: " + quest.title);
     }
 
+    // Method to show the current quest details
+    public void ShowCurrentQuest()
+    {
+        if (currentQuest != null)
+        {
+            titleText.text = currentQuest.title;
+            descriptionText.text = currentQuest.description;
+            questWindow.SetActive(true);
+        }
+        else if (questQueue.Count > 0)
+        {
+            titleText.text = "Next Quest";
+            descriptionText.text = "You have a quest available. Trigger the quest to start.";
+            questWindow.SetActive(true);
+        }
+        else
+        {
+            titleText.text = "No Active Quest";
+            descriptionText.text = "";
+            questWindow.SetActive(true);
+        }
+    }
 
+    // Method to be called by the button
+    public void OnShowCurrentQuestButtonPressed()
+    {
+        ShowCurrentQuest();
+    }
+
+    // Method to cancel the current quest
+    public void CancelCurrentQuest()
+    {
+        questWindow.SetActive(false);
+        Debug.Log("Current quest UI was closed");
+    }
+
+    // Method to be called by the cancel button
+    public void OnCancelQuestButtonPressed()
+    {
+        CancelCurrentQuest();
+    }
 }
-
