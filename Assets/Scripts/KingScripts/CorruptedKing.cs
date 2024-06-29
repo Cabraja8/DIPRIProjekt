@@ -5,6 +5,9 @@ using UnityEngine;
 public class CorruptedKing : Enemy
 {
     public int Damage;
+   
+    private float attack3Time;
+    
     protected override void Start()
     {
         base.Start();
@@ -31,25 +34,45 @@ public class CorruptedKing : Enemy
         {
             if (Time.time >= attackTime)
             {
-                enemyAnimation.PlayAttackAnimation();
-                Debug.Log("Attack");
-
-                if (PlayerControls.isShieldActive)
+                if (ShouldPerformAttack3())
                 {
-                    Debug.Log("Defended by shield");
+                    StartCoroutine(PerformAttack3());
                 }
                 else
                 {
-                    target.GetComponent<HealthManager>().TakeDamage(Damage);
+                    PerformAttack();
                 }
                 attackTime = Time.time + TimeBetweenAttacks;
             }
         }
     }
 
-
-    public IEnumerator Attack()
+    private void PerformAttack()
     {
+        enemyAnimation.PlayAttackAnimation();
+        Debug.Log("Attack");
+
+        if (PlayerControls.isShieldActive)
+        {
+            Debug.Log("Defended by shield");
+        }
+        else
+        {
+            target.GetComponent<HealthManager>().TakeDamage(Damage);
+        }
+    }
+
+    private bool ShouldPerformAttack3()
+    {
+   
+        return Time.time >= attack3Time;
+    }
+
+    private IEnumerator PerformAttack3()
+    {
+        
+        Debug.Log("Performing Attack3");
+
         Vector2 originalPosition = transform.position;
         Vector2 targetPosition = target.position;
         float percent = 0;
@@ -62,5 +85,17 @@ public class CorruptedKing : Enemy
             transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
             yield return null;
         }
+
+        if (PlayerControls.isShieldActive)
+        {
+            Debug.Log("Defended by shield");
+        }
+        else
+        {
+            target.GetComponent<HealthManager>().TakeDamage(Damage * 2); 
+        }
+        
+        attack3Time = Time.time + TimeBetweenAttacks; 
     }
 }
+
