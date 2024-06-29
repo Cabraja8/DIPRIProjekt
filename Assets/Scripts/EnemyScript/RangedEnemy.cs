@@ -61,7 +61,7 @@ public class RangedEnemy : Enemy
     {
 
         projectileScript.StartMoving(direction);
-        projectileScript.PlayFireAnimation();
+       
     }
 }
 }

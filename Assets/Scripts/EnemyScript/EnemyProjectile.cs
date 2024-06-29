@@ -26,11 +26,8 @@ public class EnemyProjectile : MonoBehaviour
     // Update is called once per frame
  public void StartMoving(Vector3 direction)
     {
-        moveDirection = direction;
-    }
-
-    public void PlayFireAnimation(){
         anim.SetTrigger("Fire");
+        moveDirection = direction;
     }
 
     void Update()
