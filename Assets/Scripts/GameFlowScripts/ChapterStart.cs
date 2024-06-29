@@ -16,16 +16,17 @@ public class ChapterStart : MonoBehaviour
     public float SetMinX;
 
     public int expectedQuestCount; // Number of quests needed to complete before triggering this chapter
+    public bool setCamera = true;
 
     // Start is called before the first frame update
     void Start()
     {
         CanStartChapter = false;
         BackBorder.SetActive(false);
-
         ChapterBorder.SetActive(true);
-        QuestManager.OnAllQuestsCompleted += ActivateTrigger;
-        QuestManager.Instance.expectedQuestCount = expectedQuestCount;
+
+        // QuestManager.OnAllQuestsCompleted += ActivateTrigger;
+        // QuestManager.Instance.expectedQuestCount = expectedQuestCount;
     }
 
     public void SetToTrueChapterStart()
@@ -33,49 +34,58 @@ public class ChapterStart : MonoBehaviour
         CanStartChapter = true;
     }
 
-    private void OnDestroy()
+
+    // private void OnDestroy()
+    // {
+    //     QuestManager.OnAllQuestsCompleted -= ActivateTrigger;
+    // }
+
+    // private void ActivateTrigger()
+    // {
+    //     ChapterBorder.SetActive(false);
+    //     BackBorder.SetActive(true);
+    //     if (setCamera)
+    //     {
+    //         SetChapter();
+    //     }
+    // }
+
+    //     void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (CanStartChapter)
+    //     {
+    //         Debug.Log("Start next chapter");
+    //         ChapterBorder.SetActive(false);
+    //         BackBorder.SetActive(true);
+    //         // SetChapter(); 
+    //         if (setCamera)
+    //         {
+    //             SetChapter();
+    //         }
+    //     }
+    // }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        QuestManager.OnAllQuestsCompleted -= ActivateTrigger;
-    }
-
-    private void ActivateTrigger()
-    {
-        ChapterBorder.SetActive(false);
-        BackBorder.SetActive(true);
-        SetChapter();
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    /// <summary>
-    /// Sent when another object enters a trigger collider attached to this
-    /// object (2D physics only).
-    /// </summary>
-    /// <param name="other">The other Collider2D involved in this collision.</param>
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (CanStartChapter)
+        if (CanStartChapter && other.CompareTag("Player"))
         {
             Debug.Log("Start next chapter");
             ChapterBorder.SetActive(false);
             BackBorder.SetActive(true);
-            SetChapter();
+            if (setCamera)
+            {
+                SetChapter();
+            }
         }
     }
 
     public void SetChapter()
     {
-
         FindObjectOfType<CameraFollow>().SetMaxY(SetMaxY);
         FindObjectOfType<CameraFollow>().SetMinY(SetMinY);
         FindObjectOfType<CameraFollow>().SetMaxX(SetMaxX);
         FindObjectOfType<CameraFollow>().SetMinX(SetMinX);
     }
-
 
 }

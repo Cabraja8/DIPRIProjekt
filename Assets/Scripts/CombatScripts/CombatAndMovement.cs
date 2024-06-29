@@ -69,173 +69,174 @@ public class CombatAndMovement : MonoBehaviour
 
 
     public void MeleeAttackEvent()
-{
-    MeleeEnemy meleeEnemy = GetComponentInParent<MeleeEnemy>();
-
-    if (meleeEnemy != null && meleeEnemy.target != null)
     {
-        HealthManager targetHealth = meleeEnemy.target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        MeleeEnemy meleeEnemy = GetComponentInParent<MeleeEnemy>();
+
+        if (meleeEnemy != null && meleeEnemy.target != null)
         {
-            if (meleeEnemy.target.CompareTag("Knight"))
+            HealthManager targetHealth = meleeEnemy.target.GetComponent<HealthManager>();
+            if (targetHealth != null && targetHealth.currentHealth < 1)
             {
-                NPCKnightBehaviour knightBehaviour = meleeEnemy.target.GetComponent<NPCKnightBehaviour>();
-                if (knightBehaviour != null)
+                if (meleeEnemy.target.CompareTag("Knight"))
                 {
-                    knightBehaviour.DeathHandler();
+                    NPCKnightBehaviour knightBehaviour = meleeEnemy.target.GetComponent<NPCKnightBehaviour>();
+                    if (knightBehaviour != null)
+                    {
+                        knightBehaviour.DeathHandler();
+                    }
                 }
-            }
-            else if (meleeEnemy.target.CompareTag("Player"))
-            {
-                Player player = meleeEnemy.target.GetComponent<Player>();
-                if (player != null)
+                else if (meleeEnemy.target.CompareTag("Player"))
                 {
-                    player.DeathHandler();
+                    Player player = meleeEnemy.target.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        player.DeathHandler();
+                    }
                 }
+                meleeEnemy.target = null;
             }
-            meleeEnemy.target = null;
-        }
-        else
-        {
-            CombatAndMovement combatAndMovement = meleeEnemy.target.GetComponentInChildren<CombatAndMovement>();
-            if (combatAndMovement != null)
+            else
             {
-                combatAndMovement.PlayTakeHitAnimation();
+                CombatAndMovement combatAndMovement = meleeEnemy.target.GetComponentInChildren<CombatAndMovement>();
+                if (combatAndMovement != null)
+                {
+                    combatAndMovement.PlayTakeHitAnimation();
+                }
             }
         }
     }
-}
     public void MeleeAttackCorruptedKing()
-{
-    CorruptedKing corruptedKing = GetComponentInParent<CorruptedKing>();
-
-    if (corruptedKing != null && corruptedKing.target != null)
     {
-        HealthManager targetHealth = corruptedKing.target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        CorruptedKing corruptedKing = GetComponentInParent<CorruptedKing>();
+
+        if (corruptedKing != null && corruptedKing.target != null)
         {
-            if (corruptedKing.target.CompareTag("Knight"))
+            HealthManager targetHealth = corruptedKing.target.GetComponent<HealthManager>();
+            if (targetHealth != null && targetHealth.currentHealth < 1)
             {
-                NPCKnightBehaviour knightBehaviour = corruptedKing.target.GetComponent<NPCKnightBehaviour>();
-                if (knightBehaviour != null)
+                if (corruptedKing.target.CompareTag("Knight"))
                 {
-                    knightBehaviour.DeathHandler();
+                    NPCKnightBehaviour knightBehaviour = corruptedKing.target.GetComponent<NPCKnightBehaviour>();
+                    if (knightBehaviour != null)
+                    {
+                        knightBehaviour.DeathHandler();
+                    }
                 }
-            }
-            else if (corruptedKing.target.CompareTag("Player"))
-            {
-                Player player = corruptedKing.target.GetComponent<Player>();
-                if (player != null)
+                else if (corruptedKing.target.CompareTag("Player"))
                 {
-                    player.DeathHandler();
+                    Player player = corruptedKing.target.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        player.DeathHandler();
+                    }
                 }
+                corruptedKing.target = null;
             }
-            corruptedKing.target = null;
-        }
-        else
-        {
-            CombatAndMovement combatAndMovement = corruptedKing.target.GetComponentInChildren<CombatAndMovement>();
-            if (combatAndMovement != null)
+            else
             {
-                combatAndMovement.PlayTakeHitAnimation();
+                CombatAndMovement combatAndMovement = corruptedKing.target.GetComponentInChildren<CombatAndMovement>();
+                if (combatAndMovement != null)
+                {
+                    combatAndMovement.PlayTakeHitAnimation();
+                }
             }
         }
     }
-}
 
-   public void MeleeAttackEventKnight()
-{
-    NPCKnightBehaviour NPCKnight = GetComponentInParent<NPCKnightBehaviour>();
-
-    if( NPCKnight != null && NPCKnight.Target.tag == "Dead"){
-        NPCKnight.Target = null;
-    }
-
-    if (NPCKnight != null && NPCKnight.Target != null)
+    public void MeleeAttackEventKnight()
     {
-        HealthManager targetHealth = NPCKnight.Target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        NPCKnightBehaviour NPCKnight = GetComponentInParent<NPCKnightBehaviour>();
+
+        if (NPCKnight != null && NPCKnight.Target.tag == "Dead")
         {
-            Enemy enemy = NPCKnight.Target.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.DeathHandler();
-            }
             NPCKnight.Target = null;
         }
-        else
+
+        if (NPCKnight != null && NPCKnight.Target != null)
         {
-            CombatAndMovement combatAndMovement = NPCKnight.Target.GetComponentInChildren<CombatAndMovement>();
-            if (combatAndMovement != null)
+            HealthManager targetHealth = NPCKnight.Target.GetComponent<HealthManager>();
+            if (targetHealth != null && targetHealth.currentHealth < 1)
             {
-                combatAndMovement.PlayTakeHitAnimation();
+                Enemy enemy = NPCKnight.Target.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.DeathHandler();
+                }
+                NPCKnight.Target = null;
+            }
+            else
+            {
+                CombatAndMovement combatAndMovement = NPCKnight.Target.GetComponentInChildren<CombatAndMovement>();
+                if (combatAndMovement != null)
+                {
+                    combatAndMovement.PlayTakeHitAnimation();
+                }
             }
         }
     }
-}
 
 
 
-  public void RangedAttackEvent()
-{
-    RangedEnemy rangedEnemy = GetComponentInParent<RangedEnemy>();
-
-    if (rangedEnemy != null && rangedEnemy.target != null)
+    public void RangedAttackEvent()
     {
-        rangedEnemy.RangedAttack();
+        RangedEnemy rangedEnemy = GetComponentInParent<RangedEnemy>();
 
-        HealthManager targetHealth = rangedEnemy.target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        if (rangedEnemy != null && rangedEnemy.target != null)
         {
-            if (rangedEnemy.target.CompareTag("Knight"))
+            rangedEnemy.RangedAttack();
+
+            HealthManager targetHealth = rangedEnemy.target.GetComponent<HealthManager>();
+            if (targetHealth != null && targetHealth.currentHealth < 1)
             {
-                NPCKnightBehaviour knightBehaviour = rangedEnemy.target.GetComponent<NPCKnightBehaviour>();
-                if (knightBehaviour != null)
+                if (rangedEnemy.target.CompareTag("Knight"))
                 {
-                    knightBehaviour.DeathHandler();
+                    NPCKnightBehaviour knightBehaviour = rangedEnemy.target.GetComponent<NPCKnightBehaviour>();
+                    if (knightBehaviour != null)
+                    {
+                        knightBehaviour.DeathHandler();
+                    }
                 }
-            }
-            else if (rangedEnemy.target.CompareTag("Player"))
-            {
-                Player player = rangedEnemy.target.GetComponent<Player>();
-                if (player != null)
+                else if (rangedEnemy.target.CompareTag("Player"))
                 {
-                    player.DeathHandler();
+                    Player player = rangedEnemy.target.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        player.DeathHandler();
+                    }
                 }
+                rangedEnemy.target = null;
             }
-            rangedEnemy.target = null;
         }
     }
-}
 
 
-   public void MeleeAttackUndeadEvent()
-{
-    Undead undead = GetComponentInParent<Undead>();
-
-    if (undead != null && undead.target != null)
+    public void MeleeAttackUndeadEvent()
     {
-        HealthManager targetHealth = undead.target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        Undead undead = GetComponentInParent<Undead>();
+
+        if (undead != null && undead.target != null)
         {
-            if (undead.target.CompareTag("Player"))
+            HealthManager targetHealth = undead.target.GetComponent<HealthManager>();
+            if (targetHealth != null && targetHealth.currentHealth < 1)
             {
-                Player player = undead.target.GetComponent<Player>();
-                if (player != null)
+                if (undead.target.CompareTag("Player"))
                 {
-                    player.DeathHandler();
+                    Player player = undead.target.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        player.DeathHandler();
+                    }
+                }
+            }
+            else
+            {
+                CombatAndMovement combatAndMovement = undead.target.GetComponentInChildren<CombatAndMovement>();
+                if (combatAndMovement != null)
+                {
+                    combatAndMovement.PlayTakeHitAnimation();
                 }
             }
         }
-        else
-        {
-            CombatAndMovement combatAndMovement = undead.target.GetComponentInChildren<CombatAndMovement>();
-            if (combatAndMovement != null)
-            {
-                combatAndMovement.PlayTakeHitAnimation();
-            }
-        }
     }
-}
 
 }

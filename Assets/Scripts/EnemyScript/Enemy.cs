@@ -18,9 +18,11 @@ public class Enemy : MonoBehaviour
 
     [Header("Detection Settings")]
     public float detectionRadius = 5f;
+    public float sneakDetectionRadius = 2f; // New variable for sneak detection
+    private float currentDetectionRadius;
     public LayerMask targetLayerMask;
 
-    public bool CanDetectFromFar=true;
+    public bool CanDetectFromFar = true;
 
     public GameObject HealthBarUI;
 
@@ -51,13 +53,16 @@ public class Enemy : MonoBehaviour
         WalkEnemyAnim();
         CheckAngle();
 
-        if(!CanDetectFromFar){
-        DetectTarget();
-        }else{
-        if (target == null)
+        if (!CanDetectFromFar)
         {
-            target = FindClosestTarget(transform.position, "Player", "Knight");
+            DetectTarget();
         }
+        else
+        {
+            if (target == null)
+            {
+                target = FindClosestTarget(transform.position, "Player", "Knight");
+            }
         }
     }
     Transform FindClosestTarget(Vector3 position, params string[] tags)
@@ -194,6 +199,12 @@ public class Enemy : MonoBehaviour
     public void onHit(float damage)
     {
         Debug.Log("swordbox hit" + damage);
+    }
+
+    // Method to set the detection radius based on sneak state
+    public void SetSneakDetection(bool isSneaking)
+    {
+        currentDetectionRadius = isSneaking ? sneakDetectionRadius : detectionRadius;
     }
 
 }

@@ -63,11 +63,13 @@ public class PlayerMovement : Player
         }
 
         MoveAmount = moveInput * MovementSpeed;
+
     }
 
     /// FixedUpdate is called every fixed framerate frame
     void FixedUpdate()
     {
+
         rb.MovePosition(rb.position + MoveAmount * Time.deltaTime);
     }
 }

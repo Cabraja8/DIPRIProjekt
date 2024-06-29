@@ -24,7 +24,7 @@ public class PlayerControls : Player
     public TextMeshProUGUI aoeCooldownText;
 
     private float basicAttackCooldown = 1f;
-    private float dashCooldown = 5f;  // Adjusted cooldown times for better testing
+    private float dashCooldown = 5f;
     private float sneakCooldown = 5f;
     private float shieldCooldown = 5f;
     private float aoeCooldown = 5f;
@@ -70,10 +70,20 @@ public class PlayerControls : Player
             PlayerAnimation.PlayDashAnimation();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isCooldownActive(sneakTimer, sneakCooldown))
+        // if (Input.GetKeyDown(KeyCode.LeftControl) && !isCooldownActive(sneakTimer, sneakCooldown))
+        // {
+        //     Sneak();
+        //     PlayerAnimation.PlayWalkAnimation();
+        // }
+
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             Sneak();
             PlayerAnimation.PlayWalkAnimation();
+        }
+        else if (isSneakActive)
+        {
+            ResetSneak();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !isCooldownActive(shieldTimer, shieldCooldown))
@@ -118,7 +128,8 @@ public class PlayerControls : Player
             Debug.Log("Sneak!");
             MovementSpeed /= 2f;
             isSneakActive = true;
-            Invoke("ResetSneak", 0.5f);
+            SetEnemyDetectionRadius(true);
+            // Invoke("ResetSneak", 0.5f);
         }
     }
 
@@ -161,7 +172,7 @@ public class PlayerControls : Player
         }
         Invoke("ResetAoE", 0.25f);
         isAoEActive = false;
-        aoeTimer = Time.time; // Start the cooldown timer
+        aoeTimer = Time.time;
     }
 
     private IEnumerator Attack()
@@ -198,17 +209,17 @@ public class PlayerControls : Player
     private void ResetDash()
     {
         MovementSpeed /= 2f;
-        // MovementSpeed = OriginalMovementSpeed;
         isDashActive = false;
         dashTimer = Time.time;
     }
 
     private void ResetSneak()
     {
+        Debug.Log("Exiting sneak mode");
         MovementSpeed *= 2f;
-        // MovementSpeed = OriginalMovementSpeed;
         isSneakActive = false;
         sneakTimer = Time.time;
+        SetEnemyDetectionRadius(false);
     }
 
     private void ResetShield()
@@ -263,4 +274,20 @@ public class PlayerControls : Player
             cooldownText.text = "";
         }
     }
+
+    private void SetEnemyDetectionRadius(bool isSneaking)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 100f, LayerMask.GetMask("Enemy"));
+        foreach (Collider2D collider in colliders)
+        {
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.SetSneakDetection(isSneaking);
+            }
+        }
+    }
+
+
 }
+
