@@ -117,7 +117,8 @@ public void ArmTheDefences()  {
 
 public void FollowPlayer(){
    if (Player != null) 
-        {
+        {   
+            isFollowing = true;
             navMeshAgent.SetDestination(Player.position);
         }
 }

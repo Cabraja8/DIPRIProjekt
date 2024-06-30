@@ -15,7 +15,7 @@ public class SpawnKnightsOutside : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!PlayerCollided)
+        if (other.CompareTag("Player") && !PlayerCollided)
         {
             PlayerCollided = true;
             SpawnKnightsOnPoint();
@@ -28,16 +28,30 @@ public class SpawnKnightsOutside : MonoBehaviour
         {
             Instantiate(Knights, spawnPoint.position, spawnPoint.rotation);
         }
-        FollowPlayerKnights();
+        Invoke("FollowPlayerKnights",1f);
+        
     }
 
     public void FollowPlayerKnights()
-    {
+    {   
+        
         NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
         foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
         {
             knightBehaviour.Target = null;
-            knightBehaviour.isFollowing = true;
+            knightBehaviour.FollowPlayer();
+            knightBehaviour.CanDetectFromFar = false;
+        }
+        Invoke("MakeKnightsFightInTheWave",5f);
+    }
+
+    public void MakeKnightsFightInTheWave(){
+         NPCKnightBehaviour[] knightBehaviours = FindObjectsOfType<NPCKnightBehaviour>();
+        foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours)
+        {
+            
+            knightBehaviour.isFollowing=false;
+            knightBehaviour.CanDetectFromFar = true;
         }
     }
 }

@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 1520913503259705291}
   - component: {fileID: 1507257324651130130}
   - component: {fileID: 4849593107700434297}
+  - component: {fileID: 5365235133786465838}
   m_Layer: 7
   m_Name: StatueMageModel
   m_TagString: Enemy
@@ -588,6 +589,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   enemyAnimation: {fileID: 0}
   detectionRadius: 30
+  sneakDetectionRadius: 2
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -649,6 +651,22 @@ MonoBehaviour:
   healthBar: {fileID: 6524544004356849759}
   regenRate: 10
   regenDelay: 1
+--- !u!114 &5365235133786465838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447992731894944724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201fbd1c0e3754e4caf90303e319e2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthManager: {fileID: 4849593107700434297}
+  weaponPrefab: {fileID: 8740801746852077034, guid: 1bd0a8c107c6dcd418f88439d770a709,
+    type: 3}
+  weaponType: 1
 --- !u!1 &8301608989312431318
 GameObject:
   m_ObjectHideFlags: 0

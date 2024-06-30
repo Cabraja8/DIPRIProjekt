@@ -6,11 +6,14 @@ public class TriggerStatues : MonoBehaviour
     public OpenTheDoorInsideTheCastle LastDoor;
     public StatueEnemy[] statues;  
 
+    public GameObject[] interactions;
+
     private int currentStatueIndex = 0;
 
     void Start()
     {
        LastDoor.enabled = false;
+    DisableInteractions();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -35,8 +38,7 @@ public class TriggerStatues : MonoBehaviour
         foreach (var statue in statues)
         {
             if(statue.isAlive && GameObject.FindGameObjectsWithTag("Enemy").Length == 0){
-                LastDoor.enabled = true;
-                LastDoor.OpenDoor();
+                EnableInteractionForPuzzle();
                 FollowPlayerKnights();
             }
         }
@@ -52,7 +54,26 @@ foreach (NPCKnightBehaviour knightBehaviour in knightBehaviours) {
 }
 }
 
+public void EnableInteractionForPuzzle(){
+    foreach (var interaction in interactions)
+        {
+            interaction.SetActive(true);
+        }
+}
+   void DisableInteractions()
+    {
+        foreach (var interaction in interactions)
+        {
+            interaction.SetActive(false);
+        }
+    }
 
+
+    public void EnableLastDoor(){
+         LastDoor.enabled = true;
+         LastDoor.OpenDoor();
+         DisableInteractions();
+    }
     
 }
 

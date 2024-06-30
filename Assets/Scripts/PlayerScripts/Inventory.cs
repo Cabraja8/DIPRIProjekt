@@ -5,8 +5,9 @@ public class Inventory : MonoBehaviour
 {
     public int maxCapacity = 1; 
     public List<StoneType> stones = new List<StoneType>();
-
     public List<GameObject> crown = new List<GameObject>();
+    public List<WeaponTypeStatues> Weapons = new List<WeaponTypeStatues>();
+
 
     public void AddStone(StoneType stoneType)
     {
@@ -33,7 +34,7 @@ public class Inventory : MonoBehaviour
         {
             crown.Add(Crown);
             Debug.Log("Crown added to inventory");
-            Crown.SetActive(false); // Disable the crown GameObject
+            Crown.SetActive(false); 
         }
         else
         {
@@ -44,6 +45,32 @@ public class Inventory : MonoBehaviour
     public bool Contains(GameObject item)
     {
         return crown.Contains(item);
+    }
+
+       public void AddWeapons(WeaponTypeStatues weaponType)
+    {
+        if (Weapons.Count < maxCapacity)
+        {
+            Weapons.Add(weaponType);
+            Debug.Log("Weapon added: " + weaponType);
+        }
+        else
+        {
+            Debug.Log("Inventory is full.");
+        }
+    }
+
+    public void RemoveWeapon(WeaponTypeStatues weaponType)
+    {
+        if (Weapons.Contains(weaponType))
+        {
+            Weapons.Remove(weaponType);
+            Debug.Log("Weapon removed: " + weaponType);
+        }
+        else
+        {
+            Debug.Log("Weapon not found in inventory.");
+        }
     }
 }
 

@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 3473471648584736858}
   - component: {fileID: 3358883050837079854}
   - component: {fileID: 4440389798556291943}
+  - component: {fileID: 5107492015736071180}
   m_Layer: 7
   m_Name: StatueKnightModel
   m_TagString: Enemy
@@ -555,6 +556,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   enemyAnimation: {fileID: 0}
   detectionRadius: 30
+  sneakDetectionRadius: 2
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -649,6 +651,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &5107492015736071180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840271341478591615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201fbd1c0e3754e4caf90303e319e2e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthManager: {fileID: 3358883050837079854}
+  weaponPrefab: {fileID: 4515375928089702074, guid: c105586496a8c5d4ca98e8e1ef7ca071,
+    type: 3}
+  weaponType: 0
 --- !u!1 &8601090718160550939
 GameObject:
   m_ObjectHideFlags: 0

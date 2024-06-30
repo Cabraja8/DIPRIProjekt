@@ -142,38 +142,44 @@ public class CombatAndMovement : MonoBehaviour
             }
         }
     }
+public void MeleeAttackEventKnight()
+{
+    MeleeEnemy meleeEnemy = GetComponentInParent<MeleeEnemy>();
 
-    public void MeleeAttackEventKnight()
+    if (meleeEnemy != null && meleeEnemy.target != null)
     {
-        NPCKnightBehaviour NPCKnight = GetComponentInParent<NPCKnightBehaviour>();
-
-        if (NPCKnight != null && NPCKnight.Target.tag == "Dead")
+        HealthManager targetHealth = meleeEnemy.target.GetComponent<HealthManager>();
+        if (targetHealth != null && targetHealth.currentHealth < 1)
         {
-            NPCKnight.Target = null;
-        }
-
-        if (NPCKnight != null && NPCKnight.Target != null)
-        {
-            HealthManager targetHealth = NPCKnight.Target.GetComponent<HealthManager>();
-            if (targetHealth != null && targetHealth.currentHealth < 1)
+            if (meleeEnemy.target.CompareTag("Knight"))
             {
-                Enemy enemy = NPCKnight.Target.GetComponent<Enemy>();
-                if (enemy != null)
+                NPCKnightBehaviour knightBehaviour = meleeEnemy.target.GetComponent<NPCKnightBehaviour>();
+                if (knightBehaviour != null)
                 {
-                    enemy.DeathHandler();
+                    knightBehaviour.DeathHandler();
                 }
-                NPCKnight.Target = null;
             }
-            else
+            else if (meleeEnemy.target.CompareTag("Player"))
             {
-                CombatAndMovement combatAndMovement = NPCKnight.Target.GetComponentInChildren<CombatAndMovement>();
-                if (combatAndMovement != null)
+                Player player = meleeEnemy.target.GetComponent<Player>();
+                if (player != null)
                 {
-                    combatAndMovement.PlayTakeHitAnimation();
+                    player.DeathHandler();
                 }
+            }
+            meleeEnemy.target = null;
+        }
+        else
+        {
+            CombatAndMovement combatAndMovement = meleeEnemy.target.GetComponentInChildren<CombatAndMovement>();
+            if (combatAndMovement != null)
+            {
+                combatAndMovement.PlayTakeHitAnimation();
             }
         }
     }
+}
+
 
 
 
