@@ -15,7 +15,6 @@ public class ChapterStart : MonoBehaviour
     public float SetMaxX;
     public float SetMinX;
 
-    public int expectedQuestCount; // Number of quests needed to complete before triggering this chapter
     public bool setCamera = true;
 
     // Start is called before the first frame update
@@ -50,35 +49,22 @@ public class ChapterStart : MonoBehaviour
     //     }
     // }
 
-    //     void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (CanStartChapter)
-    //     {
-    //         Debug.Log("Start next chapter");
-    //         ChapterBorder.SetActive(false);
-    //         BackBorder.SetActive(true);
-    //         // SetChapter(); 
-    //         if (setCamera)
-    //         {
-    //             SetChapter();
-    //         }
-    //     }
-    // }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (CanStartChapter && other.CompareTag("Player"))
+        if (CanStartChapter)
         {
             Debug.Log("Start next chapter");
             ChapterBorder.SetActive(false);
             BackBorder.SetActive(true);
+            // SetChapter(); 
             if (setCamera)
             {
                 SetChapter();
             }
         }
     }
+
+
 
     public void SetChapter()
     {
