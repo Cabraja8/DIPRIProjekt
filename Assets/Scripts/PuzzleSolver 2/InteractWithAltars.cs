@@ -6,6 +6,7 @@ public class InteractWithAltars : MonoBehaviour, Interactable
     private bool isItemPlaced = false;
     public TriggerStatues triggerStatues;
     public GameObject altarVisualPrefab; // Prefab of the visual representation of the item on the altar
+    public Transform altarPosition;
 
     public void Interact()
     {
@@ -45,7 +46,7 @@ public class InteractWithAltars : MonoBehaviour, Interactable
             // Disable the Light2D component
             light2D.enabled = false;
         }
-                Instantiate(altarVisualPrefab, transform.position, Quaternion.identity);
+                Instantiate(altarVisualPrefab, altarPosition.position, Quaternion.identity);
                 // You may need to adjust the position and rotation depending on where you want to place the visual
             }
 

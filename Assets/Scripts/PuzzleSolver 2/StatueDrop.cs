@@ -19,7 +19,8 @@ public class StatueDrop : MonoBehaviour
     void Update()
     {
         if (healthManager != null && healthManager.currentHealth == 0)
-        {
+        {   
+            
             DropWeapon();
             Destroy(gameObject); // Destroy the statue after dropping the weapon
         }

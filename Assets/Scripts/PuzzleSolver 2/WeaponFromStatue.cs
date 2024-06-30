@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class WeaponFromStatue : MonoBehaviour,Interactable
 {   
@@ -36,8 +38,17 @@ public class WeaponFromStatue : MonoBehaviour,Interactable
       
     }
     public bool CanInteract(){
-       
+       Invoke("ResetInteraction",2f);
         return !IsInteracted;
+    }
+
+    public void ResetInteraction(){
+        IsInteracted = false;
+        Light2D light = GetComponentInChildren<Light2D>();
+        if (light != null)
+        {
+            light.enabled = false;
+        }
     }
 
 }

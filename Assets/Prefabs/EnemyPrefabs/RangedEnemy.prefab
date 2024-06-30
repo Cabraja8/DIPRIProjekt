@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 5835157372940560087}
   - component: {fileID: 6184698625627721663}
   - component: {fileID: 5348550060736734079}
+  - component: {fileID: 477653870461862264}
   m_Layer: 7
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -646,9 +647,11 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   enemyAnimation: {fileID: 0}
   detectionRadius: 5
+  sneakDetectionRadius: 2
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 8
+  CanDetectFromFar: 1
   HealthBarUI: {fileID: 3228266522472518151}
   maxHealth: 100
   ShotPoint: {fileID: 7754500897964685641}
@@ -704,6 +707,43 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 4972689315378504825}
+  regenRate: 10
+  regenDelay: 1
+--- !u!58 &477653870461862264
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576617274680161023}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &8964806546733492159
 GameObject:
   m_ObjectHideFlags: 0

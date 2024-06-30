@@ -10,6 +10,8 @@ public class TriggerStatues : MonoBehaviour
 
     private int currentStatueIndex = 0;
 
+    public bool TriggeredWave;
+
     void Start()
     {
        LastDoor.enabled = false;
@@ -18,8 +20,9 @@ public class TriggerStatues : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player") && !TriggeredWave)
+        {   
+            TriggeredWave = true;
             Backdoor.CloseDoor();
             Invoke("EnableSecondRoom", 2f);
         }
