@@ -10,6 +10,7 @@ public class QuestManager : MonoBehaviour
 
     private List<Quest> questQueue = new List<Quest>(); // Changed to List for sorting
     private Quest currentQuest;
+    private Quest lastAcceptedQuest; // Track the last accepted quest
     private List<Quest> completedQuests = new List<Quest>();
 
     public int expectedQuestCount; // Number of quests needed to complete before triggering the next chapter
@@ -52,6 +53,7 @@ public class QuestManager : MonoBehaviour
         {
             questWindow.SetActive(false);
             currentQuest.isActive = true;
+            lastAcceptedQuest = currentQuest; // Track the last accepted quest
             if (currentQuest.waypoint != null)
             {
                 WayPointManager.Instance.SetActiveWaypoint(currentQuest.waypoint, currentQuest); // Activate waypoint with quest reference
@@ -99,16 +101,26 @@ public class QuestManager : MonoBehaviour
     // Method to show the current quest details
     public void ShowCurrentQuest()
     {
-        if (currentQuest != null)
+        if (lastAcceptedQuest != null && lastAcceptedQuest.isActive)
         {
-            titleText.text = currentQuest.title;
+            // Show the last accepted quest
+            titleText.text =  "Current Quest: " +  lastAcceptedQuest.title;
+            descriptionText.text = lastAcceptedQuest.description;
+            questWindow.SetActive(true);
+        }
+        else if (currentQuest != null)
+        {
+            // Show the current quest that can be accepted
+            titleText.text = "Next Quest: " + currentQuest.title;
             descriptionText.text = currentQuest.description;
             questWindow.SetActive(true);
         }
         else if (questQueue.Count > 0)
         {
-            titleText.text = "Next Quest";
-            descriptionText.text = "You have a quest available. Trigger the quest to start.";
+            // Show the next quest in the queue
+            Quest nextQuest = questQueue[0];
+            titleText.text = "Next Quest: " + nextQuest.title;
+            descriptionText.text = nextQuest.description;
             questWindow.SetActive(true);
         }
         else

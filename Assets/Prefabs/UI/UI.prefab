@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 1741645519988252375}
   - component: {fileID: 5483999181467005792}
   m_Layer: 5
-  m_Name: Opis
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1335,7 +1335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9197923947455925112}
   m_Layer: 5
-  m_Name: QuestDesc
+  m_Name: QuestWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2203,7 +2203,7 @@ GameObject:
   - component: {fileID: 6826822708940496468}
   - component: {fileID: 19690656057473998}
   m_Layer: 5
-  m_Name: WayPoint
+  m_Name: WaypointImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

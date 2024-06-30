@@ -33,8 +33,16 @@ public class WayPointManager : MonoBehaviour
 
     private void Update()
     {
-        if (waypointsCompleted || waypoints.Count == 0)
+        if (waypointsCompleted || waypoints.Count == 0 || waypointImage == null || player == null || mainCamera == null)
             return;
+
+        if (currentWaypointIndex >= waypoints.Count || waypoints[currentWaypointIndex] == null)
+        {
+            waypointsCompleted = true;
+            if (waypointImage != null) waypointImage.enabled = false;
+            Debug.Log("All waypoints visited or current waypoint is null!");
+            return;
+        }
 
         float distance = Vector3.Distance(player.position, waypoints[currentWaypointIndex].position);
 
@@ -50,10 +58,10 @@ public class WayPointManager : MonoBehaviour
     {
         Transform reachedWaypoint = waypoints[currentWaypointIndex];
         currentWaypointIndex++;
-        if (currentWaypointIndex >= waypoints.Count)
+        if (currentWaypointIndex >= waypoints.Count || reachedWaypoint == null)
         {
             waypointsCompleted = true;
-            waypointImage.enabled = false;
+            if (waypointImage != null) waypointImage.enabled = false;
             Debug.Log("All waypoints visited!");
         }
 
@@ -71,6 +79,12 @@ public class WayPointManager : MonoBehaviour
 
     private void UpdateWaypointImagePosition(Transform waypoint)
     {
+        if (waypoint == null || waypointImage == null || mainCamera == null)
+        {
+            if (waypointImage != null) waypointImage.enabled = false;
+            return;
+        }
+
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(waypoint.position);
         bool isOffScreen = screenPosition.z < 0 || screenPosition.x < 0 || screenPosition.x > Screen.width || screenPosition.y < 0 || screenPosition.y > Screen.height;
 
@@ -102,7 +116,7 @@ public class WayPointManager : MonoBehaviour
         currentWaypointIndex = 0;
         waypointsCompleted = false;
         activeQuest = quest;
-        waypointImage.enabled = true;
+        if (waypointImage != null) waypointImage.enabled = true;
         UpdateWaypointImagePosition(waypoints[currentWaypointIndex]);
     }
 
