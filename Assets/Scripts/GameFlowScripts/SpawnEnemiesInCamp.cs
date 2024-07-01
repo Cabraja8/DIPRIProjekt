@@ -1,44 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnEnemiesInCamp : MonoBehaviour
-{   
+{
     public bool Triggered;
-    public Transform SpawnPointForEnemies;
-    public Enemy[] enemies; // Array to hold the enemy prefabs
-    public int numberOfEnemiesToSpawn = 6; // Number of enemies to spawn
+    public Transform[] SpawnPointsForEnemies; 
+    public Enemy[] enemies; 
 
-    // Start is called before the first frame update
+
+  
     void Start()
     {
         Triggered = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
     void OnTriggerEnter2D(Collider2D other)
-    {   
-        if (!Triggered){
+    {
+        if (!Triggered && other.CompareTag("Player"))
+        {
             Triggered = true;
             SpawnEnemies();
         }
     }
 
-     public void SpawnEnemies()
+    public void SpawnEnemies()
     {
-        for (int i = 0; i < numberOfEnemiesToSpawn; i++)
+        for (int i = 0; i < SpawnPointsForEnemies.Length; i++)
         {
             foreach (Enemy enemyPrefab in enemies)
             {
-                Enemy enemyInstance = Instantiate(enemyPrefab, SpawnPointForEnemies.position, SpawnPointForEnemies.rotation);
+                Transform spawnPoint = SpawnPointsForEnemies[i];
+                Enemy enemyInstance = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
                 enemyInstance.CanDetectFromFar = false;
             }
         }
     }
 }
+
 

@@ -75,7 +75,7 @@ public class CombatAndMovement : MonoBehaviour
         if (meleeEnemy != null && meleeEnemy.target != null)
         {
             HealthManager targetHealth = meleeEnemy.target.GetComponent<HealthManager>();
-            if (targetHealth != null && targetHealth.currentHealth < 1)
+            if (targetHealth != null && targetHealth.currentHealth <= 0)
             {
                 if (meleeEnemy.target.CompareTag("Knight"))
                 {
@@ -112,7 +112,7 @@ public class CombatAndMovement : MonoBehaviour
         if (corruptedKing != null && corruptedKing.target != null)
         {
             HealthManager targetHealth = corruptedKing.target.GetComponent<HealthManager>();
-            if (targetHealth != null && targetHealth.currentHealth < 1)
+            if (targetHealth != null && targetHealth.currentHealth <= 0)
             {
                 if (corruptedKing.target.CompareTag("Knight"))
                 {
@@ -149,7 +149,7 @@ public void MeleeAttackEventKnight()
     if (meleeEnemy != null && meleeEnemy.target != null)
     {
         HealthManager targetHealth = meleeEnemy.target.GetComponent<HealthManager>();
-        if (targetHealth != null && targetHealth.currentHealth < 1)
+        if (targetHealth != null && targetHealth.currentHealth <= 0)
         {
             if (meleeEnemy.target.CompareTag("Knight"))
             {

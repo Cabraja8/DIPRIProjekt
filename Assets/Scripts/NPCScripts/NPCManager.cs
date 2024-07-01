@@ -11,8 +11,7 @@ public class NPCManager : MonoBehaviour
 
     void Start()
     {
-        FirstStage();
-        Invoke("SecondStage",15f);
+      
     }
 
     public void FirstStage()

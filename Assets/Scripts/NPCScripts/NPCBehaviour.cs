@@ -33,10 +33,41 @@ public class NPCBehaviour : MonoBehaviour
         SetDefaultValues();
         
        if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2)
+{
+    GameObject[] startFields = GameObject.FindGameObjectsWithTag("StartField");
+
+    if (startFields.Length > 0)
+    {
+        GameObject closestStartField = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject startField in startFields)
         {
-             standField = GameObject.FindGameObjectWithTag("StartField");
+            float distance = Vector3.Distance(startField.transform.position, currentPosition);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestStartField = startField;
+            }
+        }
+
+        if (closestStartField != null)
+        {
+            standField = closestStartField;
             FirstSceneKnightCall();
         }
+        else
+        {
+            Debug.LogWarning("No StartField found.");
+        }
+    }
+    else
+    {
+        Debug.LogWarning("No StartField objects found with tag 'StartField'.");
+    }
+}
+
             
     }
 
