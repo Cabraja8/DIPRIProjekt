@@ -54,19 +54,42 @@ public class Player : MonoBehaviour
         CheckAngle();
     }
 
+    // private void CheckAngle()
+    // {
+    //     Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    //     if (moveDirection.x != 0)
+    //     {
+    //         if (moveDirection.x < 0)
+    //         {
+    //             rend.flipX = true;
+    //         }
+    //         else
+    //         {
+    //             rend.flipX = false;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //         mousePosition.z = 0f;
+    //         Vector2 playerToMouse = mousePosition - transform.position;
+
+    //         if (playerToMouse.x < 0)
+    //         {
+    //             rend.flipX = true;
+    //         }
+    //         else
+    //         {
+    //             rend.flipX = false;
+    //         }
+    //     }
+    // }
     private void CheckAngle()
     {
         Vector2 moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (moveDirection.x != 0)
         {
-            if (moveDirection.x < 0)
-            {
-                rend.flipX = true;
-            }
-            else
-            {
-                rend.flipX = false;
-            }
+            rend.flipX = moveDirection.x < 0;
         }
         else
         {
@@ -74,14 +97,7 @@ public class Player : MonoBehaviour
             mousePosition.z = 0f;
             Vector2 playerToMouse = mousePosition - transform.position;
 
-            if (playerToMouse.x < 0)
-            {
-                rend.flipX = true;
-            }
-            else
-            {
-                rend.flipX = false;
-            }
+            rend.flipX = playerToMouse.x < 0;
         }
     }
 

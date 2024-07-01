@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SwordHitbox : MonoBehaviour
 {
-    public float swordDamage = 1f;
+    public float swordDamage = 10f;
     public Collider2D swordCollider;
 
     // Start is called before the first frame update

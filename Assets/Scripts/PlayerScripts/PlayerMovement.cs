@@ -6,12 +6,14 @@ using UnityEngine;
 public class PlayerMovement : Player
 {
     private bool isWalking = false; // Variable to track walking state
+    private PlayerControls playerControls;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         MovementSpeed = 5f;
+        playerControls = GetComponent<PlayerControls>();
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class PlayerMovement : Player
         float moveY = Input.GetAxisRaw("Vertical");
 
         Vector2 moveInput = new Vector2(moveX, moveY).normalized;
-        PlayerControls playerControls = GetComponent<PlayerControls>();
+        // PlayerControls playerControls = GetComponent<PlayerControls>();
 
         if (moveInput != Vector2.zero)
         {
@@ -72,4 +74,10 @@ public class PlayerMovement : Player
 
         rb.MovePosition(rb.position + MoveAmount * Time.deltaTime);
     }
+
+    public void SetMovementSpeed(float speed)
+    {
+        MovementSpeed = speed;
+    }
+
 }

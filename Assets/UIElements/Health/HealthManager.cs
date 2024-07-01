@@ -9,7 +9,7 @@ public class HealthManager : MonoBehaviour
     public int currentHealth;
     public HealthBar healthBar;
 
-    public float regenRate = 10f; // brzina regeneracije
+    public float regenRate = 8f; // brzina regeneracije
     public float regenDelay = 1f; // delay nakon zadnje "stete"
     private float lastDamageTime;
 

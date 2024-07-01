@@ -61,8 +61,8 @@ public class PlayerControls : Player
 
     private void PlayerControl()
     {
-        float translation = Input.GetAxis("Horizontal") * MovementSpeed * Time.deltaTime;
-        transform.Translate(translation, 0, 0);
+        // float translation = Input.GetAxis("Horizontal") * MovementSpeed * Time.deltaTime;
+        // transform.Translate(translation, 0, 0);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isCooldownActive(dashTimer, dashCooldown))
         {
@@ -115,7 +115,8 @@ public class PlayerControls : Player
         if (!isDashActive)
         {
             Debug.Log("Dash!");
-            MovementSpeed *= 2f;
+            playerMovement.SetMovementSpeed(playerMovement.MovementSpeed * 2f);
+            // MovementSpeed *= 2f;
             isDashActive = true;
             Invoke("ResetDash", 0.5f);
         }
@@ -126,7 +127,8 @@ public class PlayerControls : Player
         if (!isSneakActive)
         {
             Debug.Log("Sneak!");
-            MovementSpeed /= 2f;
+            playerMovement.SetMovementSpeed(playerMovement.MovementSpeed / 2f);
+            // MovementSpeed /= 2f;
             isSneakActive = true;
             SetEnemyDetectionRadius(true);
             // Invoke("ResetSneak", 0.5f);
@@ -208,15 +210,19 @@ public class PlayerControls : Player
 
     private void ResetDash()
     {
-        MovementSpeed /= 2f;
+        playerMovement.SetMovementSpeed(OriginalMovementSpeed);
+
+        // MovementSpeed /= 2f;
         isDashActive = false;
         dashTimer = Time.time;
     }
 
     private void ResetSneak()
     {
+        playerMovement.SetMovementSpeed(OriginalMovementSpeed);
+
         Debug.Log("Exiting sneak mode");
-        MovementSpeed *= 2f;
+        // MovementSpeed *= 2f;
         isSneakActive = false;
         sneakTimer = Time.time;
         SetEnemyDetectionRadius(false);
