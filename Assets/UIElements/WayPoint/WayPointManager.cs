@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class WayPointManager : MonoBehaviour
 {
-    public static WayPointManager Instance; // Singleton instance
+    public static WayPointManager Instance;
     public List<Transform> waypoints = new List<Transform>();
     public Image waypointImage;
     public Camera mainCamera;
     public Transform player;
     private int currentWaypointIndex = 0;
     private bool waypointsCompleted = false;
-    public Quest activeQuest; // Reference to the active quest
+    public Quest activeQuest;
 
     public float proximityThreshold = 5.0f;
     public float edgeBuffer = 50.0f;
@@ -31,6 +31,7 @@ public class WayPointManager : MonoBehaviour
         }
     }
 
+    // Other methods...
     private void Update()
     {
         if (waypointsCompleted || waypoints.Count == 0 || waypointImage == null || player == null || mainCamera == null)

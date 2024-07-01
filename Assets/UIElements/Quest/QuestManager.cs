@@ -1,22 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
 
-    private List<Quest> questQueue = new List<Quest>(); // Changed to List for sorting
+    private List<Quest> questQueue = new List<Quest>();
     private Quest currentQuest;
-    private Quest lastAcceptedQuest; // Track the last accepted quest
+    private Quest lastAcceptedQuest; 
     private List<Quest> completedQuests = new List<Quest>();
 
-    public int expectedQuestCount; // Number of quests needed to complete before triggering the next chapter
-    public int currentQuestOrder = 0; // Track the order of the current quest
-
-    // UI elements
+    public int expectedQuestCount;
+    public int currentQuestOrder = 0;
+    //UI
     public GameObject questWindow;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
@@ -29,7 +27,7 @@ public class QuestManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keep the QuestManager across scenes if needed
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -37,6 +35,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // Other methods...
     public void AddQuest(Quest newQuest)
     {
         questQueue.Add(newQuest);
@@ -104,7 +103,7 @@ public class QuestManager : MonoBehaviour
         if (lastAcceptedQuest != null && lastAcceptedQuest.isActive)
         {
             // Show the last accepted quest
-            titleText.text =  "Current Quest: " +  lastAcceptedQuest.title;
+            titleText.text = "Last Accepted Quest: " + lastAcceptedQuest.title;
             descriptionText.text = lastAcceptedQuest.description;
             questWindow.SetActive(true);
         }

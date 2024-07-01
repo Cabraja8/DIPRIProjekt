@@ -23,16 +23,12 @@ public class EnterTheCastleFirstScene : MonoBehaviour, Interactable
 
     private IEnumerator LoadSceneAndSetup(int sceneIndex)
     {
-        // Optionally, you can add a transition effect here
         yield return SceneManager.LoadSceneAsync(sceneIndex);
-
-        // After loading the new scene, set up any necessary components
         SetupSceneForQuests();
     }
 
     private void SetupSceneForQuests()
     {
-        // Find the SceneInitializer in the new scene and call Initialize
         SceneInitializer sceneInitializer = FindObjectOfType<SceneInitializer>();
         if (sceneInitializer != null)
         {
